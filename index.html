@@ -6,11 +6,9 @@
     <title>Quimera &bull; Ecosistema Científico, Académico y Profesional</title>
     <style>
         :root {
-            --card-bg: rgba(255, 255, 255, 0.92);
             --text-main: #0f172a;
-            --primary: #0f766e;
+            --primary: #0f766e; /* Este es el tono verde */
             --primary-hover: #115e59;
-            --border-color: rgba(226, 232, 240, 0.8);
             --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
         }
@@ -29,7 +27,7 @@
             display: flex;
             flex-direction: column;
             /* Fondo que abarca la página por completo con la imagen institucional */
-            background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.10)), url('Quimera.png');
+            background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.75)), url('banner.jpeg');
             background-size: cover;
             background-position: center center;
             background-attachment: fixed;
@@ -159,46 +157,53 @@
             align-items: center;
         }
 
+        /* Configuración de las tarjetas transparentes */
         .info-card {
-            background-color: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color);
+            background-color: transparent;
+            border: 1px solid #ffffff; /* Borde de color blanco */
             border-radius: 12px;
             padding: 1.75rem;
             box-shadow: var(--shadow);
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
             display: flex;
             flex-direction: column;
             gap: 0.4rem;
+            text-align: center; /* Encabezados y subtítulos centrados */
         }
 
+        /* Efecto Hover para el recuadro */
         .info-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
-            background-color: #ffffff;
+            background-color: #ffffff; /* Se vuelve de color blanco */
         }
 
         .info-card h2 {
             font-family: Georgia, "Times New Roman", serif;
             font-size: 1.25rem;
-            color: var(--primary);
         }
 
+        /* Letras del encabezado (estado normal y hover) */
         .info-card h2 a {
-            color: var(--primary);
+            color: #ffffff; /* Letras blancas por defecto */
             text-decoration: none;
-            transition: color 0.2s ease;
+            transition: color 0.3s ease;
         }
 
-        .info-card h2 a:hover {
-            color: var(--primary-hover);
-            text-decoration: underline;
+        .info-card:hover h2 a {
+            color: var(--primary); /* Se vuelven de color verde al posar el cursor */
         }
 
+        /* Subtítulo (estado normal y hover) */
         .info-card p {
-            color: var(--text-main);
+            color: #ffffff; /* Letras blancas por defecto */
             font-size: 0.95rem;
             font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .info-card:hover p {
+            color: #000000; /* Subtítulo negro al posar el cursor */
         }
 
         /* Posicionamiento específico requerido para las tarjetas */
@@ -251,13 +256,16 @@
     <!-- Barrita de navegación estandarizada -->
     <nav class="top-bar">
         <div class="top-bar-container">
-                        </ul>
+            <a href="https://quimerac3.github.io/" class="brand-logo">QUIMERA - Inicio General</a>
+            <ul class="nav-links">
+                <li><a href="https://quimerac3.github.io/QuimeraC3-IM-S/">Catálogo de Series Pedagógicas</a></li>
+            </ul>
         </div>
     </nav>
 
     <!-- Encabezado con la palabra QUIMERA como hipervínculo -->
     <header>
-        <span class="vol-badge">&bull; Ecosistema &bull;</span>
+        <span class="vol-badge">&bull; Ecosistema Quimera &bull;</span>
         <h1><a href="https://quimerac3.github.io/">QUIMERA</a></h1>
         <p>Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria.</p>
     </header>
