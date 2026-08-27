@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quimera &bull; Ecosistema Científico, Académico y Profesional</title>
+    <style>
+        :root {
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --text-main: #0f172a;
+            --primary: #0f766e;
+            --primary-hover: #115e59;
+            --border-color: rgba(226, 232, 240, 0.8);
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            /* Fondo que abarca la página por completo con la imagen institucional */
+            background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.75)), url('banner.jpeg');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+
+        /* -------------------------------------------------- */
+        /* NAVEGACIÓN SUPERIOR                                */
+        /* -------------------------------------------------- */
+        .top-bar {
+            background-color: rgba(11, 19, 41, 0.95);
+            backdrop-filter: blur(8px);
+            padding: 0.85rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .top-bar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo {
+            color: #ffffff;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: -0.01em;
+            transition: color 0.2s ease;
+        }
+
+        .brand-logo:hover {
+            color: #38bdf8;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.25rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #38bdf8;
+        }
+
+        /* -------------------------------------------------- */
+        /* ENCABEZADO INTEGRADO                               */
+        /* -------------------------------------------------- */
+        header {
+            text-align: center;
+            padding: 3rem 1rem 1rem 1rem;
+            color: #ffffff;
+        }
+
+        .vol-badge {
+            display: inline-block;
+            background-color: var(--primary);
+            color: #ffffff;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.35rem 1rem;
+            border-radius: 9999px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+            text-transform: uppercase;
+        }
+
+        header h1 a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        header h1 a:hover {
+            color: #38bdf8;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #ffffff;
+            font-weight: 500;
+            max-width: 800px;
+            margin: 0 auto;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        /* -------------------------------------------------- */
+        /* DISTRIBUCIÓN DE 5 ELEMENTOS (GRID DE 3 COLUMNAS)   */
+        /* -------------------------------------------------- */
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+            flex: 1;
+        }
+
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .info-card {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.75rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            background-color: #ffffff;
+        }
+
+        .info-card h2 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+
+        .info-card h2 a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .info-card h2 a:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+
+        .info-card p {
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Posicionamiento específico requerido para las tarjetas */
+        .card-1 { grid-column: 1; grid-row: 1; } /* Izquierda arriba */
+        .card-2 { grid-column: 1; grid-row: 2; } /* Izquierda abajo */
+        .card-3 { grid-column: 2; grid-row: 1 / span 2; justify-self: center; width: 100%; } /* Centro en medio (ocupa ambas filas) */
+        .card-4 { grid-column: 3; grid-row: 1; } /* Derecha arriba */
+        .card-5 { grid-column: 3; grid-row: 2; } /* Derecha abajo */
+
+        /* -------------------------------------------------- */
+        /* PIE DE PÁGINA                                      */
+        /* -------------------------------------------------- */
+        footer {
+            text-align: center;
+            padding: 2rem 2rem;
+            background-color: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+            font-size: 0.875rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: auto;
+        }
+
+        footer p {
+            color: #ffffff;
+        }
+
+        /* Responsividad para pantallas medianas y móviles */
+        @media (max-width: 900px) {
+            .layout-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+            .card-1, .card-2, .card-3, .card-4, .card-5 {
+                grid-column: 1;
+                grid-row: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-bar-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Barrita de navegación estandarizada -->
+    <nav class="top-bar">
+        <div class="top-bar-container">
+            <a href="https://quimerac3.github.io/" class="brand-logo">QUIMERA - Inicio General</a>
+            <ul class="nav-links">
+                <li><a href="https://quimerac3.github.io/QuimeraC3-IM-S/">Catálogo de Series Pedagógicas</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Encabezado con la palabra QUIMERA como hipervínculo -->
+    <header>
+        <span class="vol-badge">&bull; Ecosistema Quimera &bull;</span>
+        <h1><a href="https://quimerac3.github.io/">QUIMERA</a></h1>
+        <p>Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria.</p>
+    </header>
+
+    <main class="container">
+        <div class="layout-grid">
+            
+            <!-- Izquierda Arriba -->
+            <article class="info-card card-1">
+                <h2><a href="seccion-01.html" target="_blank" rel="noopener noreferrer">01. ¿QUÉ ES QUIMERA?</a></h2>
+                <p>Esto somos.</p>
+            </article>
+
+            <!-- Izquierda Abajo -->
+            <article class="info-card card-2">
+                <h2><a href="seccion-02.html" target="_blank" rel="noopener noreferrer">02. MISIÓN.</a></h2>
+                <p>Para esto existimos.</p>
+            </article>
+
+            <!-- Centro en Medio -->
+            <article class="info-card card-3">
+                <h2><a href="seccion-03.html" target="_blank" rel="noopener noreferrer">03. VISIÓN.</a></h2>
+                <p>Hacia esto vamos.</p>
+            </article>
+
+            <!-- Derecha Arriba -->
+            <article class="info-card card-4">
+                <h2><a href="seccion-04.html" target="_blank" rel="noopener noreferrer">04. PRINCIPIOS.</a></h2>
+                <p>Así creamos.</p>
+            </article>
+
+            <!-- Derecha Abajo -->
+            <article class="info-card card-5">
+                <h2><a href="seccion-05.html" target="_blank" rel="noopener noreferrer">05. ÁREAS DE DESARROLLO.</a></h2>
+                <p>Aquí es donde lo creamos.</p>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- Pie de Página Estandarizado -->
+    <footer>
+        <p>&copy; 2026 Instituto Quimera &bull; Centro de Investigación, Docencia, Servicio y Difusión.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #ffffff;">Dr.C. Cesar Cerezo Camacho. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>
