@@ -31,22 +31,46 @@
             background-size: cover;
             background-position: center center;
             background-attachment: fixed;
-            /* Transición inicial para el difuminado de entrada de la página */
-            transition: filter 0.8s ease, background-color 0.8s ease;
         }
 
-        /* Clase para el difuminado inicial de entrada y de clic en QUIMERA */
-        body.blurred-page {
-            filter: blur(8px);
+        /* Capa de pantalla completa para el difuminado inicial en blanco con la imagen de fondo */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #ffffff;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 9999;
             pointer-events: none;
-            background-color: #ffffff;
+            opacity: 1;
+            transition: opacity 0.8s ease, backdrop-filter 0.8s ease;
+        }
+
+        #intro-overlay.fade-out {
+            opacity: 0;
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+        }
+
+        /* Clase para el difuminado al hacer clic en QUIMERA */
+        body.blurred-page {
+            pointer-events: none;
+        }
+        body.blurred-page #intro-overlay {
+            opacity: 1;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: opacity 0.6s ease, backdrop-filter 0.6s ease;
         }
 
         /* -------------------------------------------------- */
         /* NAVEGACIÓN SUPERIOR                                */
         /* -------------------------------------------------- */
         .top-bar {
-            background-color: rgba(11, 19, 41, 0.95);
+            background-color: rgba(11, 19, 41, 0.4); /* Transparencia del 40% */
             backdrop-filter: blur(8px);
             padding: 0.85rem 2rem;
             position: sticky;
@@ -249,8 +273,8 @@
         footer {
             text-align: center;
             padding: 2rem 2rem;
-            /* Color de respaldo del footer con transparencia del 60% (rgba con opacidad 0.6) */
-            background-color: rgba(15, 23, 42, 0.6);
+            /* Color de respaldo del footer con transparencia del 40% (rgba con opacidad 0.4) */
+            background-color: rgba(15, 23, 42, 0.4);
             backdrop-filter: blur(8px);
             color: #ffffff;
             font-size: 0.875rem;
@@ -283,6 +307,9 @@
     </style>
 </head>
 <body>
+
+    <!-- Capa para el efecto de difuminado inicial en blanco (incluyendo imagen de fondo) -->
+    <div id="intro-overlay"></div>
 
     <!-- Barrita de navegación estandarizada -->
     <nav class="top-bar">
@@ -344,12 +371,12 @@
     </footer>
 
     <script>
-        // 1. Efecto al ingresar a la página: inicia difuminado en blanco y tras 1 segundo recupera la visibilidad
+        // 1. Efecto al ingresar a la página: mantiene la capa blanca difuminada 1 segundo y luego la desvanece
         window.addEventListener('DOMContentLoaded', () => {
-            document.body.classList.add('blurred-page');
+            const overlay = document.getElementById('intro-overlay');
             setTimeout(() => {
-                document.body.classList.remove('blurred-page');
-            }, 1000); // 1000 ms = 1 segundo de espera antes de revelar la página
+                overlay.classList.add('fade-out');
+            }, 1000); // 1000 ms = 1 segundo de espera
         });
 
         // 2. Efecto al seleccionar el título QUIMERA con un clic: difumina toda la página antes de redirigir
