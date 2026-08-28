@@ -31,6 +31,15 @@
             background-size: cover;
             background-position: center center;
             background-attachment: fixed;
+            /* Transición inicial para el difuminado de entrada de la página */
+            transition: filter 0.8s ease, background-color 0.8s ease;
+        }
+
+        /* Clase para el difuminado inicial de entrada y de clic en QUIMERA */
+        body.blurred-page {
+            filter: blur(8px);
+            pointer-events: none;
+            background-color: #ffffff;
         }
 
         /* -------------------------------------------------- */
@@ -122,12 +131,33 @@
         header h1 a {
             color: #ffffff;
             text-decoration: none;
-            transition: color 0.2s ease;
+            display: inline-block;
         }
 
-        header h1 a:hover {
-            color: #38bdf8;
+        /* Estilo base y transiciones secuenciales por letra para QUIMERA */
+        .quimera-letter {
+            display: inline-block;
+            color: #ffffff;
+            transition: color 0.25s ease;
         }
+
+        /* Cambiar a rojo letra por letra de izquierda a derecha al pasar el cursor (hover) */
+        header h1 a:hover .char-q { transition-delay: 0.0s; color: #dc2626; }
+        header h1 a:hover .char-u { transition-delay: 0.05s; color: #dc2626; }
+        header h1 a:hover .char-i { transition-delay: 0.1s; color: #dc2626; }
+        header h1 a:hover .char-m { transition-delay: 0.15s; color: #dc2626; }
+        header h1 a:hover .char-e { transition-delay: 0.2s; color: #dc2626; }
+        header h1 a:hover .char-r { transition-delay: 0.25s; color: #dc2626; }
+        header h1 a:hover .char-a { transition-delay: 0.3s; color: #dc2626; }
+
+        /* Retardos para regresar a blanco de derecha a izquierda cuando el cursor se retira */
+        header h1 a .char-a { transition-delay: 0.0s; }
+        header h1 a .char-r { transition-delay: 0.05s; }
+        header h1 a .char-e { transition-delay: 0.1s; }
+        header h1 a .char-m { transition-delay: 0.15s; }
+        header h1 a .char-i { transition-delay: 0.2s; }
+        header h1 a .char-u { transition-delay: 0.25s; }
+        header h1 a .char-q { transition-delay: 0.3s; }
 
         header p {
             font-size: 1.1rem;
@@ -219,7 +249,8 @@
         footer {
             text-align: center;
             padding: 2rem 2rem;
-            background-color: rgba(15, 23, 42, 0.95);
+            /* Color de respaldo del footer con transparencia del 60% (rgba con opacidad 0.6) */
+            background-color: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(8px);
             color: #ffffff;
             font-size: 0.875rem;
@@ -263,10 +294,10 @@
         </div>
     </nav>
 
-    <!-- Encabezado con la palabra QUIMERA como hipervínculo -->
+    <!-- Encabezado con la palabra QUIMERA dividida en letras para la animación -->
     <header>
         <span class="vol-badge">&bull; Ecosistema &bull;</span>
-        <h1><a href="https://quimerac3.github.io/">QUIMERA</a></h1>
+        <h1><a href="https://quimerac3.github.io/" id="quimera-link"><span class="quimera-letter char-q">Q</span><span class="quimera-letter char-u">U</span><span class="quimera-letter char-i">I</span><span class="quimera-letter char-m">M</span><span class="quimera-letter char-e">E</span><span class="quimera-letter char-r">R</span><span class="quimera-letter char-a">A</span></a></h1>
         <p>Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria.</p>
     </header>
 
@@ -311,6 +342,29 @@
         <p>&copy; 2026 Instituto Quimera &bull; Centro de Investigación, Docencia, Servicio y Difusión.</p>
         <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #ffffff;">Dr.C. Cesar Cerezo Camacho. Todos los derechos reservados.</p>
     </footer>
+
+    <script>
+        // 1. Efecto al ingresar a la página: inicia difuminado y recupera visibilidad de inmediato
+        window.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('blurred-page');
+            setTimeout(() => {
+                document.body.classList.remove('blurred-page');
+            }, 50); // Inicia la transición de revelado casi al instante
+        });
+
+        // 2. Efecto al seleccionar el título QUIMERA con un clic: difumina toda la página antes de redirigir
+        const quimeraLink = document.getElementById('quimera-link');
+        quimeraLink.addEventListener('click', function(e) {
+            e.preventDefault(); // Detiene la navegación inmediata para apreciar el efecto
+            const targetUrl = this.href;
+            
+            document.body.classList.add('blurred-page');
+            
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 600); // Coincide con la duración de la transición CSS
+        });
+    </script>
 
 </body>
 </html>
