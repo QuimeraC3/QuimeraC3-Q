@@ -7,7 +7,7 @@
     <style>
         :root {
             --text-main: #0f172a;
-            --primary: #0f766e; /* Este es el tono verde */
+            --primary: #0f766e;
             --primary-hover: #115e59;
             --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
@@ -26,14 +26,13 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            /* Fondo que abarca la página por completo con la imagen institucional */
             background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.10)), url('Quimera.png');
             background-size: cover;
             background-position: center center;
             background-attachment: fixed;
         }
 
-        /* Capa de pantalla completa para el difuminado inicial en blanco con la imagen de fondo */
+        /* Capa de pantalla completa para el difuminado inicial/final */
         #intro-overlay {
             position: fixed;
             top: 0;
@@ -55,7 +54,7 @@
             -webkit-backdrop-filter: blur(0px);
         }
 
-        /* Clase para el difuminado al hacer clic en QUIMERA */
+        /* Clase para el difuminado al hacer clic en los enlaces */
         body.blurred-page {
             pointer-events: none;
         }
@@ -66,11 +65,9 @@
             transition: opacity 0.6s ease, backdrop-filter 0.6s ease;
         }
 
-        /* -------------------------------------------------- */
-        /* NAVEGACIÓN SUPERIOR                                */
-        /* -------------------------------------------------- */
+        /* NAVEGACIÓN SUPERIOR */
         .top-bar {
-            background-color: rgba(11, 19, 41, 0.4); /* Transparencia del 40% */
+            background-color: rgba(11, 19, 41, 0.4);
             backdrop-filter: blur(8px);
             padding: 0.85rem 2rem;
             position: sticky;
@@ -119,9 +116,7 @@
             color: #38bdf8;
         }
 
-        /* -------------------------------------------------- */
-        /* ENCABEZADO INTEGRADO                               */
-        /* -------------------------------------------------- */
+        /* ENCABEZADO INTEGRADO */
         header {
             text-align: center;
             padding: 3rem 1rem 1rem 1rem;
@@ -158,14 +153,12 @@
             display: inline-block;
         }
 
-        /* Estilo base y transiciones secuenciales por letra para QUIMERA */
         .quimera-letter {
             display: inline-block;
             color: #ffffff;
             transition: color 0.25s ease;
         }
 
-        /* Cambiar a rojo letra por letra de izquierda a derecha al pasar el cursor (hover) */
         header h1 a:hover .char-q { transition-delay: 0.0s; color: #dc2626; }
         header h1 a:hover .char-u { transition-delay: 0.05s; color: #dc2626; }
         header h1 a:hover .char-i { transition-delay: 0.1s; color: #dc2626; }
@@ -174,7 +167,6 @@
         header h1 a:hover .char-r { transition-delay: 0.25s; color: #dc2626; }
         header h1 a:hover .char-a { transition-delay: 0.3s; color: #dc2626; }
 
-        /* Retardos para regresar a blanco de derecha a izquierda cuando el cursor se retira */
         header h1 a .char-a { transition-delay: 0.0s; }
         header h1 a .char-r { transition-delay: 0.05s; }
         header h1 a .char-e { transition-delay: 0.1s; }
@@ -192,9 +184,7 @@
             text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
         }
 
-        /* -------------------------------------------------- */
-        /* DISTRIBUCIÓN DE 5 ELEMENTOS (GRID DE 3 COLUMNAS)   */
-        /* -------------------------------------------------- */
+        /* DISTRIBUCIÓN DE 5 ELEMENTOS */
         .container {
             max-width: 1200px;
             width: 100%;
@@ -211,10 +201,9 @@
             align-items: center;
         }
 
-        /* Configuración de las tarjetas transparentes */
         .info-card {
             background-color: transparent;
-            border: 1px solid #ffffff; /* Borde de color blanco */
+            border: 1px solid #ffffff;
             border-radius: 12px;
             padding: 1.75rem;
             box-shadow: var(--shadow);
@@ -222,14 +211,13 @@
             display: flex;
             flex-direction: column;
             gap: 0.4rem;
-            text-align: center; /* Encabezados y subtítulos centrados */
+            text-align: center;
         }
 
-        /* Efecto Hover para el recuadro */
         .info-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
-            background-color: #ffffff; /* Se vuelve de color blanco */
+            background-color: #ffffff;
         }
 
         .info-card h2 {
@@ -237,43 +225,37 @@
             font-size: 1.25rem;
         }
 
-        /* Letras del encabezado (estado normal y hover) */
         .info-card h2 a {
-            color: #ffffff; /* Letras blancas por defecto */
+            color: #ffffff;
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         .info-card:hover h2 a {
-            color: var(--primary); /* Se vuelven de color verde al posar el cursor */
+            color: var(--primary);
         }
 
-        /* Subtítulo (estado normal y hover) */
         .info-card p {
-            color: #ffffff; /* Letras blancas por defecto */
+            color: #ffffff;
             font-size: 0.95rem;
             font-weight: 500;
             transition: color 0.3s ease;
         }
 
         .info-card:hover p {
-            color: #000000; /* Subtítulo negro al posar el cursor */
+            color: #000000;
         }
 
-        /* Posicionamiento específico requerido para las tarjetas */
-        .card-1 { grid-column: 1; grid-row: 1; } /* Izquierda arriba */
-        .card-2 { grid-column: 1; grid-row: 2; } /* Izquierda abajo */
-        .card-3 { grid-column: 2; grid-row: 1 / span 2; justify-self: center; width: 100%; } /* Centro en medio (ocupa ambas filas) */
-        .card-4 { grid-column: 3; grid-row: 1; } /* Derecha arriba */
-        .card-5 { grid-column: 3; grid-row: 2; } /* Derecha abajo */
+        .card-1 { grid-column: 1; grid-row: 1; }
+        .card-2 { grid-column: 1; grid-row: 2; }
+        .card-3 { grid-column: 2; grid-row: 1 / span 2; justify-self: center; width: 100%; }
+        .card-4 { grid-column: 3; grid-row: 1; }
+        .card-5 { grid-column: 3; grid-row: 2; }
 
-        /* -------------------------------------------------- */
-        /* PIE DE PÁGINA                                      */
-        /* -------------------------------------------------- */
+        /* PIE DE PÁGINA */
         footer {
             text-align: center;
             padding: 2rem 2rem;
-            /* Color de respaldo del footer con transparencia del 40% (rgba con opacidad 0.4) */
             background-color: rgba(15, 23, 42, 0.4);
             backdrop-filter: blur(8px);
             color: #ffffff;
@@ -286,7 +268,6 @@
             color: #ffffff;
         }
 
-        /* Responsividad para pantallas medianas y móviles */
         @media (max-width: 900px) {
             .layout-grid {
                 grid-template-columns: 1fr;
@@ -308,10 +289,9 @@
 </head>
 <body>
 
-    <!-- Capa para el efecto de difuminado inicial en blanco (incluyendo imagen de fondo) -->
+    <!-- Capa para el efecto de difuminado -->
     <div id="intro-overlay"></div>
 
-    <!-- Barrita de navegación estandarizada -->
     <nav class="top-bar">
         <div class="top-bar-container">
             <a href="https://quimerac3.github.io/" class="brand-logo">QUIMERA - Inicio General</a>
@@ -321,7 +301,6 @@
         </div>
     </nav>
 
-    <!-- Encabezado con la palabra QUIMERA dividida en letras para la animación -->
     <header>
         <span class="vol-badge">&bull; Ecosistema &bull;</span>
         <h1><a href="https://quimerac3.github.io/" id="quimera-link"><span class="quimera-letter char-q">Q</span><span class="quimera-letter char-u">U</span><span class="quimera-letter char-i">I</span><span class="quimera-letter char-m">M</span><span class="quimera-letter char-e">E</span><span class="quimera-letter char-r">R</span><span class="quimera-letter char-a">A</span></a></h1>
@@ -331,65 +310,66 @@
     <main class="container">
         <div class="layout-grid">
             
-            <!-- Izquierda Arriba -->
             <article class="info-card card-1">
-                <h2><a href="https://quimerac3.github.io/QuimeraC3-Q-QE/" target="_blank" rel="noopener noreferrer">01. ¿QUÉ ES QUIMERA?</a></h2>
+                <h2><a href="https://quimerac3.github.io/QuimeraC3-Q-QE/">01. ¿QUÉ ES QUIMERA?</a></h2>
                 <p>Esto somos.</p>
             </article>
 
-            <!-- Izquierda Abajo -->
             <article class="info-card card-2">
-                <h2><a href="seccion-02.html" target="_blank" rel="noopener noreferrer">02. MISIÓN.</a></h2>
+                <h2><a href="seccion-02.html">02. MISIÓN.</a></h2>
                 <p>Para esto existimos.</p>
             </article>
 
-            <!-- Centro en Medio -->
             <article class="info-card card-3">
-                <h2><a href="seccion-03.html" target="_blank" rel="noopener noreferrer">03. VISIÓN.</a></h2>
+                <h2><a href="seccion-03.html">03. VISIÓN.</a></h2>
                 <p>Hacia esto vamos.</p>
             </article>
 
-            <!-- Derecha Arriba -->
             <article class="info-card card-4">
-                <h2><a href="seccion-04.html" target="_blank" rel="noopener noreferrer">04. PRINCIPIOS.</a></h2>
+                <h2><a href="seccion-04.html">04. PRINCIPIOS.</a></h2>
                 <p>Así creamos.</p>
             </article>
 
-            <!-- Derecha Abajo -->
             <article class="info-card card-5">
-                <h2><a href="seccion-05.html" target="_blank" rel="noopener noreferrer">05. ÁREAS DE DESARROLLO.</a></h2>
+                <h2><a href="seccion-05.html">05. ÁREAS DE DESARROLLO.</a></h2>
                 <p>Aquí es donde lo creamos.</p>
             </article>
 
         </div>
     </main>
 
-    <!-- Pie de Página Estandarizado -->
     <footer>
         <p>&copy; 2026 Instituto Quimera &bull; Centro de Investigación, Docencia, Servicio y Difusión.</p>
         <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #ffffff;">Dr.C. Cesar Cerezo Camacho. Todos los derechos reservados.</p>
     </footer>
 
     <script>
-        // 1. Efecto al ingresar a la página: mantiene la capa blanca difuminada 1 segundo y luego la desvanece
+        // 1. Efecto al ingresar a la página
         window.addEventListener('DOMContentLoaded', () => {
             const overlay = document.getElementById('intro-overlay');
             setTimeout(() => {
                 overlay.classList.add('fade-out');
-            }, 1000); // 1000 ms = 1 segundo de espera
+            }, 1000); 
         });
 
-        // 2. Efecto al seleccionar el título QUIMERA con un clic: difumina toda la página antes de redirigir
-        const quimeraLink = document.getElementById('quimera-link');
-        quimeraLink.addEventListener('click', function(e) {
-            e.preventDefault(); // Detiene la navegación inmediata para apreciar el efecto
-            const targetUrl = this.href;
-            
-            document.body.classList.add('blurred-page');
-            
-            setTimeout(() => {
-                window.location.href = targetUrl;
-            }, 600); // Coincide con la duración de la transición CSS
+        // 2. Efecto de salida para TODOS los enlaces
+        const allLinks = document.querySelectorAll('a[href]');
+        allLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    return; 
+                }
+
+                e.preventDefault(); 
+                const targetUrl = this.href;
+                
+                document.body.classList.add('blurred-page');
+                
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 600); 
+            });
         });
     </script>
 
