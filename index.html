@@ -344,12 +344,12 @@
     </footer>
 
     <script>
-        // 1. Efecto al ingresar a la página: inicia difuminado y recupera visibilidad de inmediato
+        // 1. Efecto al ingresar a la página: inicia difuminado en blanco y tras 1 segundo recupera la visibilidad
         window.addEventListener('DOMContentLoaded', () => {
             document.body.classList.add('blurred-page');
             setTimeout(() => {
                 document.body.classList.remove('blurred-page');
-            }, 50); // Inicia la transición de revelado casi al instante
+            }, 1000); // 1000 ms = 1 segundo de espera antes de revelar la página
         });
 
         // 2. Efecto al seleccionar el título QUIMERA con un clic: difumina toda la página antes de redirigir
