@@ -371,6 +371,14 @@
                 }, 600); 
             });
         });
+
+        // 3. Limpieza de caché al retroceder (bfcache)
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                document.body.classList.remove('blurred-page');
+                document.getElementById('intro-overlay').classList.add('fade-out');
+            }
+        });
     </script>
 
 </body>
