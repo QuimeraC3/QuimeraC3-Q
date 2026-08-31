@@ -61,13 +61,13 @@
             transition: opacity 1000ms ease, background-color 1000ms ease, backdrop-filter 1000ms ease;
         }
 
-        /* Clase para el desvanecimiento a negro en la salida (500 ms) */
+        /* Clase para el desvanecimiento a blanco en la salida (500 ms) */
         body.blurred-page {
             pointer-events: none;
         }
         body.blurred-page #intro-overlay {
             opacity: 1;
-            background-color: #000000;
+            background-color: #ffffff;
             backdrop-filter: blur(0px);
             -webkit-backdrop-filter: blur(0px);
             transition: opacity 500ms ease, background-color 500ms ease;
@@ -471,7 +471,7 @@
             }, 9200);
         });
 
-        // 15. Salida con desvanecimiento a negro en 500 milisegundos
+        // 15. Salida con desvanecimiento a blanco en 500 milisegundos
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
