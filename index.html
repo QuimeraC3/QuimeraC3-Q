@@ -506,7 +506,7 @@
                 }, t);
                 t += 300;
 
-                // 3. Desaparecen los cinco elementos en orden opuesto (05, 04, 03, 02, 01) en un total de 2000 milisegundos
+                // 3. Desaparecen los cinco elementos en orden opuesto (05, 04, 03, 02, 01) en un total de 1000 milisegundos
                 const cards = ['.card-5', '.card-4', '.card-3', '.card-2', '.card-1'];
                 const cardInterval = 2000 / cards.length; // 400ms por cada tarjeta
                 cards.forEach((cardSelector, index) => {
@@ -514,7 +514,7 @@
                         document.querySelector(cardSelector).style.opacity = '0';
                     }, t + (index * cardInterval));
                 });
-                t += 2000;
+                t += 1000;
 
                 // 4. Inmediatamente después, desaparecen los siguientes textos en orden:
                 // 01 "Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria."
