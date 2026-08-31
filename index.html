@@ -74,7 +74,7 @@
         }
 
         /* Elementos con opacidad inicial 0 para las apariciones secuenciales */
-        header, .vol-badge, header h1, header p, .card-1, .card-2, .card-3, .card-4, .card-5, footer {
+        .top-bar, header, .vol-badge, header h1, header p, .card-1, .card-2, .card-3, .card-4, .card-5, footer {
             opacity: 0;
             transition: opacity 500ms ease;
         }
@@ -320,9 +320,9 @@
     </nav>
 
     <header>
-        <span class="vol-badge">&bull; Ecosistema &bull;</span>
-        <h1><a href="https://quimerac3.github.io/" id="quimera-link"><span class="quimera-letter char-q">Q</span><span class="quimera-letter char-u">U</span><span class="quimera-letter char-i">I</span><span class="quimera-letter char-m">M</span><span class="quimera-letter char-e">E</span><span class="quimera-letter char-r">R</span><span class="quimera-letter char-a">A</span></a></h1>
-        <p>Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria.</p>
+        <span class="vol-badge" data-text="&bull; Ecosistema &bull;"></span>
+        <h1><a href="https://quimerac3.github.io/" id="quimera-link" data-text="QUIMERA"></a></h1>
+        <p data-text="Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria."></p>
     </header>
 
     <main class="container">
@@ -357,7 +357,7 @@
     </main>
 
     <footer>
-        <p data-text="© 2026 Instituto Quimera • Centro de Investigación, Docencia, Servicio y Difusión."></p>
+        <p data-text="&copy; 2026 Instituto Quimera &bull; Centro de Investigación, Docencia, Servicio y Difusión."></p>
         <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #ffffff;" data-text="Dr.C. Cesar Cerezo Camacho. Todos los derechos reservados."></p>
     </footer>
 
@@ -365,70 +365,122 @@
         window.addEventListener('DOMContentLoaded', () => {
             const overlay = document.getElementById('intro-overlay');
 
-            // 1. Duración inicial en blanco (500ms) y luego difuminado a negro (1000ms)
+            // Entrada: blanco (500ms) y cambio a negro (1000ms) -> total 1500ms en negro absoluto
             setTimeout(() => {
                 overlay.style.backgroundColor = '#000000';
             }, 500);
 
-            // Después de eso (a los 1500ms), pantalla totalmente negra. Comienza la secuencia:
+            // Paso 1: Hacer aparecer en 500 ms el header sin el texto (1500ms - 2000ms)
+            setTimeout(() => {
+                document.querySelector('header').style.opacity = '1';
+            }, 1500);
 
-            // Paso 1: Hacer aparecer la imagen de fondo en 1000 ms (y desvanecer el overlay negro)
+            // Paso 2: Hacer aparecer el texto del header con máquina de escribir, sin cursor
+            setTimeout(() => {
+                const badge = document.querySelector('.vol-badge');
+                const h1Link = document.getElementById('quimera-link');
+                const p = document.querySelector('header p');
+
+                const badgeText = badge.dataset.text;
+                const h1Text = h1Link.dataset.text;
+                const pText = p.dataset.text;
+
+                // Escribir badge
+                let i = 0;
+                function typeBadge() {
+                    if (i <= badgeText.length) {
+                        badge.innerHTML = badgeText.substring(0, i);
+                        i++;
+                        setTimeout(typeBadge, 20);
+                    } else {
+                        // Escribir H1 con estructura de letras
+                        let j = 0;
+                        function typeH1() {
+                            if (j <= h1Text.length) {
+                                let currentStr = h1Text.substring(0, j);
+                                let htmlChars = '';
+                                for (let char of currentStr) {
+                                    htmlChars += `<span class="quimera-letter">${char}</span>`;
+                                }
+                                h1Link.innerHTML = htmlChars;
+                                j++;
+                                setTimeout(typeH1, 40);
+                            } else {
+                                // Escribir párrafo del header
+                                let k = 0;
+                                function typeP() {
+                                    if (k <= pText.length) {
+                                        p.innerHTML = pText.substring(0, k);
+                                        k++;
+                                        setTimeout(typeP, 12);
+                                    }
+                                }
+                                typeP();
+                            }
+                        }
+                        typeH1();
+                    }
+                }
+                typeBadge();
+            }, 2000);
+
+            // Paso 3: Hacer aparecer en 1000 ms la imagen de fondo (y desvanecer overlay negro)
             setTimeout(() => {
                 document.getElementById('bg-layer').style.opacity = '1';
                 overlay.style.opacity = '0';
-            }, 1500);
+            }, 3800);
 
-            // Paso 2: Hacer aparecer el header en 500 ms
+            // Paso 4: Hacer aparecer en 500 ms el header superior (top-bar)
             setTimeout(() => {
-                document.querySelector('header').style.opacity = '1';
-            }, 2500);
+                document.querySelector('.top-bar').style.opacity = '1';
+            }, 4800);
 
-            // Paso 3: Hacer aparecer el título "ECOSISTEMA" (.vol-badge) en 500 ms
+            // Paso 5: Hacer aparecer en 500 ms el título "ECOSISTEMA" (.vol-badge)
             setTimeout(() => {
                 document.querySelector('.vol-badge').style.opacity = '1';
-            }, 3000);
+            }, 5300);
 
-            // Paso 4: Hacer aparecer el título "QUIMERA" (header h1) en 500 ms
+            // Paso 6: Hacer aparecer en 500 ms el título "QUIMERA" (header h1)
             setTimeout(() => {
                 document.querySelector('header h1').style.opacity = '1';
-            }, 3500);
+            }, 5800);
 
-            // Paso 5: Hacer aparecer el subtítulo en 500 ms
+            // Paso 7: Hacer aparecer en 500 ms el subtítulo
             setTimeout(() => {
                 document.querySelector('header p').style.opacity = '1';
-            }, 4000);
+            }, 6300);
 
-            // Paso 6: Hacer aparecer el recuadro 01 en 500 ms
+            // Paso 8: Hacer aparecer en 500 ms el recuadro 01
             setTimeout(() => {
                 document.querySelector('.card-1').style.opacity = '1';
-            }, 4500);
+            }, 6800);
 
-            // Paso 7: Hacer aparecer el recuadro 02 en 500 ms
+            // Paso 9: Hacer aparecer en 500 ms el recuadro 02
             setTimeout(() => {
                 document.querySelector('.card-2').style.opacity = '1';
-            }, 5000);
+            }, 7300);
 
-            // Paso 8: Hacer aparecer el recuadro 03 en 500 ms
+            // Paso 10: Hacer aparecer en 500 ms el recuadro 03
             setTimeout(() => {
                 document.querySelector('.card-3').style.opacity = '1';
-            }, 5500);
+            }, 7800);
 
-            // Paso 9: Hacer aparecer el recuadro 04 en 500 ms
+            // Paso 11: Hacer aparecer en 500 ms el recuadro 04
             setTimeout(() => {
                 document.querySelector('.card-4').style.opacity = '1';
-            }, 6000);
+            }, 8300);
 
-            // Paso 10: Hacer aparecer el recuadro 05 en 500 ms
+            // Paso 12: Hacer aparecer en 500 ms el recuadro 05
             setTimeout(() => {
                 document.querySelector('.card-5').style.opacity = '1';
-            }, 6500);
+            }, 8800);
 
-            // Paso 11: Hacer aparecer el footer sin texto en 500 ms
+            // Paso 13: Hacer aparecer en 500 ms el footer sin el texto
             setTimeout(() => {
                 document.querySelector('footer').style.opacity = '1';
-            }, 7000);
+            }, 9300);
 
-            // Paso 12: Hacer aparecer el texto del footer con efecto de máquina de escribir sin cursor parpadeante
+            // Paso 14: Hacer aparecer el texto del footer con efecto máquina de escribir, sin cursor
             setTimeout(() => {
                 const footerPs = document.querySelectorAll('footer p');
                 let pIndex = 0;
@@ -446,16 +498,16 @@
                             setTimeout(typeChar, 18);
                         } else {
                             pIndex++;
-                            setTimeout(typeFooterP, 120);
+                            setTimeout(typeFooterP, 100);
                         }
                     }
                     typeChar();
                 }
                 typeFooterP();
-            }, 7500);
+            }, 9800);
         });
 
-        // Efecto de salida: desvanecimiento a negro en 500 milisegundos[cite: 7]
+        // Paso 15: Salida con desvanecimiento a negro en 500 milisegundos[cite: 7, 8]
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
