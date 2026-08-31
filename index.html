@@ -508,7 +508,7 @@
 
                 // 3. Desaparecen los cinco elementos en orden opuesto (05, 04, 03, 02, 01) en un total de 1000 milisegundos
                 const cards = ['.card-5', '.card-4', '.card-3', '.card-2', '.card-1'];
-                const cardInterval = 2000 / cards.length; // 400ms por cada tarjeta
+                const cardInterval = 1000 / cards.length; // 200ms por cada tarjeta
                 cards.forEach((cardSelector, index) => {
                     setTimeout(() => {
                         document.querySelector(cardSelector).style.opacity = '0';
