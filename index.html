@@ -26,10 +26,23 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            background-color: #000000;
+        }
+
+        /* Capa de fondo para la imagen con aparición progresiva */
+        #bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
             background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.10)), url('Quimera.png');
             background-size: cover;
             background-position: center center;
             background-attachment: fixed;
+            opacity: 0;
+            transition: opacity 1000ms ease;
         }
 
         /* Capa de pantalla completa para el difuminado inicial/final */
@@ -45,24 +58,25 @@
             z-index: 9999;
             pointer-events: none;
             opacity: 1;
-            transition: opacity 0.8s ease, backdrop-filter 0.8s ease;
+            transition: opacity 1000ms ease, background-color 1000ms ease, backdrop-filter 1000ms ease;
         }
 
-        #intro-overlay.fade-out {
-            opacity: 0;
-            backdrop-filter: blur(0px);
-            -webkit-backdrop-filter: blur(0px);
-        }
-
-        /* Clase para el difuminado al hacer clic en los enlaces */
+        /* Clase para el desvanecimiento a negro en la salida (500 ms) */
         body.blurred-page {
             pointer-events: none;
         }
         body.blurred-page #intro-overlay {
             opacity: 1;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            transition: opacity 0.6s ease, backdrop-filter 0.6s ease;
+            background-color: #000000;
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+            transition: opacity 500ms ease, background-color 500ms ease;
+        }
+
+        /* Elementos con opacidad inicial 0 para las apariciones secuenciales */
+        header, .vol-badge, header h1, header p, .card-1, .card-2, .card-3, .card-4, .card-5, footer {
+            opacity: 0;
+            transition: opacity 500ms ease;
         }
 
         /* NAVEGACIÓN SUPERIOR */
@@ -207,7 +221,7 @@
             border-radius: 12px;
             padding: 1.75rem;
             box-shadow: var(--shadow);
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, opacity 500ms ease;
             display: flex;
             flex-direction: column;
             gap: 0.4rem;
@@ -262,6 +276,7 @@
             font-size: 0.875rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             margin-top: auto;
+            transition: opacity 500ms ease;
         }
 
         footer p {
@@ -289,7 +304,10 @@
 </head>
 <body>
 
-    <!-- Capa para el efecto de difuminado -->
+    <!-- Capa de fondo -->
+    <div id="bg-layer"></div>
+
+    <!-- Capa para el efecto de difuminado inicial/final -->
     <div id="intro-overlay"></div>
 
     <nav class="top-bar">
@@ -339,20 +357,105 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 Instituto Quimera &bull; Centro de Investigación, Docencia, Servicio y Difusión.</p>
-        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #ffffff;">Dr.C. Cesar Cerezo Camacho. Todos los derechos reservados.</p>
+        <p data-text="© 2026 Instituto Quimera • Centro de Investigación, Docencia, Servicio y Difusión."></p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #ffffff;" data-text="Dr.C. Cesar Cerezo Camacho. Todos los derechos reservados."></p>
     </footer>
 
     <script>
-        // 1. Efecto al ingresar a la página
         window.addEventListener('DOMContentLoaded', () => {
             const overlay = document.getElementById('intro-overlay');
+
+            // 1. Duración inicial en blanco (500ms) y luego difuminado a negro (1000ms)
             setTimeout(() => {
-                overlay.classList.add('fade-out');
-            }, 1000); 
+                overlay.style.backgroundColor = '#000000';
+            }, 500);
+
+            // Después de eso (a los 1500ms), pantalla totalmente negra. Comienza la secuencia:
+
+            // Paso 1: Hacer aparecer la imagen de fondo en 1000 ms (y desvanecer el overlay negro)
+            setTimeout(() => {
+                document.getElementById('bg-layer').style.opacity = '1';
+                overlay.style.opacity = '0';
+            }, 1500);
+
+            // Paso 2: Hacer aparecer el header en 500 ms
+            setTimeout(() => {
+                document.querySelector('header').style.opacity = '1';
+            }, 2500);
+
+            // Paso 3: Hacer aparecer el título "ECOSISTEMA" (.vol-badge) en 500 ms
+            setTimeout(() => {
+                document.querySelector('.vol-badge').style.opacity = '1';
+            }, 3000);
+
+            // Paso 4: Hacer aparecer el título "QUIMERA" (header h1) en 500 ms
+            setTimeout(() => {
+                document.querySelector('header h1').style.opacity = '1';
+            }, 3500);
+
+            // Paso 5: Hacer aparecer el subtítulo en 500 ms
+            setTimeout(() => {
+                document.querySelector('header p').style.opacity = '1';
+            }, 4000);
+
+            // Paso 6: Hacer aparecer el recuadro 01 en 500 ms
+            setTimeout(() => {
+                document.querySelector('.card-1').style.opacity = '1';
+            }, 4500);
+
+            // Paso 7: Hacer aparecer el recuadro 02 en 500 ms
+            setTimeout(() => {
+                document.querySelector('.card-2').style.opacity = '1';
+            }, 5000);
+
+            // Paso 8: Hacer aparecer el recuadro 03 en 500 ms
+            setTimeout(() => {
+                document.querySelector('.card-3').style.opacity = '1';
+            }, 5500);
+
+            // Paso 9: Hacer aparecer el recuadro 04 en 500 ms
+            setTimeout(() => {
+                document.querySelector('.card-4').style.opacity = '1';
+            }, 6000);
+
+            // Paso 10: Hacer aparecer el recuadro 05 en 500 ms
+            setTimeout(() => {
+                document.querySelector('.card-5').style.opacity = '1';
+            }, 6500);
+
+            // Paso 11: Hacer aparecer el footer sin texto en 500 ms
+            setTimeout(() => {
+                document.querySelector('footer').style.opacity = '1';
+            }, 7000);
+
+            // Paso 12: Hacer aparecer el texto del footer con efecto de máquina de escribir sin cursor parpadeante
+            setTimeout(() => {
+                const footerPs = document.querySelectorAll('footer p');
+                let pIndex = 0;
+
+                function typeFooterP() {
+                    if (pIndex >= footerPs.length) return;
+                    let p = footerPs[pIndex];
+                    let text = p.dataset.text;
+                    let i = 0;
+
+                    function typeChar() {
+                        if (i <= text.length) {
+                            p.innerHTML = text.substring(0, i);
+                            i++;
+                            setTimeout(typeChar, 18);
+                        } else {
+                            pIndex++;
+                            setTimeout(typeFooterP, 120);
+                        }
+                    }
+                    typeChar();
+                }
+                typeFooterP();
+            }, 7500);
         });
 
-        // 2. Efecto de salida para TODOS los enlaces
+        // Efecto de salida: desvanecimiento a negro en 500 milisegundos[cite: 7]
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -368,15 +471,17 @@
                 
                 setTimeout(() => {
                     window.location.href = targetUrl;
-                }, 600); 
+                }, 500); 
             });
         });
 
-        // 3. Limpieza de caché al retroceder (bfcache)
+        // Limpieza de caché al retroceder (bfcache)
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) {
                 document.body.classList.remove('blurred-page');
-                document.getElementById('intro-overlay').classList.add('fade-out');
+                const overlay = document.getElementById('intro-overlay');
+                overlay.style.backgroundColor = '#000000';
+                overlay.style.opacity = '1';
             }
         });
     </script>
