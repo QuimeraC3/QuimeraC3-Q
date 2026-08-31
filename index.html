@@ -79,6 +79,10 @@
             transition: opacity 500ms ease;
         }
 
+        .brand-logo {
+            transition: opacity 500ms ease;
+        }
+
         /* NAVEGACIÓN SUPERIOR */
         .top-bar {
             background-color: rgba(11, 19, 41, 0.4);
@@ -105,7 +109,7 @@
             font-weight: 700;
             text-decoration: none;
             letter-spacing: -0.01em;
-            transition: color 0.2s ease;
+            transition: color 0.2s ease, opacity 500ms ease;
         }
 
         .brand-logo:hover {
@@ -278,6 +282,7 @@
 
         footer p {
             color: #ffffff;
+            transition: opacity 500ms ease;
         }
 
         @media (max-width: 900px) {
@@ -471,7 +476,7 @@
             }, 9200);
         });
 
-        // 15. Salida con desvanecimiento a blanco en 500 milisegundos
+        // 15. Salida secuencial personalizada al hacer clic en los elementos
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -484,10 +489,76 @@
                 const targetUrl = this.href;
                 
                 document.body.classList.add('blurred-page');
-                
+
+                let t = 0;
+
+                // 1. Desaparece el texto del footer
+                setTimeout(() => {
+                    document.querySelectorAll('footer p').forEach(p => {
+                        p.style.opacity = '0';
+                    });
+                }, t);
+                t += 300;
+
+                // 2. Desaparece el footer
+                setTimeout(() => {
+                    document.querySelector('footer').style.opacity = '0';
+                }, t);
+                t += 300;
+
+                // 3. Desaparecen los cinco elementos en orden opuesto (05, 04, 03, 02, 01) en un total de 2000 milisegundos
+                const cards = ['.card-5', '.card-4', '.card-3', '.card-2', '.card-1'];
+                const cardInterval = 2000 / cards.length; // 400ms por cada tarjeta
+                cards.forEach((cardSelector, index) => {
+                    setTimeout(() => {
+                        document.querySelector(cardSelector).style.opacity = '0';
+                    }, t + (index * cardInterval));
+                });
+                t += 2000;
+
+                // 4. Inmediatamente después, desaparecen los siguientes textos en orden:
+                // 01 "Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria."
+                setTimeout(() => {
+                    document.querySelector('header p').style.opacity = '0';
+                }, t);
+                t += 300;
+
+                // 02 QUIMERA
+                setTimeout(() => {
+                    document.querySelector('header h1').style.opacity = '0';
+                }, t);
+                t += 300;
+
+                // 03 ECOSISTEMA
+                setTimeout(() => {
+                    document.querySelector('.vol-badge').style.opacity = '0';
+                }, t);
+                t += 300;
+
+                // 04 QUIMERA - Inicio General
+                setTimeout(() => {
+                    document.querySelector('.brand-logo').style.opacity = '0';
+                }, t);
+                t += 400;
+
+                // 5. Por último desaparecerá la imagen de fondo
+                setTimeout(() => {
+                    document.getElementById('bg-layer').style.opacity = '0';
+                }, t);
+                t += 500;
+
+                // 6. Desvanecimiento en blanco en un tiempo de 500 milisegundos antes de pasar a la siguiente subpágina
+                setTimeout(() => {
+                    const overlay = document.getElementById('intro-overlay');
+                    overlay.style.backgroundColor = '#ffffff';
+                    overlay.style.opacity = '1';
+                }, t);
+                t += 500;
+
+                // Redirección final
                 setTimeout(() => {
                     window.location.href = targetUrl;
-                }, 500); 
+                }, t);
             });
         });
 
