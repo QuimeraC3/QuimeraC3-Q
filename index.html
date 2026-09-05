@@ -137,7 +137,7 @@
         /* ENCABEZADO INTEGRADO */
         header {
             text-align: center;
-            padding: 3rem 1rem 1rem 1rem;
+            padding: 2.5rem 1rem 0.5rem 1rem;
             color: #ffffff;
         }
 
@@ -145,26 +145,28 @@
             display: inline-block;
             background-color: var(--primary);
             color: #ffffff;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            padding: 0.35rem 1rem;
+            padding: 0.3rem 0.9rem;
             border-radius: 9999px;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            transform: translateY(100%);
+            /* ECOSISTEMA desplazado hacia arriba 100% de su propia altura */
+            transform: translateY(-100%);
         }
 
         header h1 {
             font-family: Georgia, "Times New Roman", serif;
-            font-size: 3.6rem;
+            font-size: 3.2rem;
             font-weight: 700;
             letter-spacing: -0.02em;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
             text-transform: uppercase;
-            transform: translateY(200%);
+            /* QUIMERA desplazado hacia arriba 150% del tamaño de su letra (3.2rem * 1.5 = 4.8rem) */
+            transform: translateY(-4.8rem);
         }
 
         header h1 a {
@@ -196,22 +198,22 @@
         header h1 a .char-q { transition-delay: 0.3s; }
 
         header p {
-            font-size: 1.375rem;
+            font-size: 1.2rem;
             color: #ffffff;
             font-weight: 500;
-            max-width: 800px;
+            max-width: 750px;
             margin: 0 auto;
             text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-            /* Descendido 3 veces más (21.6rem) */
-            transform: translateY(21.6rem);
+            /* Subtítulo posicionado de manera idónea por encima del recuadro 03 relocalizado */
+            transform: translateY(-2.5rem);
         }
 
         /* DISTRIBUCIÓN DE 5 ELEMENTOS */
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             width: 100%;
             margin: 0 auto;
-            padding: 2.5rem 1.5rem;
+            padding: 3.5rem 1.5rem 2rem 1.5rem;
             flex: 1;
         }
 
@@ -219,7 +221,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             grid-template-rows: auto auto auto;
-            gap: 2rem;
+            gap: 1.5rem;
             align-items: center;
         }
 
@@ -228,7 +230,7 @@
             background-color: transparent;
             border: 1px solid #ffffff;
             border-radius: 12px;
-            padding: 1.75rem;
+            padding: 1.5rem;
             box-shadow: var(--shadow);
             transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, opacity 500ms ease;
             display: flex;
@@ -244,7 +246,7 @@
 
         .info-card h2 {
             font-family: Georgia, "Times New Roman", serif;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             color: #ffffff;
             transition: color 0.3s ease;
         }
@@ -255,7 +257,7 @@
 
         .info-card p {
             color: #ffffff;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 500;
             transition: color 0.3s ease;
         }
@@ -264,52 +266,56 @@
             color: #000000;
         }
 
-        /* MODIFICACIONES DE POSICIÓN DE LOS RECUADROS */
+        /* MODIFICACIONES DE POSICIÓN DE LOS RECUADROS SEGÚN INSTRUCCIÓN EXACTA */
+        
+        /* 01 y 02: Desplazados 25% a la derecha y 50% hacia arriba de sus dimensiones */
         .card-1 { 
             grid-column: 1; 
             grid-row: 1; 
-            transform: translate(-75%, -175%);
+            transform: translate(25%, -50%);
         }
-        .card-1:hover { transform: translate(-75%, -175%) translateY(-4px); }
+        .card-1:hover { transform: translate(25%, -50%) translateY(-4px); }
 
         .card-2 { 
             grid-column: 1; 
             grid-row: 2; 
-            transform: translate(-75%, 50%);
+            transform: translate(25%, -50%);
         }
-        .card-2:hover { transform: translate(-75%, 50%) translateY(-4px); }
+        .card-2:hover { transform: translate(25%, -50%) translateY(-4px); }
 
+        /* 03 (VISIÓN): Desplazado hacia arriba el 125% de su altura */
         .card-3 { 
             grid-column: 2; 
             grid-row: 3; 
             justify-self: center; 
             width: 100%; 
-            transform: translateY(25%);
+            transform: translateY(-125%);
         }
-        .card-3:hover { transform: translateY(25%) translateY(-4px); }
+        .card-3:hover { transform: translateY(-125%) translateY(-4px); }
 
+        /* 04 y 05: Desplazados 25% a la izquierda y 50% hacia arriba de sus dimensiones */
         .card-4 { 
             grid-column: 3; 
             grid-row: 2; 
-            transform: translate(75%, 50%);
+            transform: translate(-25%, -50%);
         }
-        .card-4:hover { transform: translate(75%, 50%) translateY(-4px); }
+        .card-4:hover { transform: translate(-25%, -50%) translateY(-4px); }
 
         .card-5 { 
             grid-column: 3; 
             grid-row: 1; 
-            transform: translate(75%, -150%);
+            transform: translate(-25%, -50%);
         }
-        .card-5:hover { transform: translate(75%, -150%) translateY(-4px); }
+        .card-5:hover { transform: translate(-25%, -50%) translateY(-4px); }
 
         /* PIE DE PÁGINA */
         footer {
             text-align: center;
-            padding: 2rem 2rem;
+            padding: 1.5rem 2rem;
             background-color: rgba(15, 23, 42, 0.4);
             backdrop-filter: blur(8px);
             color: #ffffff;
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             margin-top: auto;
             transition: opacity 500ms ease;
