@@ -134,7 +134,7 @@
             color: #38bdf8;
         }
 
-        /* ENCABEZADO INTEGRADO Y MODIFICACIONES SOLICITADAS */
+        /* ENCABEZADO INTEGRADO */
         header {
             text-align: center;
             padding: 3rem 1rem 1rem 1rem;
@@ -145,7 +145,7 @@
             display: inline-block;
             background-color: var(--primary);
             color: #ffffff;
-            font-size: 1.2rem; /* 50% más grande que 0.8rem */
+            font-size: 1.2rem;
             font-weight: 700;
             letter-spacing: 0.1em;
             text-transform: uppercase;
@@ -153,18 +153,18 @@
             border-radius: 9999px;
             margin-bottom: 1rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            transform: translateY(100%); /* 100% de su propia altura desplazado hacia abajo */
+            transform: translateY(100%);
         }
 
         header h1 {
             font-family: Georgia, "Times New Roman", serif;
-            font-size: 3.6rem; /* 50% más grande que 2.4rem */
+            font-size: 3.6rem;
             font-weight: 700;
             letter-spacing: -0.02em;
             margin-bottom: 0.5rem;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
             text-transform: uppercase;
-            transform: translateY(200%); /* 200% de su propia altura desplazado hacia abajo */
+            transform: translateY(200%);
         }
 
         header h1 a {
@@ -196,13 +196,14 @@
         header h1 a .char-q { transition-delay: 0.3s; }
 
         header p {
-            font-size: 1.375rem; /* 25% más grande que 1.1rem */
+            font-size: 1.375rem;
             color: #ffffff;
             font-weight: 500;
             max-width: 800px;
             margin: 0 auto;
             text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-            transform: translateY(280%); /* Posicionado justo por encima del recuadro 03 considerando el 25% de su altura */
+            /* Descendido 600% de su propio tamaño de letra (6em) */
+            transform: translateY(6em);
         }
 
         /* DISTRIBUCIÓN DE 5 ELEMENTOS */
@@ -263,44 +264,43 @@
             color: #000000;
         }
 
-        /* MODIFICACIONES DE POSICIÓN DE LOS RECUADROS */
+        /* MODIFICACIONES DE POSICIÓN DE LOS RECUADROS (Ascendidos 50% y 25% respectivamente) */
         .card-1 { 
             grid-column: 1; 
             grid-row: 1; 
-            transform: translate(-75%, -100%);
+            transform: translate(-75%, -150%);
         }
-        .card-1:hover { transform: translate(-75%, -100%) translateY(-4px); }
+        .card-1:hover { transform: translate(-75%, -150%) translateY(-4px); }
 
         .card-2 { 
             grid-column: 1; 
             grid-row: 2; 
-            transform: translate(-75%, 100%);
+            transform: translate(-75%, 50%);
         }
-        .card-2:hover { transform: translate(-75%, 100%) translateY(-4px); }
+        .card-2:hover { transform: translate(-75%, 50%) translateY(-4px); }
 
         .card-3 { 
             grid-column: 2; 
             grid-row: 3; 
             justify-self: center; 
             width: 100%; 
-            transform: translateY(50%);
+            transform: translateY(25%);
         }
-        .card-3:hover { transform: translateY(50%) translateY(-4px); }
+        .card-3:hover { transform: translateY(25%) translateY(-4px); }
 
-        /* Intercambio de posiciones entre Card 4 y Card 5 */
         .card-4 { 
             grid-column: 3; 
             grid-row: 2; 
-            transform: translate(75%, 100%);
+            transform: translate(75%, 50%);
         }
-        .card-4:hover { transform: translate(75%, 100%) translateY(-4px); }
+        .card-4:hover { transform: translate(75%, 50%) translateY(-4px); }
 
         .card-5 { 
             grid-column: 3; 
             grid-row: 1; 
-            transform: translate(75%, -100%);
+            transform: translate(75%, -150%);
         }
-        .card-5:hover { transform: translate(75%, -100%) translateY(-4px); }
+        .card-5:hover { transform: translate(75%, -150%) translateY(-4px); }
 
         /* PIE DE PÁGINA */
         footer {
@@ -387,13 +387,11 @@
                 <p>Hacia esto vamos.</p>
             </a>
 
-            <!-- Intercambio aplicado: Card 4 ahora ocupa la posición inferior derecha -->
             <a href="seccion-04.html" class="info-card card-4">
                 <h2>04. PRINCIPIOS.</h2>
                 <p>Así creamos.</p>
             </a>
 
-            <!-- Intercambio aplicado: Card 5 ahora ocupa la posición superior derecha -->
             <a href="seccion-05.html" class="info-card card-5">
                 <h2>05. ÁREAS DE DESARROLLO.</h2>
                 <p>Aquí es donde creamos.</p>
