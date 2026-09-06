@@ -164,7 +164,8 @@
             margin-bottom: 0.4rem;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
             text-transform: uppercase;
-            transform: translateY(20px);
+            /* Relocalizado hacia abajo un 200% de su tamaño (3.2rem * 2 = 6.4rem) */
+            transform: translateY(6.4rem);
         }
 
         header h1 a {
@@ -306,7 +307,7 @@
         footer {
             text-align: center;
             padding: 1.5rem 2rem;
-            background-color: rgba(15, 23, 42, 0.4);
+            background-color: rgba(11, 19, 41, 0.4);
             backdrop-filter: blur(8px);
             color: #ffffff;
             font-size: 0.85rem;
@@ -348,10 +349,10 @@
 </head>
 <body>
 
-    <!-- Capa de fondo[cite: 9] -->
+    <!-- Capa de fondo[cite: 6] -->
     <div id="bg-layer"></div>
 
-    <!-- Capa para el efecto de difuminado inicial/final[cite: 9] -->
+    <!-- Capa para el efecto de difuminado inicial/final[cite: 6] -->
     <div id="intro-overlay"></div>
 
     <nav class="top-bar">
@@ -409,23 +410,23 @@
         window.addEventListener('DOMContentLoaded', () => {
             const overlay = document.getElementById('intro-overlay');
 
-            // Entrada: blanco (500ms) y cambio a negro (1000ms) -> total 1500ms en negro absoluto[cite: 9]
+            // Entrada: blanco (500ms) y cambio a negro (1000ms) -> total 1500ms en negro absoluto[cite: 6]
             setTimeout(() => {
                 overlay.style.backgroundColor = '#000000';
             }, 500);
 
-            // 1. Aparece la imagen de fondo de Quimera y se desvanece el overlay negro[cite: 9]
+            // 1. Aparece la imagen de fondo de Quimera y se desvanece el overlay negro[cite: 6]
             setTimeout(() => {
                 document.getElementById('bg-layer').style.opacity = '1';
                 overlay.style.opacity = '0';
             }, 1500);
 
-            // 2. Aparece el header superior sin el texto[cite: 9]
+            // 2. Aparece el header superior sin el texto[cite: 6]
             setTimeout(() => {
                 document.querySelector('.top-bar').style.opacity = '1';
             }, 2500);
 
-            // 3. Aparece el texto del header "QUIMERA - Inicio General" con efecto máquina de escribir[cite: 9]
+            // 3. Aparece el texto del header "QUIMERA - Inicio General" con efecto máquina de escribir[cite: 6]
             setTimeout(() => {
                 const brandLogo = document.querySelector('.brand-logo');
                 const text = brandLogo.dataset.text;
@@ -441,57 +442,57 @@
                 typeBrandLogo();
             }, 3000);
 
-            // 4. Hacer aparecer en 500 ms el header principal[cite: 9]
+            // 4. Hacer aparecer en 500 ms el header principal[cite: 6]
             setTimeout(() => {
                 document.querySelector('header').style.opacity = '1';
             }, 4200);
 
-            // 5. Hacer aparecer en 500 ms el título "ECOSISTEMA" (.vol-badge)[cite: 9]
+            // 5. Hacer aparecer en 500 ms el título "ECOSISTEMA" (.vol-badge)[cite: 6]
             setTimeout(() => {
                 document.querySelector('.vol-badge').style.opacity = '1';
             }, 4700);
 
-            // 6. Hacer aparecer en 500 ms el título "QUIMERA" (header h1)[cite: 9]
+            // 6. Hacer aparecer en 500 ms el título "QUIMERA" (header h1)[cite: 6]
             setTimeout(() => {
                 document.querySelector('header h1').style.opacity = '1';
             }, 5200);
 
-            // 7. Hacer aparecer en 500 ms el subtítulo[cite: 9]
+            // 7. Hacer aparecer en 500 ms el subtítulo[cite: 6]
             setTimeout(() => {
                 document.querySelector('header p').style.opacity = '1';
             }, 5700);
 
-            // 8. Hacer aparecer en 500 ms el recuadro 01[cite: 9]
+            // 8. Hacer aparecer en 500 ms el recuadro 01[cite: 6]
             setTimeout(() => {
                 document.querySelector('.card-1').style.opacity = '1';
             }, 6200);
 
-            // 9. Hacer aparecer en 500 ms el recuadro 02[cite: 9]
+            // 9. Hacer aparecer en 500 ms el recuadro 02[cite: 6]
             setTimeout(() => {
                 document.querySelector('.card-2').style.opacity = '1';
             }, 6700);
 
-            // 10. Hacer aparecer en 500 ms el recuadro 03[cite: 9]
+            // 10. Hacer aparecer en 500 ms el recuadro 03[cite: 6]
             setTimeout(() => {
                 document.querySelector('.card-3').style.opacity = '1';
             }, 7200);
 
-            // 11. Hacer aparecer en 500 ms el recuadro 04[cite: 9]
+            // 11. Hacer aparecer en 500 ms el recuadro 04[cite: 6]
             setTimeout(() => {
                 document.querySelector('.card-4').style.opacity = '1';
             }, 7700);
 
-            // 12. Hacer aparecer en 500 ms el recuadro 05[cite: 9]
+            // 12. Hacer aparecer en 500 ms el recuadro 05[cite: 6]
             setTimeout(() => {
                 document.querySelector('.card-5').style.opacity = '1';
             }, 8200);
 
-            // 13. Hacer aparecer en 500 ms el footer sin el texto[cite: 9]
+            // 13. Hacer aparecer en 500 ms el footer sin el texto[cite: 6]
             setTimeout(() => {
                 document.querySelector('footer').style.opacity = '1';
             }, 8700);
 
-            // 14. Hacer aparecer el texto del footer con efecto máquina de escribir, sin cursor[cite: 9]
+            // 14. Hacer aparecer el texto del footer con efecto máquina de escribir, sin cursor[cite: 6]
             setTimeout(() => {
                 const footerPs = document.querySelectorAll('footer p');
                 let pIndex = 0;
@@ -518,7 +519,7 @@
             }, 9200);
         });
 
-        // 15. Salida secuencial personalizada al hacer clic en los elementos[cite: 9]
+        // 15. Salida secuencial personalizada al hacer clic en los elementos[cite: 6]
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -534,7 +535,7 @@
 
                 let t = 0;
 
-                // 1. Desaparece el texto del footer[cite: 9]
+                // 1. Desaparece el texto del footer[cite: 6]
                 setTimeout(() => {
                     document.querySelectorAll('footer p').forEach(p => {
                         p.style.opacity = '0';
@@ -542,13 +543,13 @@
                 }, t);
                 t += 300;
 
-                // 2. Desaparece el footer[cite: 9]
+                // 2. Desaparece el footer[cite: 6]
                 setTimeout(() => {
                     document.querySelector('footer').style.opacity = '0';
                 }, t);
                 t += 300;
 
-                // 3. Desaparecen los cinco elementos en orden opuesto (05, 04, 03, 02, 01)[cite: 9]
+                // 3. Desaparecen los cinco elementos en orden opuesto (05, 04, 03, 02, 01)[cite: 6]
                 const cards = ['.card-5', '.card-4', '.card-3', '.card-2', '.card-1'];
                 const cardInterval = 1000 / cards.length; 
                 cards.forEach((cardSelector, index) => {
@@ -558,7 +559,7 @@
                 });
                 t += 1000;
 
-                // 4. Inmediatamente después, desaparecen los siguientes textos en orden:[cite: 9]
+                // 4. Inmediatamente después, desaparecen los siguientes textos en orden:[cite: 6]
                 setTimeout(() => {
                     document.querySelector('header p').style.opacity = '0';
                 }, t);
@@ -579,13 +580,13 @@
                 }, t);
                 t += 400;
 
-                // 5. Por último desaparecerá la imagen de fondo[cite: 9]
+                // 5. Por último desaparecerá la imagen de fondo[cite: 6]
                 setTimeout(() => {
                     document.getElementById('bg-layer').style.opacity = '0';
                 }, t);
                 t += 500;
 
-                // 6. Desvanecimiento en blanco antes de pasar a la siguiente subpágina[cite: 9]
+                // 6. Desvanecimiento en blanco antes de pasar a la siguiente subpágina[cite: 6]
                 setTimeout(() => {
                     const overlay = document.getElementById('intro-overlay');
                     overlay.style.backgroundColor = '#ffffff';
@@ -593,14 +594,14 @@
                 }, t);
                 t += 500;
 
-                // Redirección final[cite: 9]
+                // Redirección final[cite: 6]
                 setTimeout(() => {
                     window.location.href = targetUrl;
                 }, t);
             });
         });
 
-        // Limpieza de caché al retroceder (bfcache)[cite: 9]
+        // Limpieza de caché al retroceder (bfcache)[cite: 6]
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) {
                 document.body.classList.remove('blurred-page');
