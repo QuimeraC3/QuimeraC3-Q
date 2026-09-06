@@ -23,8 +23,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             color: var(--text-main);
             line-height: 1.6;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             background-color: #000000;
@@ -345,6 +344,14 @@
             .top-bar-container {
                 flex-direction: column;
                 gap: 0.5rem;
+            }
+        }
+
+        /* Bloquear el desplazamiento (scroll) y fijar la altura SOLO en computadoras */
+        @media (min-width: 901px) {
+            body {
+                height: 100vh;
+                overflow: hidden;
             }
         }
     </style>
