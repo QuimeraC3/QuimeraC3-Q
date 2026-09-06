@@ -603,41 +603,12 @@
             });
         });
 
-        // Limpieza de caché y restauración al usar las flechas del navegador (bfcache)
+        // Forzar reinicio completo de la animación al usar las flechas del navegador (bfcache)
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) {
-                document.body.classList.remove('blurred-page');
-                const overlay = document.getElementById('intro-overlay');
-                overlay.style.backgroundColor = '#000000';
-                overlay.style.opacity = '0'; // Quitamos el velo negro para que se vea la página
-
-                // Restaurar la opacidad de todos los elementos principales a 1 de golpe
-                document.getElementById('bg-layer').style.opacity = '1';
-                document.querySelector('.top-bar').style.opacity = '1';
-                document.querySelector('header').style.opacity = '1';
-                document.querySelector('.vol-badge').style.opacity = '1';
-                document.querySelector('header h1').style.opacity = '1';
-                document.querySelector('header p').style.opacity = '1';
-
-                // Rellenar y mostrar de inmediato el texto del logo superior
-                const brandLogo = document.querySelector('.brand-logo');
-                brandLogo.style.opacity = '1';
-                brandLogo.innerHTML = brandLogo.dataset.text;
-
-                // Mostrar todas las tarjetas de golpe
-                const cards = ['.card-1', '.card-2', '.card-3', '.card-4', '.card-5'];
-                cards.forEach(selector => {
-                    const el = document.querySelector(selector);
-                    if (el) el.style.opacity = '1';
-                });
-
-                // Mostrar y rellenar de inmediato los textos del footer
-                const footer = document.querySelector('footer');
-                footer.style.opacity = '1';
-                document.querySelectorAll('footer p').forEach(p => {
-                    p.style.opacity = '1';
-                    p.innerHTML = p.dataset.text;
-                });
+                window.location.reload();
+            }
+        });
             }
         });
     </script>
