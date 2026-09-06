@@ -622,9 +622,9 @@
                 document.querySelector('header h1').style.opacity = '0';
                 document.querySelector('header p').style.opacity = '0';
                 
-                // Vaciar los textos con efecto de escritura para que vuelvan a escribirse
+                // Limpiar el texto del logo superior y dejar que su contenedor lo gestione
                 const brandLogo = document.querySelector('.brand-logo');
-                brandLogo.style.opacity = '0';
+                brandLogo.style.opacity = ''; 
                 brandLogo.innerHTML = '';
 
                 const cards = ['.card-1', '.card-2', '.card-3', '.card-4', '.card-5'];
@@ -636,7 +636,7 @@
                 const footer = document.querySelector('footer');
                 footer.style.opacity = '0';
                 document.querySelectorAll('footer p').forEach(p => {
-                    p.innerHTML = ''; // Limpiamos el texto para que vuelva la máquina de escribir
+                    p.innerHTML = '';
                 });
 
                 // 4. Volver a disparar la secuencia exacta de tiempos de entrada
