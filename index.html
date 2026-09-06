@@ -120,6 +120,7 @@
             display: flex;
             gap: 1.25rem;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links a {
@@ -132,6 +133,19 @@
 
         .nav-links a:hover {
             color: #38bdf8;
+        }
+
+        /* Estilo especial para el botón de música */
+        #audio-toggle {
+            background: rgba(15, 118, 110, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        #audio-toggle:hover {
+            background: var(--primary);
+            color: #ffffff;
         }
 
         /* ENCABEZADO INTEGRADO */
@@ -164,7 +178,6 @@
             margin-bottom: 0.4rem;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
             text-transform: uppercase;
-            /* Relocalizado hacia abajo un 200% de su tamaño (3.2rem * 2.1875 = 7.0rem) */
             transform: translateY(7.0rem);
         }
 
@@ -203,7 +216,6 @@
             max-width: 750px;
             margin: 0 auto;
             text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-            /* Subtítulo modificado para descender 15.0rem */
             transform: translateY(15.0rem);
         }
 
@@ -265,7 +277,7 @@
             color: #000000;
         }
 
-        /* MODIFICACIONES DE POSICIÓN DE LOS RECUADROS (Recalibradas para 100% de zoom) */
+        /* MODIFICACIONES DE POSICIÓN DE LOS RECUADROS */
         .card-1 { 
             grid-column: 1; 
             grid-row: 1; 
@@ -347,7 +359,6 @@
             }
         }
 
-        /* Bloquear el desplazamiento SOLO en computadoras reales con ratón/trackpad */
         @media (min-width: 901px) and (hover: hover) and (pointer: fine) {
             body {
                 height: 100vh;
@@ -358,17 +369,21 @@
 </head>
 <body>
 
-    <!-- Capa de fondo[cite: 6] -->
+    <!-- Elemento de Audio (Cambia "tu-musica.mp3" por la ruta de tu archivo de audio) -->
+    <audio id="bg-music" src="Tango_Futuro_(Lado_B).mp3" loop preload="auto"></audio>
+
+    <!-- Capa de fondo -->
     <div id="bg-layer"></div>
 
-    <!-- Capa para el efecto de difuminado inicial/final[cite: 6] -->
+    <!-- Capa para el efecto de difuminado inicial/final -->
     <div id="intro-overlay"></div>
 
     <nav class="top-bar">
         <div class="top-bar-container">
             <a href="https://quimerac3.github.io/" class="brand-logo" data-text="QUIMERA - Inicio General"></a>
             <ul class="nav-links">
-                
+                <!-- Botón para controlar la música -->
+                <li><a href="#" id="audio-toggle">🎵 Música: OFF</a></li>
             </ul>
         </div>
     </nav>
@@ -415,26 +430,47 @@
     </footer>
 
     <script>
+        // Control de Reproducción de Música
+        const music = document.getElementById('bg-music');
+        const audioToggle = document.getElementById('audio-toggle');
+        let isMusicPlaying = false;
+
+        audioToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (isMusicPlaying) {
+                music.pause();
+                audioToggle.textContent = '🎵 Música: OFF';
+                isMusicPlaying = false;
+            } else {
+                music.play().then(() => {
+                    audioToggle.textContent = '🎶 Música: ON';
+                    isMusicPlaying = true;
+                }).catch(error => {
+                    console.log("Error al reproducir audio:", error);
+                });
+            }
+        });
+
         window.addEventListener('DOMContentLoaded', () => {
             const overlay = document.getElementById('intro-overlay');
 
-            // Entrada: blanco (500ms) y cambio a negro (1000ms) -> total 1500ms en negro absoluto[cite: 6]
+            // Entrada: blanco (500ms) y cambio a negro (1000ms) -> total 1500ms en negro absoluto
             setTimeout(() => {
                 overlay.style.backgroundColor = '#000000';
             }, 500);
 
-            // 1. Aparece la imagen de fondo de Quimera y se desvanece el overlay negro[cite: 6]
+            // 1. Aparece la imagen de fondo de Quimera y se desvanece el overlay negro
             setTimeout(() => {
                 document.getElementById('bg-layer').style.opacity = '1';
                 overlay.style.opacity = '0';
             }, 1500);
 
-            // 2. Aparece el header superior sin el texto[cite: 6]
+            // 2. Aparece el header superior sin el texto
             setTimeout(() => {
                 document.querySelector('.top-bar').style.opacity = '1';
             }, 2500);
 
-            // 3. Aparece el texto del header "QUIMERA - Inicio General" con efecto máquina de escribir[cite: 6]
+            // 3. Aparece el texto del header "QUIMERA - Inicio General" con efecto máquina de escribir
             setTimeout(() => {
                 const brandLogo = document.querySelector('.brand-logo');
                 const text = brandLogo.dataset.text;
@@ -450,57 +486,57 @@
                 typeBrandLogo();
             }, 3000);
 
-            // 4. Hacer aparecer en 500 ms el header principal[cite: 6]
+            // 4. Hacer aparecer en 500 ms el header principal
             setTimeout(() => {
                 document.querySelector('header').style.opacity = '1';
             }, 4200);
 
-            // 5. Hacer aparecer en 500 ms el título "ECOSISTEMA" (.vol-badge)[cite: 6]
+            // 5. Hacer aparecer en 500 ms el título "ECOSISTEMA" (.vol-badge)
             setTimeout(() => {
                 document.querySelector('.vol-badge').style.opacity = '1';
             }, 4700);
 
-            // 6. Hacer aparecer en 500 ms el título "QUIMERA" (header h1)[cite: 6]
+            // 6. Hacer aparecer en 500 ms el título "QUIMERA" (header h1)
             setTimeout(() => {
                 document.querySelector('header h1').style.opacity = '1';
             }, 5200);
 
-            // 7. Hacer aparecer en 500 ms el subtítulo[cite: 6]
+            // 7. Hacer aparecer en 500 ms el subtítulo
             setTimeout(() => {
                 document.querySelector('header p').style.opacity = '1';
             }, 5700);
 
-            // 8. Hacer aparecer en 500 ms el recuadro 01[cite: 6]
+            // 8. Hacer aparecer en 500 ms el recuadro 01
             setTimeout(() => {
                 document.querySelector('.card-1').style.opacity = '1';
             }, 6200);
 
-            // 9. Hacer aparecer en 500 ms el recuadro 02[cite: 6]
+            // 9. Hacer aparecer en 500 ms el recuadro 02
             setTimeout(() => {
                 document.querySelector('.card-2').style.opacity = '1';
             }, 6700);
 
-            // 10. Hacer aparecer en 500 ms el recuadro 03[cite: 6]
+            // 10. Hacer aparecer en 500 ms el recuadro 03
             setTimeout(() => {
                 document.querySelector('.card-3').style.opacity = '1';
             }, 7200);
 
-            // 11. Hacer aparecer en 500 ms el recuadro 04[cite: 6]
+            // 11. Hacer aparecer en 500 ms el recuadro 04
             setTimeout(() => {
                 document.querySelector('.card-4').style.opacity = '1';
             }, 7700);
 
-            // 12. Hacer aparecer en 500 ms el recuadro 05[cite: 6]
+            // 12. Hacer aparecer en 500 ms el recuadro 05
             setTimeout(() => {
                 document.querySelector('.card-5').style.opacity = '1';
             }, 8200);
 
-            // 13. Hacer aparecer en 500 ms el footer sin el texto[cite: 6]
+            // 13. Hacer aparecer en 500 ms el footer sin el texto
             setTimeout(() => {
                 document.querySelector('footer').style.opacity = '1';
             }, 8700);
 
-            // 14. Hacer aparecer el texto del footer con efecto máquina de escribir, sin cursor[cite: 6]
+            // 14. Hacer aparecer el texto del footer con efecto máquina de escribir, sin cursor
             setTimeout(() => {
                 const footerPs = document.querySelectorAll('footer p');
                 let pIndex = 0;
@@ -527,10 +563,13 @@
             }, 9200);
         });
 
-        // 15. Salida secuencial personalizada al hacer clic en los elementos[cite: 6]
+        // 15. Salida secuencial personalizada al hacer clic en los elementos
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
+                // Si es el botón de música, no hacemos la animación de salida de página
+                if (this.id === 'audio-toggle') return;
+
                 const href = this.getAttribute('href');
                 if (href.startsWith('#')) {
                     return; 
@@ -543,7 +582,7 @@
 
                 let t = 0;
 
-                // 1. Desaparece el texto del footer[cite: 6]
+                // 1. Desaparece el texto del footer
                 setTimeout(() => {
                     document.querySelectorAll('footer p').forEach(p => {
                         p.style.opacity = '0';
@@ -551,13 +590,13 @@
                 }, t);
                 t += 300;
 
-                // 2. Desaparece el footer[cite: 6]
+                // 2. Desaparece el footer
                 setTimeout(() => {
                     document.querySelector('footer').style.opacity = '0';
                 }, t);
                 t += 300;
 
-                // 3. Desaparecen los cinco elementos en orden opuesto (05, 04, 03, 02, 01)[cite: 6]
+                // 3. Desaparecen los cinco elementos en orden opuesto (05, 04, 03, 02, 01)
                 const cards = ['.card-5', '.card-4', '.card-3', '.card-2', '.card-1'];
                 const cardInterval = 1000 / cards.length; 
                 cards.forEach((cardSelector, index) => {
@@ -567,7 +606,7 @@
                 });
                 t += 1000;
 
-                // 4. Inmediatamente después, desaparecen los siguientes textos en orden:[cite: 6]
+                // 4. Inmediatamente después, desaparecen los siguientes textos en orden:
                 setTimeout(() => {
                     document.querySelector('header p').style.opacity = '0';
                 }, t);
@@ -588,13 +627,13 @@
                 }, t);
                 t += 400;
 
-                // 5. Por último desaparecerá la imagen de fondo[cite: 6]
+                // 5. Por último desaparecerá la imagen de fondo
                 setTimeout(() => {
                     document.getElementById('bg-layer').style.opacity = '0';
                 }, t);
                 t += 500;
 
-                // 6. Desvanecimiento en blanco antes de pasar a la siguiente subpágina[cite: 6]
+                // 6. Desvanecimiento en blanco antes de pasar a la siguiente subpágina
                 setTimeout(() => {
                     const overlay = document.getElementById('intro-overlay');
                     overlay.style.backgroundColor = '#ffffff';
@@ -602,7 +641,7 @@
                 }, t);
                 t += 500;
 
-                // Redirección final[cite: 6]
+                // Redirección final
                 setTimeout(() => {
                     window.location.href = targetUrl;
                 }, t);
@@ -612,15 +651,12 @@
         // Reiniciar la animación desde cero al usar las flechas del navegador (bfcache)
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) {
-                // 1. Quitar la clase de salida por si se quedó grabada
                 document.body.classList.remove('blurred-page');
 
-                // 2. Restablecer el overlay al estado inicial (pantalla blanca de entrada)
                 const overlay = document.getElementById('intro-overlay');
                 overlay.style.backgroundColor = '#ffffff';
                 overlay.style.opacity = '1';
 
-                // 3. Ocultar todos los elementos nuevamente (opacidad 0)
                 document.getElementById('bg-layer').style.opacity = '0';
                 document.querySelector('.top-bar').style.opacity = '0';
                 document.querySelector('header').style.opacity = '0';
@@ -628,7 +664,6 @@
                 document.querySelector('header h1').style.opacity = '0';
                 document.querySelector('header p').style.opacity = '0';
                 
-                // Limpiar el texto del logo superior y dejar que su contenedor lo gestione
                 const brandLogo = document.querySelector('.brand-logo');
                 brandLogo.style.opacity = ''; 
                 brandLogo.innerHTML = '';
@@ -645,7 +680,6 @@
                     p.innerHTML = '';
                 });
 
-                // 4. Volver a disparar la secuencia exacta de tiempos de entrada
                 setTimeout(() => {
                     overlay.style.backgroundColor = '#000000';
                 }, 500);
