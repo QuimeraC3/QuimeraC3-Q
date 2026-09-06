@@ -603,41 +603,103 @@
             });
         });
 
-        // Limpieza de caché y restauración al usar las flechas del navegador (bfcache)
+        // Reiniciar la animación desde cero al usar las flechas del navegador (bfcache)
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) {
+                // 1. Quitar la clase de salida por si se quedó grabada
                 document.body.classList.remove('blurred-page');
+
+                // 2. Restablecer el overlay al estado inicial (pantalla blanca de entrada)
                 const overlay = document.getElementById('intro-overlay');
-                overlay.style.backgroundColor = '#000000';
-                overlay.style.opacity = '0'; // Quitamos el velo negro para que se vea la página
+                overlay.style.backgroundColor = '#ffffff';
+                overlay.style.opacity = '1';
 
-                // Restaurar la opacidad de todos los elementos principales a 1 de golpe
-                document.getElementById('bg-layer').style.opacity = '1';
-                document.querySelector('.top-bar').style.opacity = '1';
-                document.querySelector('header').style.opacity = '1';
-                document.querySelector('.vol-badge').style.opacity = '1';
-                document.querySelector('header h1').style.opacity = '1';
-                document.querySelector('header p').style.opacity = '1';
-
-                // Rellenar y mostrar de inmediato el texto del logo superior
+                // 3. Ocultar todos los elementos nuevamente (opacidad 0)
+                document.getElementById('bg-layer').style.opacity = '0';
+                document.querySelector('.top-bar').style.opacity = '0';
+                document.querySelector('header').style.opacity = '0';
+                document.querySelector('.vol-badge').style.opacity = '0';
+                document.querySelector('header h1').style.opacity = '0';
+                document.querySelector('header p').style.opacity = '0';
+                
+                // Vaciar los textos con efecto de escritura para que vuelvan a escribirse
                 const brandLogo = document.querySelector('.brand-logo');
-                brandLogo.style.opacity = '1';
-                brandLogo.innerHTML = brandLogo.dataset.text;
+                brandLogo.style.opacity = '0';
+                brandLogo.innerHTML = '';
 
-                // Mostrar todas las tarjetas de golpe
                 const cards = ['.card-1', '.card-2', '.card-3', '.card-4', '.card-5'];
                 cards.forEach(selector => {
                     const el = document.querySelector(selector);
-                    if (el) el.style.opacity = '1';
+                    if (el) el.style.opacity = '0';
                 });
 
-                // Mostrar y rellenar de inmediato los textos del footer
                 const footer = document.querySelector('footer');
-                footer.style.opacity = '1';
+                footer.style.opacity = '0';
                 document.querySelectorAll('footer p').forEach(p => {
-                    p.style.opacity = '1';
-                    p.innerHTML = p.dataset.text;
+                    p.style.opacity = '0';
+                    p.innerHTML = '';
                 });
+
+                // 4. Volver a disparar la secuencia exacta de tiempos de entrada
+                setTimeout(() => {
+                    overlay.style.backgroundColor = '#000000';
+                }, 500);
+
+                setTimeout(() => {
+                    document.getElementById('bg-layer').style.opacity = '1';
+                    overlay.style.opacity = '0';
+                }, 1500);
+
+                setTimeout(() => {
+                    document.querySelector('.top-bar').style.opacity = '1';
+                }, 2500);
+
+                setTimeout(() => {
+                    const text = brandLogo.dataset.text;
+                    let i = 0;
+                    function typeBrandLogo() {
+                        if (i <= text.length) {
+                            brandLogo.innerHTML = text.substring(0, i);
+                            i++;
+                            setTimeout(typeBrandLogo, 25);
+                        }
+                    }
+                    typeBrandLogo();
+                }, 3000);
+
+                setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 4200);
+                setTimeout(() => { document.querySelector('.vol-badge').style.opacity = '1'; }, 4700);
+                setTimeout(() => { document.querySelector('header h1').style.opacity = '1'; }, 5200);
+                setTimeout(() => { document.querySelector('header p').style.opacity = '1'; }, 5700);
+                setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 6200);
+                setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 6700);
+                setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 7200);
+                setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 7700);
+                setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 8200);
+                setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 8700);
+
+                setTimeout(() => {
+                    const footerPs = document.querySelectorAll('footer p');
+                    let pIndex = 0;
+                    function typeFooterP() {
+                        if (pIndex >= footerPs.length) return;
+                        let p = footerPs[pIndex];
+                        let text = p.dataset.text;
+                        let i = 0;
+                        function typeChar() {
+                            if (i <= text.length) {
+                                p.innerHTML = text.substring(0, i);
+                                i++;
+                                setTimeout(typeChar, 18);
+                            } else {
+                                pIndex++;
+                                setTimeout(typeFooterP, 100);
+                            }
+                        }
+                        typeChar();
+                    }
+                    typeFooterP();
+                }, 9200);
             }
         });
     </script>
