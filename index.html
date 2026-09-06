@@ -347,8 +347,8 @@
             }
         }
 
-        /* Bloquear el desplazamiento (scroll) y fijar la altura SOLO en computadoras */
-        @media (min-width: 901px) {
+        /* Bloquear el desplazamiento SOLO en computadoras reales con ratón/trackpad */
+        @media (min-width: 901px) and (hover: hover) and (pointer: fine) {
             body {
                 height: 100vh;
                 overflow: hidden;
