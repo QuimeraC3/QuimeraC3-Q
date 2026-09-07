@@ -596,7 +596,8 @@
                 function typeFooterP() {
                     if (pIndex >= footerPs.length) return;
                         let p = footerPs[pIndex];
-                        let text = p.dataset.text;
+                        // Autocorrección dinámica del año actual en el typewriter
+                        let text = p.dataset.text.replace('2026', new Date().getFullYear());
                         let i = 0;
                         function typeChar() {
                             if (i <= text.length) {
@@ -752,7 +753,8 @@
                     function typeFooterP() {
                         if (pIndex >= footerPs.length) return;
                         let p = footerPs[pIndex];
-                        let text = p.dataset.text;
+                        // Autocorrección dinámica del año actual también al restaurar por bfcache
+                        let text = p.dataset.text.replace('2026', new Date().getFullYear());
                         let i = 0;
                         function typeChar() {
                             if (i <= text.length) {
