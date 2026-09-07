@@ -142,6 +142,7 @@
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
             cursor: pointer;
+            transition: opacity 500ms ease;
         }
         #audio-toggle:hover, #fullscreen-toggle:hover {
             background: var(--primary);
@@ -646,6 +647,14 @@
                 t += 300;
                 setTimeout(() => { document.querySelector('.brand-logo').style.opacity = '0'; }, t);
                 t += 400;
+
+                // Transición de salida para "Música" y "Pantalla completa"
+                setTimeout(() => { 
+                    document.getElementById('audio-toggle').style.opacity = '0';
+                    document.getElementById('fullscreen-toggle').style.opacity = '0';
+                }, t);
+                t += 300;
+
                 setTimeout(() => { document.getElementById('bg-layer').style.opacity = '0'; }, t);
                 t += 500;
 
@@ -669,6 +678,8 @@
 
                 document.getElementById('bg-layer').style.opacity = '0';
                 document.querySelector('.top-bar').style.opacity = '0';
+                document.getElementById('audio-toggle').style.opacity = '';
+                document.getElementById('fullscreen-toggle').style.opacity = '';
                 document.querySelector('header').style.opacity = '0';
                 document.querySelector('.vol-badge').style.opacity = '0';
                 document.querySelector('header h1').style.opacity = '0';
