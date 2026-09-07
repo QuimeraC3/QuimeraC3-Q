@@ -370,7 +370,7 @@
 </head>
 <body>
 
-    <!-- Elemento de Audio (Cambia "tu-musica.mp3" por la ruta de tu archivo de audio) -->
+    <!-- Elemento de Audio -->
     <audio id="bg-music" src="Tango_Futuro_(Lado_B).mp3" loop preload="auto"></audio>
 
     <!-- Capa de fondo -->
@@ -392,7 +392,8 @@
     <header>
         <span class="vol-badge">&bull; Ecosistema &bull;</span>
         <h1><a href="https://quimerac3.github.io/" id="quimera-link"><span class="quimera-letter char-q">Q</span><span class="quimera-letter char-u">U</span><span class="quimera-letter char-i">I</span><span class="quimera-letter char-m">M</span><span class="quimera-letter char-e">E</span><span class="quimera-letter char-r">R</span><span class="quimera-letter char-a">A</span></a></h1>
-        <p>Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria.</p>
+        <!-- Subtítulo adaptado con data-text para la animación de máquina de escribir -->
+        <p data-text="Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria."></p>
     </header>
 
     <main class="container">
@@ -502,40 +503,52 @@
                 document.querySelector('header h1').style.opacity = '1';
             }, 5200);
 
-            // 7. Hacer aparecer en 500 ms el subtítulo
+            // 7. Hacer aparecer el subtítulo y activar su efecto máquina de escribir justo después del título
             setTimeout(() => {
-                document.querySelector('header p').style.opacity = '1';
+                const subP = document.querySelector('header p');
+                subP.style.opacity = '1';
+                const subText = subP.dataset.text;
+                let j = 0;
+
+                function typeSubText() {
+                    if (j <= subText.length) {
+                        subP.innerHTML = subText.substring(0, j);
+                        j++;
+                        setTimeout(typeSubText, 20);
+                    }
+                }
+                typeSubText();
             }, 5700);
 
             // 8. Hacer aparecer en 500 ms el recuadro 01
             setTimeout(() => {
                 document.querySelector('.card-1').style.opacity = '1';
-            }, 6200);
+            }, 6700);
 
             // 9. Hacer aparecer en 500 ms el recuadro 02
             setTimeout(() => {
                 document.querySelector('.card-2').style.opacity = '1';
-            }, 6700);
+            }, 7200);
 
             // 10. Hacer aparecer en 500 ms el recuadro 03
             setTimeout(() => {
                 document.querySelector('.card-3').style.opacity = '1';
-            }, 7200);
+            }, 7700);
 
             // 11. Hacer aparecer en 500 ms el recuadro 04
             setTimeout(() => {
                 document.querySelector('.card-4').style.opacity = '1';
-            }, 7700);
+            }, 8200);
 
             // 12. Hacer aparecer en 500 ms el recuadro 05
             setTimeout(() => {
                 document.querySelector('.card-5').style.opacity = '1';
-            }, 8200);
+            }, 8700);
 
             // 13. Hacer aparecer en 500 ms el footer sin el texto
             setTimeout(() => {
                 document.querySelector('footer').style.opacity = '1';
-            }, 8700);
+            }, 9200);
 
             // 14. Hacer aparecer el texto del footer con efecto máquina de escribir, sin cursor
             setTimeout(() => {
@@ -561,14 +574,13 @@
                     typeChar();
                 }
                 typeFooterP();
-            }, 9200);
+            }, 9700);
         });
 
         // 15. Salida secuencial personalizada al hacer clic en los elementos
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
-                // Si es el botón de música, no hacemos la animación de salida de página
                 if (this.id === 'audio-toggle') return;
 
                 const href = this.getAttribute('href');
@@ -583,7 +595,6 @@
 
                 let t = 0;
 
-                // 1. Desaparece el texto del footer
                 setTimeout(() => {
                     document.querySelectorAll('footer p').forEach(p => {
                         p.style.opacity = '0';
@@ -591,13 +602,11 @@
                 }, t);
                 t += 300;
 
-                // 2. Desaparece el footer
                 setTimeout(() => {
                     document.querySelector('footer').style.opacity = '0';
                 }, t);
                 t += 300;
 
-                // 3. Desaparecen los cinco elementos en orden opuesto (05, 04, 03, 02, 01)
                 const cards = ['.card-5', '.card-4', '.card-3', '.card-2', '.card-1'];
                 const cardInterval = 1000 / cards.length; 
                 cards.forEach((cardSelector, index) => {
@@ -607,7 +616,6 @@
                 });
                 t += 1000;
 
-                // 4. Inmediatamente después, desaparecen los siguientes textos en orden:
                 setTimeout(() => {
                     document.querySelector('header p').style.opacity = '0';
                 }, t);
@@ -628,13 +636,11 @@
                 }, t);
                 t += 400;
 
-                // 5. Por último desaparecerá la imagen de fondo
                 setTimeout(() => {
                     document.getElementById('bg-layer').style.opacity = '0';
                 }, t);
                 t += 500;
 
-                // 6. Desvanecimiento en blanco antes de pasar a la siguiente subpágina
                 setTimeout(() => {
                     const overlay = document.getElementById('intro-overlay');
                     overlay.style.backgroundColor = '#ffffff';
@@ -642,7 +648,6 @@
                 }, t);
                 t += 500;
 
-                // Redirección final
                 setTimeout(() => {
                     window.location.href = targetUrl;
                 }, t);
@@ -663,7 +668,10 @@
                 document.querySelector('header').style.opacity = '0';
                 document.querySelector('.vol-badge').style.opacity = '0';
                 document.querySelector('header h1').style.opacity = '0';
-                document.querySelector('header p').style.opacity = '0';
+                
+                const subP = document.querySelector('header p');
+                subP.style.opacity = '0';
+                subP.innerHTML = '';
                 
                 const brandLogo = document.querySelector('.brand-logo');
                 brandLogo.style.opacity = ''; 
@@ -710,13 +718,27 @@
                 setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 4200);
                 setTimeout(() => { document.querySelector('.vol-badge').style.opacity = '1'; }, 4700);
                 setTimeout(() => { document.querySelector('header h1').style.opacity = '1'; }, 5200);
-                setTimeout(() => { document.querySelector('header p').style.opacity = '1'; }, 5700);
-                setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 6200);
-                setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 6700);
-                setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 7200);
-                setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 7700);
-                setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 8200);
-                setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 8700);
+                
+                setTimeout(() => {
+                    subP.style.opacity = '1';
+                    const subText = subP.dataset.text;
+                    let j = 0;
+                    function typeSubText() {
+                        if (j <= subText.length) {
+                            subP.innerHTML = subText.substring(0, j);
+                            j++;
+                            setTimeout(typeSubText, 20);
+                        }
+                    }
+                    typeSubText();
+                }, 5700);
+
+                setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 6700);
+                setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 7200);
+                setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 7700);
+                setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 8200);
+                setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 8700);
+                setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 9200);
 
                 setTimeout(() => {
                     const footerPs = document.querySelectorAll('footer p');
@@ -739,7 +761,7 @@
                         typeChar();
                     }
                     typeFooterP();
-                }, 9200);
+                }, 9700);
             }
         });
     </script>
