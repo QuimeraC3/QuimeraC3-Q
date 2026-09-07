@@ -105,7 +105,7 @@
         .brand-logo {
             color: #ffffff;
             font-family: Georgia, "Times New Roman", serif;
-            font-size: 0.99rem; /* Reducido un 10% desde 1.1rem */
+            font-size: 0.99rem;
             font-weight: 700;
             text-decoration: none;
             letter-spacing: -0.01em;
@@ -162,7 +162,7 @@
             position: absolute;
             top: 5vh;
             left: 50%;
-            transform: translate(-50%, -50%); /* Sube el título Ecosistema la mitad de su propia altura */
+            transform: translate(-50%, -50%);
             display: inline-block;
             background-color: var(--primary);
             color: #ffffff;
@@ -280,65 +280,21 @@
             color: #000000;
         }
 
-        /* COORDENADAS Y DESPLAZAMIENTOS ESPECÍFICOS SOLICITADOS */
-        
-        /* Recuadros 01 y 02: Desplazados a la izquierda un 10% de su propio ancho */
-        .card-1 { 
-            top: 23vh; 
-            left: 5vw; 
-            transform: translateX(-10%);
-        }
-        .card-1:hover {
-            box-shadow: var(--shadow-lg);
-            background-color: #ffffff;
-            transform: translateX(-10%) translateY(-6px);
-        }
+        /* COORDENADAS ESCRITORIO */
+        .card-1 { top: 23vh; left: 5vw; transform: translateX(-10%); }
+        .card-1:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(-10%) translateY(-6px); }
 
-        .card-2 { 
-            top: 57vh; 
-            left: 5vw; 
-            transform: translateX(-10%);
-        }
-        .card-2:hover {
-            box-shadow: var(--shadow-lg);
-            background-color: #ffffff;
-            transform: translateX(-10%) translateY(-6px);
-        }
+        .card-2 { top: 57vh; left: 5vw; transform: translateX(-10%); }
+        .card-2:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(-10%) translateY(-6px); }
 
-        /* Recuadro 03: Desplazado hacia abajo un 30% de su propia altura */
-        .card-3 { 
-            top: 77vh; 
-            left: 50%; 
-            transform: translateX(-50%) translateY(30%);
-        }
-        .card-3:hover {
-            box-shadow: var(--shadow-lg);
-            background-color: #ffffff;
-            transform: translateX(-50%) translateY(30%) translateY(-6px);
-        }
+        .card-3 { top: 77vh; left: 50%; transform: translateX(-50%) translateY(30%); }
+        .card-3:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(-50%) translateY(30%) translateY(-6px); }
 
-        /* Recuadros 04 y 05: Desplazados a la derecha un 10% de su propio ancho */
-        .card-4 { 
-            top: 57vh; 
-            right: 5vw; 
-            transform: translateX(10%);
-        }
-        .card-4:hover {
-            box-shadow: var(--shadow-lg);
-            background-color: #ffffff;
-            transform: translateX(10%) translateY(-6px);
-        }
+        .card-4 { top: 57vh; right: 5vw; transform: translateX(10%); }
+        .card-4:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(10%) translateY(-6px); }
 
-        .card-5 { 
-            top: 23vh; 
-            right: 5vw; 
-            transform: translateX(10%);
-        }
-        .card-5:hover {
-            box-shadow: var(--shadow-lg);
-            background-color: #ffffff;
-            transform: translateX(10%) translateY(-6px);
-        }
+        .card-5 { top: 23vh; right: 5vw; transform: translateX(10%); }
+        .card-5:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(10%) translateY(-6px); }
 
         /* PIE DE PÁGINA */
         footer {
@@ -360,18 +316,43 @@
             color: #ffffff;
         }
 
-        /* RESPONSIVO PARA PANTALLAS PEQUEÑAS (Móviles / Tablets) */
+        /* ========================================================== */
+        /* OPTIMIZACIÓN RESPONSIVO PARA CELULARES (Móviles / Tablets) */
+        /* ========================================================== */
         @media (max-width: 900px) {
             body {
                 height: auto;
-                overflow: auto;
+                overflow-y: auto;
+                overflow-x: hidden;
             }
-            .container {
+
+            /* Fondo fijo que cubra toda la altura de la página scrolleable */
+            #bg-layer {
+                height: 100%;
+                background-attachment: scroll;
+            }
+
+            /* Barra de navegación fluida arriba */
+            .top-bar {
                 position: relative;
-                height: auto;
-                pointer-events: auto;
-                padding: 2rem;
+                background-color: rgba(11, 19, 41, 0.85);
+                backdrop-filter: blur(6px);
+                padding: 0.75rem 1rem;
             }
+
+            .top-bar-container {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .nav-links {
+                justify-content: center;
+                gap: 0.8rem;
+                flex-wrap: wrap;
+            }
+
+            /* Encabezado en flujo vertical limpio */
             header {
                 position: relative;
                 top: auto;
@@ -379,33 +360,72 @@
                 width: 100%;
                 height: auto;
                 transform: none;
-                padding: 4rem 1rem 1rem 1rem;
+                padding: 2rem 1rem 1.5rem 1rem;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 0.5rem;
+                gap: 1rem;
+                text-align: center;
             }
+
             .vol-badge, header h1, header p {
                 position: relative !important;
                 top: auto !important;
                 left: auto !important;
                 transform: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
             }
-            .info-card {
+
+            header h1 {
+                font-size: 2.2rem;
+            }
+
+            header p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+
+            /* Contenedor principal convertido en bloque flexible vertical */
+            .container {
                 position: relative;
+                top: auto;
+                left: auto;
                 width: 100%;
-                max-width: none;
-                margin-bottom: 1.5rem;
+                height: auto;
+                pointer-events: auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                padding: 0 1rem 2rem 1rem;
+            }
+
+            /* Tarjetas una debajo de otra, sin solapamientos */
+            .info-card {
+                position: relative !important;
                 top: auto !important;
                 left: auto !important;
                 right: auto !important;
+                bottom: auto !important;
                 transform: none !important;
+                width: 100% !important;
+                max-width: 420px !important;
+                margin: 0 auto;
+                background-color: rgba(15, 23, 42, 0.75);
+                backdrop-filter: blur(4px);
             }
+
             .info-card:hover {
-                transform: translateY(-6px) !important;
+                transform: translateY(-4px) !important;
+                background-color: #ffffff;
             }
+
+            /* Pie de página estático al final del scroll */
             footer {
                 position: relative;
+                margin-top: 1rem;
+                padding: 1rem;
             }
         }
     </style>
@@ -465,7 +485,7 @@
     </main>
 
     <footer>
-        <p data-text="&copy; 2026 Instituto Quimera &bull; Centro de Investigación, Docencia, Servicio y Difusión. &bull; Dr.C. Cesar Cerezo Camacho. &bull; Todos los derechos reservados. &bull;"></p>
+        <p data-text="&copy; 2026 Instituto Quimera &bull; Centro de Investigación, Docencia, Servicio y Difusión. &bull; Dr.C. Cesar Cerezo Camacho. Todos los derechos reservados. &bull;"></p>
     </footer>
 
     <script>
@@ -508,7 +528,6 @@
             }
         });
 
-        // Sincronizar el texto del botón si el usuario sale con la tecla ESC
         document.addEventListener('fullscreenchange', () => {
             if (!document.fullscreenElement) {
                 fullscreenToggle.textContent = '⛶ Pantalla Completa';
@@ -640,7 +659,6 @@
             });
         });
 
-        // Pageshow (botón atrás del navegador)
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) {
                 document.body.classList.remove('blurred-page');
