@@ -147,10 +147,10 @@
             color: #ffffff;
         }
 
-        /* ENCABEZADO CARTESIANO CENTRAL */
+        /* ENCABEZADO CARTESIANO CENTRAL (Estructura Base exacta) */
         header {
             position: absolute;
-            top: 5vh;
+            top: 4vh;
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
@@ -163,22 +163,22 @@
             display: inline-block;
             background-color: var(--primary);
             color: #ffffff;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            padding: 0.3rem 0.9rem;
+            padding: 0.25rem 0.8rem;
             border-radius: 9999px;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         header h1 {
             font-family: Georgia, "Times New Roman", serif;
-            font-size: 3.2rem;
+            font-size: 3rem;
             font-weight: 700;
             letter-spacing: -0.02em;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.2rem;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
             text-transform: uppercase;
         }
@@ -204,10 +204,10 @@
         header h1 a:hover .char-a { transition-delay: 0.3s; color: #dc2626; }
 
         header p {
-            font-size: 1.3rem;
+            font-size: 1.15rem;
             color: #ffffff;
             font-weight: 500;
-            max-width: 750px;
+            max-width: 700px;
             margin: 0 auto;
             text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
         }
@@ -219,25 +219,25 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            pointer-events: none; /* Permite hacer clic solo en las tarjetas */
+            pointer-events: none;
             z-index: 10;
         }
 
         .info-card {
-            pointer-events: auto; /* Reactiva clics en las tarjetas */
+            pointer-events: auto;
             position: absolute;
             text-decoration: none;
             background-color: transparent;
             border: 1px solid #ffffff;
             border-radius: 12px;
-            padding: 1.2rem;
+            padding: 1rem 1.2rem;
             width: 23vw;
-            max-width: 340px;
+            max-width: 330px;
             box-shadow: var(--shadow);
             transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, opacity 500ms ease;
             display: flex;
             flex-direction: column;
-            gap: 0.3rem;
+            gap: 0.2rem;
             text-align: center;
         }
 
@@ -249,7 +249,7 @@
 
         .info-card h2 {
             font-family: Georgia, "Times New Roman", serif;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: #ffffff;
             transition: color 0.3s ease;
         }
@@ -260,7 +260,7 @@
 
         .info-card p {
             color: #ffffff;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 500;
             transition: color 0.3s ease;
         }
@@ -269,17 +269,17 @@
             color: #000000;
         }
 
-        /* COORDENADAS EXACTAS PORCENTUALES (vw / vh) */
+        /* COORDENADAS EXACTAS DE LA IMAGEN BASE */
         .card-1 { 
-            top: 24vh; 
+            top: 23vh; 
             left: 5vw; 
         }
         .card-2 { 
-            top: 58vh; 
+            top: 57vh; 
             left: 5vw; 
         }
         .card-3 { 
-            top: 76vh; 
+            top: 77vh; 
             left: 50%; 
             transform: translateX(-50%);
         }
@@ -287,11 +287,11 @@
             transform: translateX(-50%) translateY(-6px);
         }
         .card-4 { 
-            top: 58vh; 
+            top: 57vh; 
             right: 5vw; 
         }
         .card-5 { 
-            top: 24vh; 
+            top: 23vh; 
             right: 5vw; 
         }
 
