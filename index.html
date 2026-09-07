@@ -392,7 +392,6 @@
     <header>
         <span class="vol-badge">&bull; Ecosistema &bull;</span>
         <h1><a href="https://quimerac3.github.io/" id="quimera-link"><span class="quimera-letter char-q">Q</span><span class="quimera-letter char-u">U</span><span class="quimera-letter char-i">I</span><span class="quimera-letter char-m">M</span><span class="quimera-letter char-e">E</span><span class="quimera-letter char-r">R</span><span class="quimera-letter char-a">A</span></a></h1>
-        <!-- Subtítulo adaptado con data-text para la animación de máquina de escribir -->
         <p data-text="Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria."></p>
     </header>
 
@@ -503,7 +502,7 @@
                 document.querySelector('header h1').style.opacity = '1';
             }, 5200);
 
-            // 7. Hacer aparecer el subtítulo y activar su efecto máquina de escribir justo después del título
+            // 7. Inicia la máquina de escribir del subtítulo en el milisegundo 5700
             setTimeout(() => {
                 const subP = document.querySelector('header p');
                 subP.style.opacity = '1';
@@ -520,37 +519,33 @@
                 typeSubText();
             }, 5700);
 
-            // 8. Hacer aparecer en 500 ms el recuadro 01
+            // 8 a 12. Retrasados para que comiencen pasados los 7500ms (cuando el subtítulo ya terminó de escribirse)
             setTimeout(() => {
                 document.querySelector('.card-1').style.opacity = '1';
-            }, 6700);
+            }, 7600);
 
-            // 9. Hacer aparecer en 500 ms el recuadro 02
             setTimeout(() => {
                 document.querySelector('.card-2').style.opacity = '1';
-            }, 7200);
+            }, 8100);
 
-            // 10. Hacer aparecer en 500 ms el recuadro 03
             setTimeout(() => {
                 document.querySelector('.card-3').style.opacity = '1';
-            }, 7700);
+            }, 8600);
 
-            // 11. Hacer aparecer en 500 ms el recuadro 04
             setTimeout(() => {
                 document.querySelector('.card-4').style.opacity = '1';
-            }, 8200);
+            }, 9100);
 
-            // 12. Hacer aparecer en 500 ms el recuadro 05
             setTimeout(() => {
                 document.querySelector('.card-5').style.opacity = '1';
-            }, 8700);
+            }, 9600);
 
-            // 13. Hacer aparecer en 500 ms el footer sin el texto
+            // 13. Footer contenedor
             setTimeout(() => {
                 document.querySelector('footer').style.opacity = '1';
-            }, 9200);
+            }, 10100);
 
-            // 14. Hacer aparecer el texto del footer con efecto máquina de escribir, sin cursor
+            // 14. Texto del footer
             setTimeout(() => {
                 const footerPs = document.querySelectorAll('footer p');
                 let pIndex = 0;
@@ -574,7 +569,7 @@
                     typeChar();
                 }
                 typeFooterP();
-            }, 9700);
+            }, 10600);
         });
 
         // 15. Salida secuencial personalizada al hacer clic en los elementos
@@ -733,12 +728,13 @@
                     typeSubText();
                 }, 5700);
 
-                setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 6700);
-                setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 7200);
-                setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 7700);
-                setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 8200);
-                setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 8700);
-                setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 9200);
+                // Tiempos actualizados simétricos para el evento pageshow
+                setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 7600);
+                setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 8100);
+                setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 8600);
+                setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 9100);
+                setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 9600);
+                setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 10100);
 
                 setTimeout(() => {
                     const footerPs = document.querySelectorAll('footer p');
@@ -761,7 +757,7 @@
                         typeChar();
                     }
                     typeFooterP();
-                }, 9700);
+                }, 10600);
             }
         });
     </script>
