@@ -278,7 +278,7 @@
             color: #000000;
         }
 
-        /* MODIFICACIONES DE POSICIÓN DE LOS RECUADROS */
+        /* MODIFICACIONES DE POSICIÓN DE LOS RECUADROS (Base para 1600x900px) */
         .card-1 { 
             grid-column: 1; 
             grid-row: 1; 
@@ -364,6 +364,33 @@
             body {
                 height: 100vh;
                 overflow: hidden;
+            }
+        }
+
+        /* ========================================================= */
+        /* MEDIA QUERY PARA PANTALLAS ULTRA ALTAS, PROYECTORES Y 4K  */
+        /* ========================================================= */
+        @media (min-width: 2400px) {
+            header h1 {
+                transform: translateY(4.5rem);
+            }
+            header p {
+                transform: translateY(15rem);
+            }
+            .card-1 { 
+                transform: translate(-85%, -170%);
+            }
+            .card-2 { 
+                transform: translate(-85%, -25%);
+            }
+            .card-3 { 
+                transform: translateY(55%);
+            }
+            .card-4 { 
+                transform: translate(85%, -25%);
+            }
+            .card-5 { 
+                transform: translate(85%, -135%);
             }
         }
     </style>
@@ -728,7 +755,6 @@
                     typeSubText();
                 }, 5700);
 
-                // Tiempos actualizados simétricos para el evento pageshow
                 setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 7600);
                 setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 8100);
                 setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 8600);
@@ -761,6 +787,5 @@
             }
         });
     </script>
-
 </body>
 </html>
