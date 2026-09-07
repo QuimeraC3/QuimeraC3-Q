@@ -135,14 +135,14 @@
             color: #38bdf8;
         }
 
-        #audio-toggle {
+        #audio-toggle, #fullscreen-toggle {
             background: rgba(15, 118, 110, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
             cursor: pointer;
         }
-        #audio-toggle:hover {
+        #audio-toggle:hover, #fullscreen-toggle:hover {
             background: var(--primary);
             color: #ffffff;
         }
@@ -426,6 +426,7 @@
             <a href="https://quimerac3.github.io/" class="brand-logo" data-text="QUIMERA - Inicio General"></a>
             <ul class="nav-links">
                 <li><a href="#" id="audio-toggle">🎵 Música: OFF</a></li>
+                <li><a href="#" id="fullscreen-toggle">⛶ Pantalla Completa</a></li>
             </ul>
         </div>
     </nav>
@@ -486,6 +487,33 @@
                 }).catch(error => {
                     console.log("Error al reproducir audio:", error);
                 });
+            }
+        });
+
+        // Control de Pantalla Completa
+        const fullscreenToggle = document.getElementById('fullscreen-toggle');
+
+        fullscreenToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().then(() => {
+                    fullscreenToggle.textContent = '❌ Salir Pantalla Completa';
+                }).catch(err => {
+                    console.log("Error al intentar entrar en pantalla completa:", err);
+                });
+            } else {
+                document.exitFullscreen().then(() => {
+                    fullscreenToggle.textContent = '⛶ Pantalla Completa';
+                });
+            }
+        });
+
+        // Sincronizar el texto del botón si el usuario sale con la tecla ESC
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                fullscreenToggle.textContent = '⛶ Pantalla Completa';
+            } else {
+                fullscreenToggle.textContent = '❌ Salir Pantalla Completa';
             }
         });
 
@@ -569,7 +597,7 @@
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
-                if (this.id === 'audio-toggle') return;
+                if (this.id === 'audio-toggle' || this.id === 'fullscreen-toggle') return;
                 const href = this.getAttribute('href');
                 if (href.startsWith('#')) return;
 
