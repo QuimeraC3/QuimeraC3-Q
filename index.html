@@ -23,9 +23,10 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             color: var(--text-main);
             line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
             background-color: #000000;
         }
 
@@ -61,7 +62,6 @@
             transition: opacity 1000ms ease, background-color 1000ms ease, backdrop-filter 1000ms ease;
         }
 
-        /* Clase para el desvanecimiento a blanco en la salida (500 ms) */
         body.blurred-page {
             pointer-events: none;
         }
@@ -73,7 +73,7 @@
             transition: opacity 500ms ease, background-color 500ms ease;
         }
 
-        /* Elementos con opacidad inicial 0 para las apariciones secuenciales */
+        /* Elementos con opacidad inicial 0 */
         .top-bar, header, .vol-badge, header h1, header p, .card-1, .card-2, .card-3, .card-4, .card-5, footer {
             opacity: 0;
             transition: opacity 500ms ease;
@@ -87,13 +87,15 @@
         .top-bar {
             background-color: rgba(11, 19, 41, 0.0);
             padding: 0.85rem 2rem;
-            position: sticky;
+            position: absolute;
             top: 0;
+            left: 0;
+            width: 100%;
             z-index: 100;
         }
 
         .top-bar-container {
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -108,7 +110,6 @@
             text-decoration: none;
             letter-spacing: -0.01em;
             transition: color 0.2s ease, opacity 500ms ease;
-            transform: translate(-125px, -5px);
         }
 
         .brand-logo:hover {
@@ -134,26 +135,28 @@
             color: #38bdf8;
         }
 
-        /* Estilo especial para el botón de música */
         #audio-toggle {
             background: rgba(15, 118, 110, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
             cursor: pointer;
-            position: relative;
-            left: 150px;
         }
         #audio-toggle:hover {
             background: var(--primary);
             color: #ffffff;
         }
 
-        /* ENCABEZADO INTEGRADO */
+        /* ENCABEZADO CARTESIANO CENTRAL */
         header {
+            position: absolute;
+            top: 5vh;
+            left: 50%;
+            transform: translateX(-50%);
             text-align: center;
-            padding: 2.5rem 1rem 0.5rem 1rem;
             color: #ffffff;
+            width: 100%;
+            z-index: 10;
         }
 
         .vol-badge {
@@ -166,9 +169,8 @@
             text-transform: uppercase;
             padding: 0.3rem 0.9rem;
             border-radius: 9999px;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            transform: translateY(-60px);
         }
 
         header h1 {
@@ -179,7 +181,6 @@
             margin-bottom: 0.4rem;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
             text-transform: uppercase;
-            transform: translateY(3.0rem);
         }
 
         header h1 a {
@@ -202,63 +203,53 @@
         header h1 a:hover .char-r { transition-delay: 0.25s; color: #dc2626; }
         header h1 a:hover .char-a { transition-delay: 0.3s; color: #dc2626; }
 
-        header h1 a .char-a { transition-delay: 0.0s; }
-        header h1 a .char-r { transition-delay: 0.05s; }
-        header h1 a .char-e { transition-delay: 0.1s; }
-        header h1 a .char-m { transition-delay: 0.15s; }
-        header h1 a .char-i { transition-delay: 0.2s; }
-        header h1 a .char-u { transition-delay: 0.25s; }
-        header h1 a .char-q { transition-delay: 0.3s; }
-
         header p {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: #ffffff;
             font-weight: 500;
             max-width: 750px;
             margin: 0 auto;
             text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-            transform: translateY(11.5rem);
         }
 
-        /* DISTRIBUCIÓN DE 5 ELEMENTOS */
+        /* CONTENEDOR Y TARJETAS CON POSICIONAMIENTO ABSOLUTO (vw / vh) */
         .container {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 3.5rem 1.5rem 2rem 1.5rem;
-            flex: 1;
-        }
-
-        .layout-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-template-rows: auto auto auto;
-            gap: 1.5rem;
-            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none; /* Permite hacer clic solo en las tarjetas */
+            z-index: 10;
         }
 
         .info-card {
+            pointer-events: auto; /* Reactiva clics en las tarjetas */
+            position: absolute;
             text-decoration: none;
             background-color: transparent;
             border: 1px solid #ffffff;
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1.2rem;
+            width: 23vw;
+            max-width: 340px;
             box-shadow: var(--shadow);
             transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, opacity 500ms ease;
             display: flex;
             flex-direction: column;
-            gap: 0.4rem;
+            gap: 0.3rem;
             text-align: center;
         }
 
         .info-card:hover {
             box-shadow: var(--shadow-lg);
             background-color: #ffffff;
+            transform: translateY(-6px);
         }
 
         .info-card h2 {
             font-family: Georgia, "Times New Roman", serif;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #ffffff;
             transition: color 0.3s ease;
         }
@@ -269,7 +260,7 @@
 
         .info-card p {
             color: #ffffff;
-            font-size: 1.0rem;
+            font-size: 0.95rem;
             font-weight: 500;
             transition: color 0.3s ease;
         }
@@ -278,119 +269,83 @@
             color: #000000;
         }
 
-        /* MODIFICACIONES DE POSICIÓN DE LOS RECUADROS (Base para 1600x900px) */
+        /* COORDENADAS EXACTAS PORCENTUALES (vw / vh) */
         .card-1 { 
-            grid-column: 1; 
-            grid-row: 1; 
-            transform: translate(-75%, -155%);
+            top: 24vh; 
+            left: 5vw; 
         }
-        .card-1:hover { transform: translate(-75%, -155%) translateY(-6px); }
-
         .card-2 { 
-            grid-column: 1; 
-            grid-row: 2; 
-            transform: translate(-75%, -20%);
+            top: 58vh; 
+            left: 5vw; 
         }
-        .card-2:hover { transform: translate(-75%, -20%) translateY(-6px); }
-
         .card-3 { 
-            grid-column: 2; 
-            grid-row: 3; 
-            justify-self: center; 
-            width: 100%; 
-            transform: translateY(45%);
+            top: 76vh; 
+            left: 50%; 
+            transform: translateX(-50%);
         }
-        .card-3:hover { transform: translateY(45%) translateY(-6px); }
-
+        .card-3:hover {
+            transform: translateX(-50%) translateY(-6px);
+        }
         .card-4 { 
-            grid-column: 3; 
-            grid-row: 2; 
-            transform: translate(75%, -20%);
+            top: 58vh; 
+            right: 5vw; 
         }
-        .card-4:hover { transform: translate(75%, -20%) translateY(-6px); }
-
         .card-5 { 
-            grid-column: 3; 
-            grid-row: 1; 
-            transform: translate(75%, -120%);
+            top: 24vh; 
+            right: 5vw; 
         }
-        .card-5:hover { transform: translate(75%, -120%) translateY(-6px); }
 
         /* PIE DE PÁGINA */
         footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
             text-align: center;
-            padding: 0.5rem 2rem;
-            background-color: rgba(11, 19, 41, 0.1);
+            padding: 0.4rem 2rem;
+            background-color: rgba(11, 19, 41, 0.2);
             backdrop-filter: blur(8px);
             color: #ffffff;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: auto;
-            transition: opacity 500ms ease;
-            transform: translate(0px, 0px);
+            z-index: 100;
         }
 
         footer p {
             color: #ffffff;
-            transition: opacity 500ms ease;
         }
 
+        /* RESPONSIVO PARA PANTALLAS PEQUEÑAS (Móviles / Tablets) */
         @media (max-width: 900px) {
-            .layout-grid {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto;
-            }
-            .card-1, .card-2, .card-3, .card-4, .card-5 {
-                grid-column: 1;
-                grid-row: auto;
-                transform: none;
-            }
-            .card-1:hover, .card-2:hover, .card-3:hover, .card-4:hover, .card-5:hover {
-                transform: translateY(-6px);
-            }
-            header h1, .vol-badge, header p {
-                transform: none;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .top-bar-container {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-        }
-
-        @media (min-width: 901px) and (hover: hover) and (pointer: fine) {
             body {
-                height: 100vh;
-                overflow: hidden;
+                height: auto;
+                overflow: auto;
             }
-        }
-
-        /* ========================================================= */
-        /* MEDIA QUERY PARA PANTALLAS ULTRA ALTAS, PROYECTORES Y 4K  */
-        /* ========================================================= */
-        @media (min-width: 2400px) {
-            header h1 {
-                transform: translateY(4.5rem);
+            .container {
+                position: relative;
+                height: auto;
+                pointer-events: auto;
+                padding: 2rem;
             }
-            header p {
-                transform: translateY(15rem);
+            header {
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+                padding: 1rem;
             }
-            .card-1 { 
-                transform: translate(-85%, -170%);
+            .info-card {
+                position: relative;
+                width: 100%;
+                max-width: none;
+                margin-bottom: 1.5rem;
+                top: auto !important;
+                left: auto !important;
+                right: auto !important;
+                transform: none !important;
             }
-            .card-2 { 
-                transform: translate(-85%, -25%);
-            }
-            .card-3 { 
-                transform: translateY(55%);
-            }
-            .card-4 { 
-                transform: translate(85%, -25%);
-            }
-            .card-5 { 
-                transform: translate(85%, -135%);
+            footer {
+                position: relative;
             }
         }
     </style>
@@ -410,7 +365,6 @@
         <div class="top-bar-container">
             <a href="https://quimerac3.github.io/" class="brand-logo" data-text="QUIMERA - Inicio General"></a>
             <ul class="nav-links">
-                <!-- Botón para controlar la música -->
                 <li><a href="#" id="audio-toggle">🎵 Música: OFF</a></li>
             </ul>
         </div>
@@ -423,34 +377,30 @@
     </header>
 
     <main class="container">
-        <div class="layout-grid">
-            
-            <a href="https://quimerac3.github.io/QuimeraC3-Q-QE/" class="info-card card-1">
-                <h2>01. ¿QUÉ ES QUIMERA?</h2>
-                <p>Esto somos.</p>
-            </a>
+        <a href="https://quimerac3.github.io/QuimeraC3-Q-QE/" class="info-card card-1">
+            <h2>01. ¿QUÉ ES QUIMERA?</h2>
+            <p>Esto somos.</p>
+        </a>
 
-            <a href="seccion-02.html" class="info-card card-2">
-                <h2>02. MISIÓN.</h2>
-                <p>Para esto existimos.</p>
-            </a>
+        <a href="seccion-02.html" class="info-card card-2">
+            <h2>02. MISIÓN.</h2>
+            <p>Para esto existimos.</p>
+        </a>
 
-            <a href="seccion-03.html" class="info-card card-3">
-                <h2>03. VISIÓN.</h2>
-                <p>Hacia esto vamos.</p>
-            </a>
+        <a href="seccion-03.html" class="info-card card-3">
+            <h2>03. VISIÓN.</h2>
+            <p>Hacia esto vamos.</p>
+        </a>
 
-            <a href="seccion-04.html" class="info-card card-4">
-                <h2>04. PRINCIPIOS.</h2>
-                <p>Así creamos.</p>
-            </a>
+        <a href="seccion-04.html" class="info-card card-4">
+            <h2>04. PRINCIPIOS.</h2>
+            <p>Así creamos.</p>
+        </a>
 
-            <a href="seccion-05.html" class="info-card card-5">
-                <h2>05. ÁREAS DE DESARROLLO.</h2>
-                <p>Aquí es donde creamos.</p>
-            </a>
-
-        </div>
+        <a href="seccion-05.html" class="info-card card-5">
+            <h2>05. ÁREAS DE DESARROLLO.</h2>
+            <p>Aquí es donde creamos.</p>
+        </a>
     </main>
 
     <footer>
@@ -482,28 +432,19 @@
         window.addEventListener('DOMContentLoaded', () => {
             const overlay = document.getElementById('intro-overlay');
 
-            // Entrada: blanco (500ms) y cambio a negro (1000ms) -> total 1500ms en negro absoluto
-            setTimeout(() => {
-                overlay.style.backgroundColor = '#000000';
-            }, 500);
+            setTimeout(() => { overlay.style.backgroundColor = '#000000'; }, 500);
 
-            // 1. Aparece la imagen de fondo de Quimera y se desvanece el overlay negro
             setTimeout(() => {
                 document.getElementById('bg-layer').style.opacity = '1';
                 overlay.style.opacity = '0';
             }, 1500);
 
-            // 2. Aparece el header superior sin el texto
-            setTimeout(() => {
-                document.querySelector('.top-bar').style.opacity = '1';
-            }, 2500);
+            setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 2500);
 
-            // 3. Aparece el texto del header "QUIMERA - Inicio General" con efecto máquina de escribir
             setTimeout(() => {
                 const brandLogo = document.querySelector('.brand-logo');
                 const text = brandLogo.dataset.text;
                 let i = 0;
-
                 function typeBrandLogo() {
                     if (i <= text.length) {
                         brandLogo.innerHTML = text.substring(0, i);
@@ -514,28 +455,15 @@
                 typeBrandLogo();
             }, 3000);
 
-            // 4. Hacer aparecer en 500 ms el header principal
-            setTimeout(() => {
-                document.querySelector('header').style.opacity = '1';
-            }, 4200);
+            setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 4200);
+            setTimeout(() => { document.querySelector('.vol-badge').style.opacity = '1'; }, 4700);
+            setTimeout(() => { document.querySelector('header h1').style.opacity = '1'; }, 5200);
 
-            // 5. Hacer aparecer en 500 ms el título "ECOSISTEMA" (.vol-badge)
-            setTimeout(() => {
-                document.querySelector('.vol-badge').style.opacity = '1';
-            }, 4700);
-
-            // 6. Hacer aparecer en 500 ms el título "QUIMERA" (header h1)
-            setTimeout(() => {
-                document.querySelector('header h1').style.opacity = '1';
-            }, 5200);
-
-            // 7. Inicia la máquina de escribir del subtítulo en el milisegundo 5700
             setTimeout(() => {
                 const subP = document.querySelector('header p');
                 subP.style.opacity = '1';
                 const subText = subP.dataset.text;
                 let j = 0;
-
                 function typeSubText() {
                     if (j <= subText.length) {
                         subP.innerHTML = subText.substring(0, j);
@@ -546,43 +474,21 @@
                 typeSubText();
             }, 5700);
 
-            // 8 a 12. Retrasados para que comiencen pasados los 7500ms (cuando el subtítulo ya terminó de escribirse)
-            setTimeout(() => {
-                document.querySelector('.card-1').style.opacity = '1';
-            }, 7600);
+            setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 7600);
+            setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 8100);
+            setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 8600);
+            setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 9100);
+            setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 9600);
+            setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 10100);
 
-            setTimeout(() => {
-                document.querySelector('.card-2').style.opacity = '1';
-            }, 8100);
-
-            setTimeout(() => {
-                document.querySelector('.card-3').style.opacity = '1';
-            }, 8600);
-
-            setTimeout(() => {
-                document.querySelector('.card-4').style.opacity = '1';
-            }, 9100);
-
-            setTimeout(() => {
-                document.querySelector('.card-5').style.opacity = '1';
-            }, 9600);
-
-            // 13. Footer contenedor
-            setTimeout(() => {
-                document.querySelector('footer').style.opacity = '1';
-            }, 10100);
-
-            // 14. Texto del footer
             setTimeout(() => {
                 const footerPs = document.querySelectorAll('footer p');
                 let pIndex = 0;
-
                 function typeFooterP() {
                     if (pIndex >= footerPs.length) return;
                     let p = footerPs[pIndex];
                     let text = p.dataset.text;
                     let i = 0;
-
                     function typeChar() {
                         if (i <= text.length) {
                             p.innerHTML = text.substring(0, i);
@@ -599,68 +505,40 @@
             }, 10600);
         });
 
-        // 15. Salida secuencial personalizada al hacer clic en los elementos
+        // Salida secuencial personalizada al hacer clic
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 if (this.id === 'audio-toggle') return;
-
                 const href = this.getAttribute('href');
-                if (href.startsWith('#')) {
-                    return; 
-                }
+                if (href.startsWith('#')) return;
 
                 e.preventDefault(); 
                 const targetUrl = this.href;
-                
                 document.body.classList.add('blurred-page');
 
                 let t = 0;
-
-                setTimeout(() => {
-                    document.querySelectorAll('footer p').forEach(p => {
-                        p.style.opacity = '0';
-                    });
-                }, t);
+                setTimeout(() => { document.querySelectorAll('footer p').forEach(p => p.style.opacity = '0'); }, t);
                 t += 300;
-
-                setTimeout(() => {
-                    document.querySelector('footer').style.opacity = '0';
-                }, t);
+                setTimeout(() => { document.querySelector('footer').style.opacity = '0'; }, t);
                 t += 300;
 
                 const cards = ['.card-5', '.card-4', '.card-3', '.card-2', '.card-1'];
                 const cardInterval = 1000 / cards.length; 
                 cards.forEach((cardSelector, index) => {
-                    setTimeout(() => {
-                        document.querySelector(cardSelector).style.opacity = '0';
-                    }, t + (index * cardInterval));
+                    setTimeout(() => { document.querySelector(cardSelector).style.opacity = '0'; }, t + (index * cardInterval));
                 });
                 t += 1000;
 
-                setTimeout(() => {
-                    document.querySelector('header p').style.opacity = '0';
-                }, t);
+                setTimeout(() => { document.querySelector('header p').style.opacity = '0'; }, t);
                 t += 300;
-
-                setTimeout(() => {
-                    document.querySelector('header h1').style.opacity = '0';
-                }, t);
+                setTimeout(() => { document.querySelector('header h1').style.opacity = '0'; }, t);
                 t += 300;
-
-                setTimeout(() => {
-                    document.querySelector('.vol-badge').style.opacity = '0';
-                }, t);
+                setTimeout(() => { document.querySelector('.vol-badge').style.opacity = '0'; }, t);
                 t += 300;
-
-                setTimeout(() => {
-                    document.querySelector('.brand-logo').style.opacity = '0';
-                }, t);
+                setTimeout(() => { document.querySelector('.brand-logo').style.opacity = '0'; }, t);
                 t += 400;
-
-                setTimeout(() => {
-                    document.getElementById('bg-layer').style.opacity = '0';
-                }, t);
+                setTimeout(() => { document.getElementById('bg-layer').style.opacity = '0'; }, t);
                 t += 500;
 
                 setTimeout(() => {
@@ -670,17 +548,14 @@
                 }, t);
                 t += 500;
 
-                setTimeout(() => {
-                    window.location.href = targetUrl;
-                }, t);
+                setTimeout(() => { window.location.href = targetUrl; }, t);
             });
         });
 
-        // Reiniciar la animación desde cero al usar las flechas del navegador (bfcache)
+        // Pageshow (botón atrás del navegador)
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) {
                 document.body.classList.remove('blurred-page');
-
                 const overlay = document.getElementById('intro-overlay');
                 overlay.style.backgroundColor = '#ffffff';
                 overlay.style.opacity = '1';
@@ -699,30 +574,21 @@
                 brandLogo.style.opacity = ''; 
                 brandLogo.innerHTML = '';
 
-                const cards = ['.card-1', '.card-2', '.card-3', '.card-4', '.card-5'];
-                cards.forEach(selector => {
+                ['.card-1', '.card-2', '.card-3', '.card-4', '.card-5'].forEach(selector => {
                     const el = document.querySelector(selector);
                     if (el) el.style.opacity = '0';
                 });
 
                 const footer = document.querySelector('footer');
                 footer.style.opacity = '0';
-                document.querySelectorAll('footer p').forEach(p => {
-                    p.innerHTML = '';
-                });
+                document.querySelectorAll('footer p').forEach(p => p.innerHTML = '');
 
-                setTimeout(() => {
-                    overlay.style.backgroundColor = '#000000';
-                }, 500);
-
+                setTimeout(() => { overlay.style.backgroundColor = '#000000'; }, 500);
                 setTimeout(() => {
                     document.getElementById('bg-layer').style.opacity = '1';
                     overlay.style.opacity = '0';
                 }, 1500);
-
-                setTimeout(() => {
-                    document.querySelector('.top-bar').style.opacity = '1';
-                }, 2500);
+                setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 2500);
 
                 setTimeout(() => {
                     const text = brandLogo.dataset.text;
