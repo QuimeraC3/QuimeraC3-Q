@@ -105,7 +105,7 @@
         .brand-logo {
             color: #ffffff;
             font-family: Georgia, "Times New Roman", serif;
-            font-size: 1.1rem;
+            font-size: 0.99rem; /* Reducido un 10% desde 1.1rem */
             font-weight: 700;
             text-decoration: none;
             letter-spacing: -0.01em;
@@ -147,7 +147,7 @@
             color: #ffffff;
         }
 
-        /* ENCABEZADO CARTESIANO CENTRAL (Alineación Base Exacta) */
+        /* ENCABEZADO CARTESIANO CENTRAL */
         header {
             position: absolute;
             top: 0;
@@ -162,7 +162,7 @@
             position: absolute;
             top: 5vh;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translate(-50%, -50%); /* Sube el título Ecosistema la mitad de su propia altura */
             display: inline-block;
             background-color: var(--primary);
             color: #ffffff;
@@ -258,12 +258,6 @@
             text-align: center;
         }
 
-        .info-card:hover {
-            box-shadow: var(--shadow-lg);
-            background-color: #ffffff;
-            transform: translateY(-6px);
-        }
-
         .info-card h2 {
             font-family: Georgia, "Times New Roman", serif;
             font-size: 1.05rem;
@@ -286,30 +280,64 @@
             color: #000000;
         }
 
-        /* COORDENADAS EXACTAS DE LA IMAGEN BASE */
+        /* COORDENADAS Y DESPLAZAMIENTOS ESPECÍFICOS SOLICITADOS */
+        
+        /* Recuadros 01 y 02: Desplazados a la izquierda un 10% de su propio ancho */
         .card-1 { 
             top: 23vh; 
             left: 5vw; 
+            transform: translateX(-10%);
         }
+        .card-1:hover {
+            box-shadow: var(--shadow-lg);
+            background-color: #ffffff;
+            transform: translateX(-10%) translateY(-6px);
+        }
+
         .card-2 { 
             top: 57vh; 
             left: 5vw; 
+            transform: translateX(-10%);
         }
+        .card-2:hover {
+            box-shadow: var(--shadow-lg);
+            background-color: #ffffff;
+            transform: translateX(-10%) translateY(-6px);
+        }
+
+        /* Recuadro 03: Desplazado hacia abajo un 30% de su propia altura */
         .card-3 { 
             top: 77vh; 
             left: 50%; 
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(30%);
         }
         .card-3:hover {
-            transform: translateX(-50%) translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            background-color: #ffffff;
+            transform: translateX(-50%) translateY(30%) translateY(-6px);
         }
+
+        /* Recuadros 04 y 05: Desplazados a la derecha un 10% de su propio ancho */
         .card-4 { 
             top: 57vh; 
             right: 5vw; 
+            transform: translateX(10%);
         }
+        .card-4:hover {
+            box-shadow: var(--shadow-lg);
+            background-color: #ffffff;
+            transform: translateX(10%) translateY(-6px);
+        }
+
         .card-5 { 
             top: 23vh; 
             right: 5vw; 
+            transform: translateX(10%);
+        }
+        .card-5:hover {
+            box-shadow: var(--shadow-lg);
+            background-color: #ffffff;
+            transform: translateX(10%) translateY(-6px);
         }
 
         /* PIE DE PÁGINA */
@@ -372,6 +400,9 @@
                 left: auto !important;
                 right: auto !important;
                 transform: none !important;
+            }
+            .info-card:hover {
+                transform: translateY(-6px) !important;
             }
             footer {
                 position: relative;
