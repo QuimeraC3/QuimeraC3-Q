@@ -319,6 +319,12 @@
             pointer-events: auto;
         }
 
+        #image-modal a {
+            display: inline-block;
+            line-height: 0;
+            text-decoration: none;
+        }
+
         #image-modal img {
             max-width: 75vw;
             max-height: 75vh;
@@ -327,10 +333,15 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
             transform: scale(0.9);
             transition: transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
         }
 
         #image-modal.active img {
             transform: scale(1);
+        }
+
+        #image-modal img:hover {
+            transform: scale(1.02);
         }
 
         .close-modal {
@@ -348,6 +359,7 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
+            z-index: 30001;
             transition: background 0.2s ease, color 0.2s ease;
         }
 
@@ -495,11 +507,12 @@
     <!-- Capa para el efecto de difuminado inicial/final -->
     <div id="intro-overlay"></div>
 
-    <!-- Modal para mostrar la imagen PNG de la letra Q al hacer clic -->
+    <!-- Modal con la imagen de la letra Q enlazada a la mitología -->
     <div id="image-modal">
         <button class="close-modal">&times;</button>
-        <!-- Asegúrate de que el nombre del archivo coincida con el de tu letra Q PNG -->
-        <img src="Letra_Q.png" alt="Letra Q Central de Quimera">
+        <a href="mitologia.html">
+            <img src="Letra_Q.png" alt="Mitología detrás de Quimera">
+        </a>
     </div>
 
     <nav class="top-bar">
@@ -556,7 +569,7 @@
         const closeModal = document.querySelector('.close-modal');
 
         quimeraLink.addEventListener('click', (e) => {
-            e.preventDefault(); // Evita la navegación para abrir el modal en su lugar
+            e.preventDefault(); // Evita la navegación predeterminada para abrir el modal
             imageModal.classList.add('active');
         });
 
@@ -693,7 +706,7 @@
             }, 10600);
         });
 
-        // Salida secuencial personalizada al hacer clic (excluyendo el modal de QUIMERA)
+        // Salida secuencial personalizada al hacer clic (aplica también para el huevo de pascua)
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -704,6 +717,9 @@
                 e.preventDefault(); 
                 const targetUrl = this.href;
                 document.body.classList.add('blurred-page');
+
+                // Cierra la modal si estuviera abierta antes de iniciar la animación de salida
+                imageModal.classList.remove('active');
 
                 let t = 0;
                 setTimeout(() => { document.querySelectorAll('footer p').forEach(p => p.style.opacity = '0'); }, t);
