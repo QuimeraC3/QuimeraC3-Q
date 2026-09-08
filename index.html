@@ -325,12 +325,10 @@
             text-decoration: none;
         }
 
-        /* Definición de la animación de latido a 110 BPM (0.5454s por ciclo) */
+        /* Animación sincronizada a exactamente 1 pulso por beat a 110 BPM (0.5454s) */
         @keyframes heartbeat-110bpm {
             0%, 100% { transform: scale(1); }
-            30% { transform: scale(1.09); }
-            50% { transform: scale(1); }
-            70% { transform: scale(1.05); }
+            50% { transform: scale(1.08); }
         }
 
         #image-modal img {
@@ -348,7 +346,7 @@
             transform: scale(1);
         }
 
-        /* Efecto de latido al pasar el cursor a 110 BPM */
+        /* Efecto de latido limpio a 110 BPM al pasar el cursor */
         #image-modal img:hover {
             animation: heartbeat-110bpm 0.5454s infinite ease-in-out;
         }
