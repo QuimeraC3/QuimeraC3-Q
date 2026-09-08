@@ -295,6 +295,67 @@
         .card-5 { top: 23vh; right: 5vw; transform: translateX(10%) translateY(-25%); }
         .card-5:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(10%) translateY(-25%) translateY(-6px); }
 
+        /* VENTANA MODAL PARA LA IMAGEN DE LA LETRA Q */
+        #image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 30000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 400ms ease;
+        }
+
+        #image-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #image-modal img {
+            max-width: 75vw;
+            max-height: 75vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            transform: scale(0.9);
+            transition: transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #image-modal.active img {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 2rem;
+            right: 2.5rem;
+            color: #ffffff;
+            font-size: 2.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .close-modal:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
         /* PIE DE PÁGINA */
         footer {
             position: absolute;
@@ -434,6 +495,13 @@
     <!-- Capa para el efecto de difuminado inicial/final -->
     <div id="intro-overlay"></div>
 
+    <!-- Modal para mostrar la imagen PNG de la letra Q al hacer clic -->
+    <div id="image-modal">
+        <button class="close-modal">&times;</button>
+        <!-- Asegúrate de que el nombre del archivo coincida con el de tu letra Q PNG -->
+        <img src="Letra_Q.png" alt="Letra Q Central de Quimera">
+    </div>
+
     <nav class="top-bar">
         <div class="top-bar-container">
             <a href="https://quimerac3.github.io/" class="brand-logo" data-text="QUIMERA - Inicio General"></a>
@@ -446,7 +514,7 @@
     </nav>
 
     <header>
-        <h1><a href="https://quimerac3.github.io/" id="quimera-link"><span class="quimera-letter char-q">Q</span><span class="quimera-letter char-u">U</span><span class="quimera-letter char-i">I</span><span class="quimera-letter char-m">M</span><span class="quimera-letter char-e">E</span><span class="quimera-letter char-r">R</span><span class="quimera-letter char-a">A</span></a></h1>
+        <h1><a href="#" id="quimera-link"><span class="quimera-letter char-q">Q</span><span class="quimera-letter char-u">U</span><span class="quimera-letter char-i">I</span><span class="quimera-letter char-m">M</span><span class="quimera-letter char-e">E</span><span class="quimera-letter char-r">R</span><span class="quimera-letter char-a">A</span></a></h1>
         <p data-text="Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria."></p>
     </header>
 
@@ -482,6 +550,26 @@
     </footer>
 
     <script>
+        // Control del Modal de la Letra Q
+        const quimeraLink = document.getElementById('quimera-link');
+        const imageModal = document.getElementById('image-modal');
+        const closeModal = document.querySelector('.close-modal');
+
+        quimeraLink.addEventListener('click', (e) => {
+            e.preventDefault(); // Evita la navegación para abrir el modal en su lugar
+            imageModal.classList.add('active');
+        });
+
+        closeModal.addEventListener('click', () => {
+            imageModal.classList.remove('active');
+        });
+
+        imageModal.addEventListener('click', (e) => {
+            if (e.target === imageModal) {
+                imageModal.classList.remove('active');
+            }
+        });
+
         // Control de Reproducción de Música
         const music = document.getElementById('bg-music');
         const audioToggle = document.getElementById('audio-toggle');
@@ -605,11 +693,11 @@
             }, 10600);
         });
 
-        // Salida secuencial personalizada al hacer clic
+        // Salida secuencial personalizada al hacer clic (excluyendo el modal de QUIMERA)
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
-                if (this.id === 'audio-toggle' || this.id === 'fullscreen-toggle') return;
+                if (this.id === 'audio-toggle' || this.id === 'fullscreen-toggle' || this.id === 'quimera-link') return;
                 const href = this.getAttribute('href');
                 if (href.startsWith('#')) return;
 
