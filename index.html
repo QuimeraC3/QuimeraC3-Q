@@ -117,6 +117,20 @@
             text-decoration: underline;
         }
 
+        .vol-badge {
+            display: inline-block;
+            background-color: var(--primary);
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.2rem 0.7rem;
+            border-radius: 9999px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            pointer-events: auto;
+        }
+
         .nav-links {
             display: flex;
             gap: 1.25rem;
@@ -160,27 +174,9 @@
             z-index: 10;
         }
 
-        .vol-badge {
-            position: absolute;
-            top: 5vh;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: inline-block;
-            background-color: var(--primary);
-            color: #ffffff;
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 0.25rem 0.8rem;
-            border-radius: 9999px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            pointer-events: auto;
-        }
-
         header h1 {
             position: absolute;
-            top: 22vh;
+            top: 36vh;
             left: 50%;
             transform: translateX(-50%);
             font-family: Georgia, "Times New Roman", serif;
@@ -217,7 +213,7 @@
 
         header p {
             position: absolute;
-            top: 47vh;
+            top: calc(36vh + 3rem + 1.15rem);
             left: 50%;
             transform: translateX(-50%);
             font-size: 1.15rem;
@@ -282,21 +278,21 @@
             color: #000000;
         }
 
-        /* COORDENADAS ESCRITORIO */
-        .card-1 { top: 23vh; left: 5vw; transform: translateX(-10%); }
-        .card-1:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(-10%) translateY(-6px); }
+        /* COORDENADAS ESCRITORIO CON AJUSTES SOLICITADOS */
+        .card-1 { top: 23vh; left: 5vw; transform: translateX(-10%) translateY(-25%); }
+        .card-1:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(-10%) translateY(-25%) translateY(-6px); }
 
-        .card-2 { top: 57vh; left: 5vw; transform: translateX(-10%); }
-        .card-2:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(-10%) translateY(-6px); }
+        .card-2 { top: 57vh; left: 5vw; transform: translateX(-10%) translateY(-25%); }
+        .card-2:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(-10%) translateY(-25%) translateY(-6px); }
 
-        .card-3 { top: 77vh; left: 50%; transform: translateX(-50%) translateY(30%); }
-        .card-3:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(-50%) translateY(30%) translateY(-6px); }
+        .card-3 { top: 77vh; left: 50%; transform: translateX(-50%) translateY(55%); }
+        .card-3:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(-50%) translateY(55%) translateY(-6px); }
 
-        .card-4 { top: 57vh; right: 5vw; transform: translateX(10%); }
-        .card-4:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(10%) translateY(-6px); }
+        .card-4 { top: 57vh; right: 5vw; transform: translateX(10%) translateY(-25%); }
+        .card-4:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(10%) translateY(-25%) translateY(-6px); }
 
-        .card-5 { top: 23vh; right: 5vw; transform: translateX(10%); }
-        .card-5:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(10%) translateY(-6px); }
+        .card-5 { top: 23vh; right: 5vw; transform: translateX(10%) translateY(-25%); }
+        .card-5:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(10%) translateY(-25%) translateY(-6px); }
 
         /* PIE DE PÁGINA */
         footer {
@@ -328,13 +324,11 @@
                 overflow-x: hidden;
             }
 
-            /* Fondo fijo que cubra toda la altura de la página scrolleable */
             #bg-layer {
                 height: 100%;
                 background-attachment: scroll;
             }
 
-            /* Barra de navegación fluida arriba */
             .top-bar {
                 position: relative;
                 background-color: rgba(11, 19, 41, 0.85);
@@ -354,7 +348,6 @@
                 flex-wrap: wrap;
             }
 
-            /* Encabezado en flujo vertical limpio */
             header {
                 position: relative;
                 top: auto;
@@ -370,7 +363,7 @@
                 text-align: center;
             }
 
-            .vol-badge, header h1, header p {
+            header h1, header p {
                 position: relative !important;
                 top: auto !important;
                 left: auto !important;
@@ -388,7 +381,6 @@
                 padding: 0 1rem;
             }
 
-            /* Contenedor principal convertido en bloque flexible vertical */
             .container {
                 position: relative;
                 top: auto;
@@ -403,7 +395,6 @@
                 padding: 0 1rem 2rem 1rem;
             }
 
-            /* Tarjetas una debajo de otra, sin solapamientos */
             .info-card {
                 position: relative !important;
                 top: auto !important;
@@ -423,7 +414,6 @@
                 background-color: #ffffff;
             }
 
-            /* Pie de página estático al final del scroll */
             footer {
                 position: relative;
                 margin-top: 1rem;
@@ -446,6 +436,7 @@
     <nav class="top-bar">
         <div class="top-bar-container">
             <a href="https://quimerac3.github.io/" class="brand-logo" data-text="QUIMERA - Inicio General"></a>
+            <span class="vol-badge">&bull; Ecosistema &bull;</span>
             <ul class="nav-links">
                 <li><a href="#" id="audio-toggle">🎵 Música: OFF</a></li>
                 <li><a href="#" id="fullscreen-toggle">⛶ Pantalla Completa</a></li>
@@ -454,7 +445,6 @@
     </nav>
 
     <header>
-        <span class="vol-badge">&bull; Ecosistema &bull;</span>
         <h1><a href="https://quimerac3.github.io/" id="quimera-link"><span class="quimera-letter char-q">Q</span><span class="quimera-letter char-u">U</span><span class="quimera-letter char-i">I</span><span class="quimera-letter char-m">M</span><span class="quimera-letter char-e">E</span><span class="quimera-letter char-r">R</span><span class="quimera-letter char-a">A</span></a></h1>
         <p data-text="Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria."></p>
     </header>
@@ -596,7 +586,6 @@
                 function typeFooterP() {
                     if (pIndex >= footerPs.length) return;
                         let p = footerPs[pIndex];
-                        // Autocorrección dinámica del año actual en el typewriter
                         let text = p.dataset.text.replace('2026', new Date().getFullYear());
                         let i = 0;
                         function typeChar() {
@@ -649,7 +638,6 @@
                 setTimeout(() => { document.querySelector('.brand-logo').style.opacity = '0'; }, t);
                 t += 400;
 
-                // Transición de salida para "Música" y "Pantalla completa"
                 setTimeout(() => { 
                     document.getElementById('audio-toggle').style.opacity = '0';
                     document.getElementById('fullscreen-toggle').style.opacity = '0';
@@ -753,7 +741,6 @@
                     function typeFooterP() {
                         if (pIndex >= footerPs.length) return;
                         let p = footerPs[pIndex];
-                        // Autocorrección dinámica del año actual también al restaurar por bfcache
                         let text = p.dataset.text.replace('2026', new Date().getFullYear());
                         let i = 0;
                         function typeChar() {
