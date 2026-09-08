@@ -325,6 +325,14 @@
             text-decoration: none;
         }
 
+        /* Definición de la animación de latido a 110 BPM (0.5454s por ciclo) */
+        @keyframes heartbeat-110bpm {
+            0%, 100% { transform: scale(1); }
+            30% { transform: scale(1.09); }
+            50% { transform: scale(1); }
+            70% { transform: scale(1.05); }
+        }
+
         #image-modal img {
             max-width: 75vw;
             max-height: 75vh;
@@ -340,8 +348,9 @@
             transform: scale(1);
         }
 
+        /* Efecto de latido al pasar el cursor a 110 BPM */
         #image-modal img:hover {
-            transform: scale(1.02);
+            animation: heartbeat-110bpm 0.5454s infinite ease-in-out;
         }
 
         .close-modal {
