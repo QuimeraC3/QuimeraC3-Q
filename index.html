@@ -561,14 +561,6 @@
 
         quimeraLink.addEventListener('click', (e) => {
             e.preventDefault(); 
-            if (animationTimer) {
-                clearTimeout(animationTimer);
-                animationTimer = null;
-            }
-            letters.forEach(letter => {
-                letter.style.transition = 'color 250ms ease';
-                letter.style.color = '#ffffff';
-            });
             imageModal.classList.add('active');
         });
 
@@ -582,47 +574,56 @@
             }
         });
 
-        // Animación de Onda Continua para QUIMERA
-        const letters = document.querySelectorAll('.quimera-letter');
-        let animationTimer = null;
-        let currentPhase = 0; // 0: blanco a cobre, 1: cobre a blanco, 2: blanco a cobre, etc.
+        // Animación secuencial en bucle para la palabra QUIMERA
+        const quimeraLetters = document.querySelectorAll('#quimera-link .quimera-letter');
+        let quimeraAnimationTimer = null;
+        let waveState = 0; // 0: blanco -> cobre, 1: cobre -> blanco, 2: blanco -> cobre, etc.
 
         function runQuimeraWave() {
-            const totalDuration = 500;
-            const stepTime = totalDuration / letters.length;
-            const isToGold = (currentPhase % 2 === 0);
-            const toColor = isToGold ? '#c88b32' : '#ffffff';
+            const phaseDuration = 500; // 500ms por fase completa de secuencia
+            const totalLetters = quimeraLetters.length;
+            const stepDelay = phaseDuration / totalLetters;
+            const transitionTime = 200; // duración del desvanecimiento por letra
 
-            letters.forEach(letter => {
-                letter.style.transition = `color ${stepTime}ms ease`;
-            });
+            quimeraLetters.forEach(l => l.style.transition = `color ${transitionTime}ms ease`);
 
-            letters.forEach((letter, index) => {
+            const targetColor = (waveState % 2 === 0) ? '#c88b32' : '#ffffff';
+
+            quimeraLetters.forEach((letter, index) => {
                 setTimeout(() => {
-                    letter.style.color = toColor;
-                }, index * stepTime);
+                    letter.style.color = targetColor;
+                }, index * stepDelay);
             });
 
-            animationTimer = setTimeout(() => {
-                currentPhase++;
-                runQuimeraWave();
-            }, totalDuration);
+            waveState++;
+            quimeraAnimationTimer = setTimeout(runQuimeraWave, phaseDuration);
         }
 
         quimeraLink.addEventListener('mouseenter', () => {
-            if (animationTimer) clearTimeout(animationTimer);
-            currentPhase = 0;
-            runQuimeraWave();
+            if (!quimeraAnimationTimer) {
+                waveState = 0;
+                runQuimeraWave();
+            }
         });
 
         quimeraLink.addEventListener('mouseleave', () => {
-            if (animationTimer) {
-                clearTimeout(animationTimer);
-                animationTimer = null;
+            if (quimeraAnimationTimer) {
+                clearTimeout(quimeraAnimationTimer);
+                quimeraAnimationTimer = null;
             }
-            currentPhase = 0;
-            letters.forEach(letter => {
-                letter.style.transition = 'color 250ms ease';
+            quimeraLetters.forEach(letter => {
+                letter.style.transition = 'color 0.3s ease';
+                letter.style.color = '#ffffff';
+            });
+        });
+
+        quimeraLink.addEventListener('click', () => {
+            if (quimeraAnimationTimer) {
+                clearTimeout(quimeraAnimationTimer);
+                quimeraAnimationTimer = null;
+            }
+            quimeraLetters.forEach(letter => {
+                letter.style.transition = 'color 0.3s ease';
                 letter.style.color = '#ffffff';
             });
         });
@@ -900,10 +901,10 @@
                                 setTimeout(typeFooterP, 100);
                             }
                         }
-                        typeChar();
-                }
-                typeFooterP();
-            }, 10600);
+                        typeFooterP();
+                    }
+                    typeFooterP();
+                }, 10600);
             }
         });
     </script>
