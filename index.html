@@ -9,6 +9,7 @@
             --text-main: #0f172a;
             --primary: #0f766e;
             --primary-hover: #115e59;
+            --accent: #c88b32;
             --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
         }
@@ -204,13 +205,14 @@
             transition: color 0.25s ease;
         }
 
-        header h1 a:hover .char-q { transition-delay: 0.0s; color: #dc2626; }
-        header h1 a:hover .char-u { transition-delay: 0.05s; color: #dc2626; }
-        header h1 a:hover .char-i { transition-delay: 0.1s; color: #dc2626; }
-        header h1 a:hover .char-m { transition-delay: 0.15s; color: #dc2626; }
-        header h1 a:hover .char-e { transition-delay: 0.2s; color: #dc2626; }
-        header h1 a:hover .char-r { transition-delay: 0.25s; color: #dc2626; }
-        header h1 a:hover .char-a { transition-delay: 0.3s; color: #dc2626; }
+        /* Animación de secuencia de barrido a cobre dorado al pasar el cursor */
+        header h1 a:hover .char-q { transition-delay: 0.0s; color: var(--accent); }
+        header h1 a:hover .char-u { transition-delay: 0.05s; color: var(--accent); }
+        header h1 a:hover .char-i { transition-delay: 0.1s; color: var(--accent); }
+        header h1 a:hover .char-m { transition-delay: 0.15s; color: var(--accent); }
+        header h1 a:hover .char-e { transition-delay: 0.2s; color: var(--accent); }
+        header h1 a:hover .char-r { transition-delay: 0.25s; color: var(--accent); }
+        header h1 a:hover .char-a { transition-delay: 0.3s; color: var(--accent); }
 
         header p {
             position: absolute;
@@ -865,7 +867,7 @@
                                 setTimeout(typeFooterP, 100);
                             }
                         }
-                        typeChar();
+                        typeFooterP();
                     }
                     typeFooterP();
                 }, 10600);
