@@ -202,6 +202,7 @@
         .quimera-letter {
             display: inline-block;
             color: #ffffff;
+            transition: color 0.25s ease;
         }
 
         header p {
@@ -553,64 +554,23 @@
     </footer>
 
     <script>
-        // Animación secuencial en bucle para la palabra QUIMERA
+        // Control del Modal de la Letra Q
         const quimeraLink = document.getElementById('quimera-link');
-        const quimeraLetters = document.querySelectorAll('.quimera-letter');
-        let quimeraAnimTimeout = null;
-        let isQuimeraHovering = false;
-        let waveState = 0; // 0: inicial, alterna entre oleadas de 250ms
-
-        function runQuimeraWave() {
-            if (!isQuimeraHovering) return;
-
-            waveState++;
-            const targetColor = (waveState % 2 === 1) ? '#c88b32' : '#ffffff';
-            const stepTime = 250 / quimeraLetters.length; // Distribución de los 250ms por letra
-
-            quimeraLetters.forEach((letter, index) => {
-                setTimeout(() => {
-                    if (!isQuimeraHovering) return;
-                    letter.style.transition = `color ${stepTime}ms ease`;
-                    letter.style.color = targetColor;
-                }, index * stepTime);
-            });
-
-            // Programar la siguiente oleada exactamente después de 250ms
-            if (isQuimeraHovering) {
-                quimeraAnimTimeout = setTimeout(runQuimeraWave, 250);
-            }
-        }
-
-        quimeraLink.addEventListener('mouseenter', () => {
-            isQuimeraHovering = true;
-            waveState = 0; // Reiniciar para que la primera oleada empiece cambiando a cobre dorado
-            runQuimeraWave();
-        });
-
-        quimeraLink.addEventListener('mouseleave', () => {
-            isQuimeraHovering = false;
-            clearTimeout(quimeraAnimTimeout);
-            quimeraLetters.forEach(letter => {
-                letter.style.transition = 'color 200ms ease';
-                letter.style.color = '#ffffff';
-            });
-        });
-
-        quimeraLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            isQuimeraHovering = false;
-            clearTimeout(quimeraAnimTimeout);
-            quimeraLetters.forEach(letter => {
-                letter.style.transition = 'color 200ms ease';
-                letter.style.color = '#ffffff';
-            });
-            const imageModal = document.getElementById('image-modal');
-            imageModal.classList.add('active');
-        });
-
-        // Control de Cierre del Modal de la Letra Q
         const imageModal = document.getElementById('image-modal');
         const closeModal = document.querySelector('.close-modal');
+
+        quimeraLink.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            if (animationTimer) {
+                clearTimeout(animationTimer);
+                animationTimer = null;
+            }
+            letters.forEach(letter => {
+                letter.style.transition = 'color 250ms ease';
+                letter.style.color = '#ffffff';
+            });
+            imageModal.classList.add('active');
+        });
 
         closeModal.addEventListener('click', () => {
             imageModal.classList.remove('active');
@@ -620,6 +580,51 @@
             if (e.target === imageModal) {
                 imageModal.classList.remove('active');
             }
+        });
+
+        // Animación de Onda Continua para QUIMERA
+        const letters = document.querySelectorAll('.quimera-letter');
+        let animationTimer = null;
+        let currentPhase = 0; // 0: blanco a cobre, 1: cobre a blanco, 2: blanco a cobre, etc.
+
+        function runQuimeraWave() {
+            const totalDuration = 500;
+            const stepTime = totalDuration / letters.length;
+            const isToGold = (currentPhase % 2 === 0);
+            const toColor = isToGold ? '#c88b32' : '#ffffff';
+
+            letters.forEach(letter => {
+                letter.style.transition = `color ${stepTime}ms ease`;
+            });
+
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.color = toColor;
+                }, index * stepTime);
+            });
+
+            animationTimer = setTimeout(() => {
+                currentPhase++;
+                runQuimeraWave();
+            }, totalDuration);
+        }
+
+        quimeraLink.addEventListener('mouseenter', () => {
+            if (animationTimer) clearTimeout(animationTimer);
+            currentPhase = 0;
+            runQuimeraWave();
+        });
+
+        quimeraLink.addEventListener('mouseleave', () => {
+            if (animationTimer) {
+                clearTimeout(animationTimer);
+                animationTimer = null;
+            }
+            currentPhase = 0;
+            letters.forEach(letter => {
+                letter.style.transition = 'color 250ms ease';
+                letter.style.color = '#ffffff';
+            });
         });
 
         // Control de Reproducción de Música
@@ -895,10 +900,10 @@
                                 setTimeout(typeFooterP, 100);
                             }
                         }
-                        typeFooterP();
-                    }
-                    typeFooterP();
-                }, 10600);
+                        typeChar();
+                }
+                typeFooterP();
+            }, 10600);
             }
         });
     </script>
