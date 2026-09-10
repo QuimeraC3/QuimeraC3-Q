@@ -120,7 +120,7 @@
 
         .vol-badge {
             display: inline-block;
-            background-color: var(--primary);
+            background-color: var(--accent); /* Modificado a cobre dorado */
             color: #ffffff;
             font-size: 1rem;
             font-weight: 700;
@@ -153,7 +153,7 @@
         }
 
         #audio-toggle, #fullscreen-toggle {
-            background: rgba(15, 118, 110, 0.6);
+            background: rgba(200, 139, 50, 0.6); /* Modificado a versión translúcida de cobre dorado */
             border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
@@ -161,7 +161,7 @@
             transition: opacity 500ms ease;
         }
         #audio-toggle:hover, #fullscreen-toggle:hover {
-            background: var(--primary);
+            background: var(--accent); /* Modificado a cobre dorado en hover */
             color: #ffffff;
         }
 
@@ -266,7 +266,6 @@
             transition: color 0.3s ease;
         }
 
-        /* Modificado: color de los encabezados al pasar el cursor cambiado de verde a cobre dorado (--accent) */
         .info-card:hover h2 {
             color: var(--accent);
         }
@@ -328,7 +327,6 @@
             text-decoration: none;
         }
 
-        /* Animación sincronizada a exactamente 1 pulso por beat a 110 BPM (0.5454s) */
         @keyframes heartbeat-110bpm {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.08); }
@@ -349,7 +347,6 @@
             transform: scale(1);
         }
 
-        /* Efecto de latido limpio a 110 BPM al pasar el cursor */
         #image-modal img:hover {
             animation: heartbeat-110bpm 0.5454s infinite ease-in-out;
         }
@@ -579,7 +576,7 @@
         const closeModal = document.querySelector('.close-modal');
 
         quimeraLink.addEventListener('click', (e) => {
-            e.preventDefault(); // Evita la navegación predeterminada para abrir el modal
+            e.preventDefault(); 
             imageModal.classList.add('active');
         });
 
@@ -716,7 +713,6 @@
             }, 10600);
         });
 
-        // Salida secuencial personalizada al hacer clic (aplica también para el huevo de pascua)
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -728,7 +724,6 @@
                 const targetUrl = this.href;
                 document.body.classList.add('blurred-page');
 
-                // Cierra la modal si estuviera abierta antes de iniciar la animación de salida
                 imageModal.classList.remove('active');
 
                 let t = 0;
