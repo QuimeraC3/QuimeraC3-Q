@@ -202,16 +202,20 @@
         .quimera-letter {
             display: inline-block;
             color: #ffffff;
-            transition: color 0.25s ease;
         }
 
-        header h1 a:hover .char-q { transition-delay: 0.0s; color: var(--accent); }
-        header h1 a:hover .char-u { transition-delay: 0.05s; color: var(--accent); }
-        header h1 a:hover .char-i { transition-delay: 0.1s; color: var(--accent); }
-        header h1 a:hover .char-m { transition-delay: 0.15s; color: var(--accent); }
-        header h1 a:hover .char-e { transition-delay: 0.2s; color: var(--accent); }
-        header h1 a:hover .char-r { transition-delay: 0.25s; color: var(--accent); }
-        header h1 a:hover .char-a { transition-delay: 0.3s; color: var(--accent); }
+        /* Animación cíclica de color (500ms por cada cambio de estado) */
+        @keyframes quimeraColorCycle {
+            0%   { color: #ffffff; }
+            25%  { color: var(--accent); }
+            50%  { color: #ffffff; }
+            75%  { color: var(--accent); }
+            100% { color: #ffffff; }
+        }
+
+        header h1 a:hover .quimera-letter {
+            animation: quimeraColorCycle 2s infinite linear;
+        }
 
         header p {
             position: absolute;
