@@ -204,22 +204,26 @@
             color: #ffffff;
         }
 
-        /* Animación cíclica continua de onda en bucle */
-        @keyframes quimeraWaveCycle {
-            0%   { color: #ffffff; }
-            25%  { color: var(--accent); }
-            50%  { color: #ffffff; }
-            75%  { color: var(--accent); }
-            100% { color: #ffffff; }
+        /* Animación secuencial exacta por bloques de 566ms */
+        @keyframes quimeraSequentialWave {
+            0%     { color: #ffffff; }
+            3.57%  { color: #c88b32; }
+            25%    { color: #c88b32; }
+            28.57% { color: #ffffff; }
+            50%    { color: #ffffff; }
+            53.57% { color: #c88b32; }
+            75%    { color: #c88b32; }
+            78.57% { color: #ffffff; }
+            100%   { color: #ffffff; }
         }
 
-        #quimera-link.active-wave .char-q { animation: quimeraWaveCycle 2s infinite linear; animation-delay: 0ms; }
-        #quimera-link.active-wave .char-u { animation: quimeraWaveCycle 2s infinite linear; animation-delay: 71.43ms; }
-        #quimera-link.active-wave .char-i { animation: quimeraWaveCycle 2s infinite linear; animation-delay: 142.86ms; }
-        #quimera-link.active-wave .char-m { animation: quimeraWaveCycle 2s infinite linear; animation-delay: 214.29ms; }
-        #quimera-link.active-wave .char-e { animation: quimeraWaveCycle 2s infinite linear; animation-delay: 285.71ms; }
-        #quimera-link.active-wave .char-r { animation: quimeraWaveCycle 2s infinite linear; animation-delay: 357.14ms; }
-        #quimera-link.active-wave .char-a { animation: quimeraWaveCycle 2s infinite linear; animation-delay: 428.57ms; }
+        #quimera-link.active-wave .char-q { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 0ms; }
+        #quimera-link.active-wave .char-u { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 80.85ms; }
+        #quimera-link.active-wave .char-i { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 161.70ms; }
+        #quimera-link.active-wave .char-m { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 242.55ms; }
+        #quimera-link.active-wave .char-e { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 323.40ms; }
+        #quimera-link.active-wave .char-r { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 404.25ms; }
+        #quimera-link.active-wave .char-a { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 485.10ms; }
 
         header p {
             position: absolute;
