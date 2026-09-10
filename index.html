@@ -202,8 +202,24 @@
         .quimera-letter {
             display: inline-block;
             color: #ffffff;
-            transition: color 0.25s ease;
         }
+
+        /* Animación cíclica continua de onda en bucle */
+        @keyframes quimeraWaveCycle {
+            0%   { color: #ffffff; }
+            25%  { color: var(--accent); }
+            50%  { color: #ffffff; }
+            75%  { color: var(--accent); }
+            100% { color: #ffffff; }
+        }
+
+        #quimera-link.active-wave .char-q { animation: quimeraWaveCycle 2s infinite linear; animation-delay: 0ms; }
+        #quimera-link.active-wave .char-u { animation: quimeraWaveCycle 2s infinite linear; animation-delay: 71.43ms; }
+        #quimera-link.active-wave .char-i { animation: quimeraWaveCycle 2s infinite linear; animation-delay: 142.86ms; }
+        #quimera-link.active-wave .char-m { animation: quimeraWaveCycle 2s infinite linear; animation-delay: 214.29ms; }
+        #quimera-link.active-wave .char-e { animation: quimeraWaveCycle 2s infinite linear; animation-delay: 285.71ms; }
+        #quimera-link.active-wave .char-r { animation: quimeraWaveCycle 2s infinite linear; animation-delay: 357.14ms; }
+        #quimera-link.active-wave .char-a { animation: quimeraWaveCycle 2s infinite linear; animation-delay: 428.57ms; }
 
         header p {
             position: absolute;
@@ -554,8 +570,18 @@
     </footer>
 
     <script>
-        // Control del Modal de la Letra Q
+        // Control del Hover Animado para QUIMERA
         const quimeraLink = document.getElementById('quimera-link');
+        
+        quimeraLink.addEventListener('mouseenter', () => {
+            quimeraLink.classList.add('active-wave');
+        });
+
+        quimeraLink.addEventListener('mouseleave', () => {
+            quimeraLink.classList.remove('active-wave');
+        });
+
+        // Control del Modal de la Letra Q
         const imageModal = document.getElementById('image-modal');
         const closeModal = document.querySelector('.close-modal');
 
@@ -572,60 +598,6 @@
             if (e.target === imageModal) {
                 imageModal.classList.remove('active');
             }
-        });
-
-        // Animación secuencial en bucle para la palabra QUIMERA
-        const quimeraLetters = document.querySelectorAll('#quimera-link .quimera-letter');
-        let quimeraAnimationTimer = null;
-        let waveState = 0; // 0: blanco -> cobre, 1: cobre -> blanco, 2: blanco -> cobre, etc.
-
-        function runQuimeraWave() {
-            const phaseDuration = 500; // 500ms por fase completa de secuencia
-            const totalLetters = quimeraLetters.length;
-            const stepDelay = phaseDuration / totalLetters;
-            const transitionTime = 200; // duración del desvanecimiento por letra
-
-            quimeraLetters.forEach(l => l.style.transition = `color ${transitionTime}ms ease`);
-
-            const targetColor = (waveState % 2 === 0) ? '#c88b32' : '#ffffff';
-
-            quimeraLetters.forEach((letter, index) => {
-                setTimeout(() => {
-                    letter.style.color = targetColor;
-                }, index * stepDelay);
-            });
-
-            waveState++;
-            quimeraAnimationTimer = setTimeout(runQuimeraWave, phaseDuration);
-        }
-
-        quimeraLink.addEventListener('mouseenter', () => {
-            if (!quimeraAnimationTimer) {
-                waveState = 0;
-                runQuimeraWave();
-            }
-        });
-
-        quimeraLink.addEventListener('mouseleave', () => {
-            if (quimeraAnimationTimer) {
-                clearTimeout(quimeraAnimationTimer);
-                quimeraAnimationTimer = null;
-            }
-            quimeraLetters.forEach(letter => {
-                letter.style.transition = 'color 0.3s ease';
-                letter.style.color = '#ffffff';
-            });
-        });
-
-        quimeraLink.addEventListener('click', () => {
-            if (quimeraAnimationTimer) {
-                clearTimeout(quimeraAnimationTimer);
-                quimeraAnimationTimer = null;
-            }
-            quimeraLetters.forEach(letter => {
-                letter.style.transition = 'color 0.3s ease';
-                letter.style.color = '#ffffff';
-            });
         });
 
         // Control de Reproducción de Música
