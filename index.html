@@ -294,23 +294,18 @@
         .card-1 { top: 23vh; left: 5vw; transform: translateX(-10%) translateY(-25%); }
         .card-1:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(-10%) translateY(-25%) translateY(-6px); }
 
-        .card-2 { top: 57vh; left: 5vw; transform: translateX(-10%) translateY(-25%); }
+        /* Ajustadas a 61vh para evitar colisión universal en pantallas 1080p y proyectores */
+        .card-2 { top: 61vh; left: 5vw; transform: translateX(-10%) translateY(-25%); }
         .card-2:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(-10%) translateY(-25%) translateY(-6px); }
 
         .card-3 { top: 77vh; left: 50%; transform: translateX(-50%) translateY(55%); }
         .card-3:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(-50%) translateY(55%) translateY(-6px); }
 
-        .card-4 { top: 57vh; right: 5vw; transform: translateX(10%) translateY(-25%); }
+        .card-4 { top: 61vh; right: 5vw; transform: translateX(10%) translateY(-25%); }
         .card-4:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(10%) translateY(-25%) translateY(-6px); }
 
         .card-5 { top: 23vh; right: 5vw; transform: translateX(10%) translateY(-25%); }
         .card-5:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(10%) translateY(-25%) translateY(-6px); }
-
-        /* AJUSTE ESPECÍFICO PARA RESOLUCIÓN 1920x1080px (PROYECTOR) */
-        @media (min-width: 1400px) and (max-width: 1920px) and (max-height: 1080px) {
-            .card-2 { top: 64vh; }
-            .card-4 { top: 64vh; }
-        }
 
         #image-modal {
             position: fixed;
