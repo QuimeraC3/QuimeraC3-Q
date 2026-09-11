@@ -294,7 +294,6 @@
         .card-1 { top: 23vh; left: 5vw; transform: translateX(-10%) translateY(-25%); }
         .card-1:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(-10%) translateY(-25%) translateY(-6px); }
 
-        /* Ajustadas a 61vh para evitar colisión universal en pantallas 1080p y proyectores */
         .card-2 { top: 61vh; left: 5vw; transform: translateX(-10%) translateY(-25%); }
         .card-2:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(-10%) translateY(-25%) translateY(-6px); }
 
@@ -737,8 +736,22 @@
 
                 e.preventDefault(); 
                 const targetUrl = this.href;
-                document.body.classList.add('blurred-page');
 
+                // Transición especial y directa para la Letra Q (Mitología)
+                if (targetUrl.includes('mitologia.html')) {
+                    const overlay = document.getElementById('intro-overlay');
+                    overlay.style.zIndex = '40000'; // Eleva el overlay por encima del modal para cubrirlo
+                    overlay.style.backgroundColor = '#000000';
+                    overlay.style.opacity = '1'; // Oscurece manteniendo la Letra Q intacta hasta fundirla a negro
+
+                    setTimeout(() => {
+                        window.location.href = targetUrl;
+                    }, 1000); // Espera a que termine la transición y viaja a mitología
+                    return;
+                }
+
+                // Transición normal para las demás secciones del index
+                document.body.classList.add('blurred-page');
                 imageModal.classList.remove('active');
 
                 let t = 0;
@@ -787,6 +800,7 @@
             if (event.persisted) {
                 document.body.classList.remove('blurred-page');
                 const overlay = document.getElementById('intro-overlay');
+                overlay.style.zIndex = '9999'; // Restaura el z-index original por si vuelve atrás
                 overlay.style.backgroundColor = '#ffffff';
                 overlay.style.opacity = '1';
 
@@ -878,7 +892,7 @@
                                 setTimeout(typeFooterP, 100);
                             }
                         }
-                        typeFooterP();
+                        typeChar();
                     }
                     typeFooterP();
                 }, 10600);
