@@ -737,16 +737,16 @@
                 e.preventDefault(); 
                 const targetUrl = this.href;
 
-                // Transición especial y directa para la Letra Q (Mitología)
-                if (targetUrl.includes('https://quimerac3.github.io/QuimeraC3-Q-01QEQE/')) {
+                // Transición especial y directa para la Letra Q (Mitología) desde el modal
+                if (targetUrl.includes('https://quimerac3.github.io/QuimeraC3-Q-MDQ/')) {
                     const overlay = document.getElementById('intro-overlay');
                     overlay.style.zIndex = '40000'; // Eleva el overlay por encima del modal para cubrirlo
                     overlay.style.backgroundColor = '#000000';
-                    overlay.style.opacity = '1'; // Oscurece manteniendo la Letra Q intacta hasta fundirla a negro
+                    overlay.style.opacity = '1'; // Oscurece con desvanecimiento en negro manteniendo el modal visible hasta fundirlo por completo
 
                     setTimeout(() => {
                         window.location.href = targetUrl;
-                    }, 1000); // Espera a que termine la transición y viaja a mitología
+                    }, 1000); // Espera a que termine la transición y viaja a la página destino
                     return;
                 }
 
