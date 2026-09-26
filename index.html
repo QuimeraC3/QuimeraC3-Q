@@ -484,13 +484,19 @@
             font-weight: 700;
             font-size: 1.1rem;
             letter-spacing: 0.05em;
-            animation: parpadeoAcento 0.5s infinite alternate ease-in-out;
+            color: #ffffff;
             transition: opacity 500ms ease;
+            display: inline-block;
         }
 
-        @keyframes parpadeoAcento {
-            0% { color: #ffffff; }
-            100% { color: var(--accent); }
+        .exploracion-letter {
+            display: inline-block;
+            color: #ffffff;
+            white-space: pre;
+        }
+
+        #iniciar-exploracion.active-wave .exploracion-letter {
+            animation: quimeraSequentialWave 2.264s infinite linear;
         }
 
         /* Animación TV Encendiéndose (Invertido) */
@@ -883,7 +889,24 @@
                     mecaEscribirMatrix(el, 4, procesarSiguiente);
                 } else {
                     const btn = document.getElementById('iniciar-exploracion');
-                    if (btn) btn.style.opacity = '1';
+                    if (btn) {
+                        btn.classList.remove('active-wave');
+                        btn.textContent = 'COMENZAR LA EXPLORACIÓN.';
+                        
+                        // Escritura pausada y progresiva para el texto final (velocidad 25ms)
+                        mecaEscribirMatrix(btn, 25, function() {
+                            const texto = btn.textContent;
+                            btn.innerHTML = '';
+                            [...texto].forEach((char, idx) => {
+                                const span = document.createElement('span');
+                                span.className = 'exploracion-letter';
+                                span.textContent = char;
+                                span.style.animationDelay = `${idx * 80.85}ms`;
+                                btn.appendChild(span);
+                            });
+                            btn.classList.add('active-wave');
+                        });
+                    }
                 }
             }
 
