@@ -31,6 +31,19 @@
             background-color: #000000;
         }
 
+        /* Lienzo para el efecto Matrix */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1200ms ease;
+        }
+
         /* Capa de fondo para la imagen con aparición progresiva */
         #bg-layer {
             position: fixed;
@@ -44,7 +57,7 @@
             background-position: center center;
             background-attachment: fixed;
             opacity: 0;
-            transition: opacity 1000ms ease;
+            transition: opacity 1200ms ease;
         }
 
         /* Capa de pantalla completa para el difuminado inicial/final */
@@ -236,7 +249,6 @@
             max-width: 1000px;
             margin: 0;
             text-align: center;
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
             pointer-events: auto;
             -webkit-text-stroke: 1px #000000;
             text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
@@ -508,6 +520,9 @@
     <!-- Elemento de Audio -->
     <audio id="bg-music" src="Tango_Futuro_(Lado_B).mp3" loop preload="auto"></audio>
 
+    <!-- Canvas para animación de Matrix -->
+    <canvas id="matrix-canvas"></canvas>
+
     <!-- Capa de fondo -->
     <div id="bg-layer"></div>
 
@@ -570,6 +585,60 @@
     </footer>
 
     <script>
+        // MOTOR ANIMACIÓN MATRIX
+        const matrixCanvas = document.getElementById('matrix-canvas');
+        const matrixCtx = matrixCanvas.getContext('2d');
+        let matrixInterval = null;
+        let drops = [];
+        const fontSize = 16;
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        const alphabet = katakana + latin;
+
+        function initMatrix() {
+            matrixCanvas.width = window.innerWidth;
+            matrixCanvas.height = window.innerHeight;
+            const columns = Math.floor(matrixCanvas.width / fontSize);
+            drops = Array(columns).fill(1);
+        }
+
+        function drawMatrix() {
+            matrixCtx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+
+            matrixCtx.fillStyle = '#0F0';
+            matrixCtx.font = `${fontSize}px monospace`;
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                const x = i * fontSize;
+                const y = drops[i] * fontSize;
+
+                matrixCtx.fillText(text, x, y);
+
+                if (y > matrixCanvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        function startMatrix() {
+            initMatrix();
+            if (!matrixInterval) {
+                matrixInterval = setInterval(drawMatrix, 33);
+            }
+        }
+
+        function stopMatrix() {
+            if (matrixInterval) {
+                clearInterval(matrixInterval);
+                matrixInterval = null;
+            }
+        }
+
+        window.addEventListener('resize', initMatrix);
+
         // Control del Hover Animado para QUIMERA
         const quimeraLink = document.getElementById('quimera-link');
         
@@ -647,17 +716,33 @@
             }
         });
 
-        window.addEventListener('DOMContentLoaded', () => {
+        // Función reutilizable para coordinar la secuencia de entrada
+        function runIntroSequence() {
             const overlay = document.getElementById('intro-overlay');
 
+            // 0. Inicia el motor de Matrix en segundo plano
+            startMatrix();
+
+            // 1. Transición de Blanco a Negro en el Overlay
             setTimeout(() => { overlay.style.backgroundColor = '#000000'; }, 500);
 
+            // 2. Se revela la lluvia de Matrix sobre la pantalla negra
             setTimeout(() => {
-                document.getElementById('bg-layer').style.opacity = '1';
+                matrixCanvas.style.opacity = '1';
                 overlay.style.opacity = '0';
             }, 1500);
 
-            setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 2500);
+            // 3. Matrix da paso a la Imagen de Fondo (bg-layer)
+            setTimeout(() => {
+                document.getElementById('bg-layer').style.opacity = '1';
+                matrixCanvas.style.opacity = '0';
+            }, 4200);
+
+            // Apaga la renderización de Matrix al terminar de desvanecerse
+            setTimeout(() => { stopMatrix(); }, 5500);
+
+            // 4. Aparición progresiva de elementos UI
+            setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 5200);
 
             setTimeout(() => {
                 const brandLogo = document.querySelector('.brand-logo');
@@ -671,11 +756,11 @@
                     }
                 }
                 typeBrandLogo();
-            }, 3000);
+            }, 5700);
 
-            setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 4200);
-            setTimeout(() => { document.querySelector('.ecosistema-title').style.opacity = '1'; }, 4700);
-            setTimeout(() => { document.querySelector('header h1').style.opacity = '1'; }, 5200);
+            setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 6900);
+            setTimeout(() => { document.querySelector('.ecosistema-title').style.opacity = '1'; }, 7400);
+            setTimeout(() => { document.querySelector('header h1').style.opacity = '1'; }, 7900);
 
             setTimeout(() => {
                 const subP = document.querySelector('header p');
@@ -690,14 +775,14 @@
                     }
                 }
                 typeSubText();
-            }, 5700);
+            }, 8400);
 
-            setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 7600);
-            setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 8100);
-            setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 8600);
-            setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 9100);
-            setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 9600);
-            setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 10100);
+            setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 10300);
+            setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 10800);
+            setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 11300);
+            setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 11800);
+            setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 12300);
+            setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 12800);
 
             setTimeout(() => {
                 const footerPs = document.querySelectorAll('footer p');
@@ -720,9 +805,12 @@
                         typeChar();
                 }
                 typeFooterP();
-            }, 10600);
-        });
+            }, 13300);
+        }
 
+        window.addEventListener('DOMContentLoaded', runIntroSequence);
+
+        // Control de salida en enlaces
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -733,20 +821,18 @@
                 e.preventDefault(); 
                 const targetUrl = this.href;
 
-                // Transición especial y directa para la Letra Q (Mitología) desde el modal
                 if (targetUrl.includes('https://quimerac3.github.io/QuimeraC3-Q-MDQ/')) {
                     const overlay = document.getElementById('intro-overlay');
-                    overlay.style.zIndex = '40000'; // Eleva el overlay por encima del modal para cubrirlo
+                    overlay.style.zIndex = '40000';
                     overlay.style.backgroundColor = '#000000';
-                    overlay.style.opacity = '1'; // Oscurece con desvanecimiento en negro manteniendo el modal visible hasta fundirlo por completo
+                    overlay.style.opacity = '1';
 
                     setTimeout(() => {
                         window.location.href = targetUrl;
-                    }, 1000); // Espera a que termine la transición y viaja a la página destino
+                    }, 1000);
                     return;
                 }
 
-                // Transición normal para las demás secciones del index
                 document.body.classList.add('blurred-page');
                 imageModal.classList.remove('active');
 
@@ -792,15 +878,17 @@
             });
         });
 
+        // Soporte para navegación con botón "Atrás" del navegador
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) {
                 document.body.classList.remove('blurred-page');
                 const overlay = document.getElementById('intro-overlay');
-                overlay.style.zIndex = '9999'; // Restaura el z-index original por si vuelve atrás
+                overlay.style.zIndex = '9999';
                 overlay.style.backgroundColor = '#ffffff';
                 overlay.style.opacity = '1';
 
                 document.getElementById('bg-layer').style.opacity = '0';
+                matrixCanvas.style.opacity = '0';
                 document.querySelector('.top-bar').style.opacity = '0';
                 document.getElementById('audio-toggle').style.opacity = '';
                 document.getElementById('fullscreen-toggle').style.opacity = '';
@@ -825,73 +913,7 @@
                 footer.style.opacity = '0';
                 document.querySelectorAll('footer p').forEach(p => p.innerHTML = '');
 
-                setTimeout(() => { overlay.style.backgroundColor = '#000000'; }, 500);
-                setTimeout(() => {
-                    document.getElementById('bg-layer').style.opacity = '1';
-                    overlay.style.opacity = '0';
-                }, 1500);
-                setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 2500);
-
-                setTimeout(() => {
-                    const text = brandLogo.dataset.text;
-                    let i = 0;
-                    function typeBrandLogo() {
-                        if (i <= text.length) {
-                            brandLogo.innerHTML = text.substring(0, i);
-                            i++;
-                            setTimeout(typeBrandLogo, 25);
-                        }
-                    }
-                    typeBrandLogo();
-                }, 3000);
-
-                setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 4200);
-                setTimeout(() => { document.querySelector('.ecosistema-title').style.opacity = '1'; }, 4700);
-                setTimeout(() => { document.querySelector('header h1').style.opacity = '1'; }, 5200);
-                
-                setTimeout(() => {
-                    subP.style.opacity = '1';
-                    const subText = subP.dataset.text;
-                    let j = 0;
-                    function typeSubText() {
-                        if (j <= subText.length) {
-                            subP.innerHTML = subText.substring(0, j);
-                            j++;
-                            setTimeout(typeSubText, 20);
-                        }
-                    }
-                    typeSubText();
-                }, 5700);
-
-                setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 7600);
-                setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 8100);
-                setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 8600);
-                setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 9100);
-                setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 9600);
-                setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 10100);
-
-                setTimeout(() => {
-                    const footerPs = document.querySelectorAll('footer p');
-                    let pIndex = 0;
-                    function typeFooterP() {
-                        if (pIndex >= footerPs.length) return;
-                        let p = footerPs[pIndex];
-                        let text = p.dataset.text.replace('2026', new Date().getFullYear());
-                        let i = 0;
-                        function typeChar() {
-                            if (i <= text.length) {
-                                p.innerHTML = text.substring(0, i);
-                                i++;
-                                setTimeout(typeChar, 18);
-                            } else {
-                                pIndex++;
-                                setTimeout(typeFooterP, 100);
-                            }
-                        }
-                        typeChar();
-                    }
-                    typeFooterP();
-                }, 10600);
+                runIntroSequence();
             }
         });
     </script>
