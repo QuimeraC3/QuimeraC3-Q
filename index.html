@@ -75,7 +75,7 @@
         }
 
         /* Elementos con opacidad inicial 0 */
-        .top-bar, header, .vol-badge, header h1, header p, .card-1, .card-2, .card-3, .card-4, .card-5, footer {
+        .top-bar, header, .ecosistema-title, header h1, header p, .card-1, .card-2, .card-3, .card-4, .card-5, footer {
             opacity: 0;
             transition: opacity 500ms ease;
         }
@@ -116,21 +116,6 @@
         .brand-logo:hover {
             color: #38bdf8;
             text-decoration: underline;
-        }
-
-        .vol-badge {
-            display: inline-block;
-            background-color: var(--accent);
-            color: #ffffff;
-            font-size: clamp(0.8rem, 1.5vw, 1rem);
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 0.2rem 0.7rem;
-            border-radius: 9999px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            pointer-events: auto;
-            margin-left: 4.5rem;
         }
 
         .nav-links {
@@ -176,13 +161,12 @@
             z-index: 10;
         }
 
-        header h1 {
+        .ecosistema-title, header h1 {
             position: absolute;
-            top: 41vh;
             left: 50%;
             transform: translateX(-50%);
             font-family: Georgia, "Times New Roman", serif;
-            font-size: clamp(2.5rem, 10vw, 6rem); 
+            font-size: clamp(2rem, 8.5vw, 6rem); 
             line-height: 1.1;
             -webkit-text-stroke: 1.5px #000000;
             text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
@@ -193,6 +177,15 @@
             text-align: center;
             pointer-events: auto;
             margin: 0;
+            color: #ffffff;
+        }
+
+        .ecosistema-title {
+            top: 27vh;
+        }
+
+        header h1 {
+            top: 41vh;
         }
 
         header h1 a {
@@ -450,7 +443,7 @@
                 text-align: center;
             }
 
-            header h1, header p {
+            .ecosistema-title, header h1, header p {
                 position: relative !important;
                 top: auto !important;
                 left: auto !important;
@@ -526,7 +519,6 @@
     <nav class="top-bar">
         <div class="top-bar-container">
             <a href="https://quimerac3.github.io/" class="brand-logo" data-text="QUIMERA - Inicio General"></a>
-            <span class="vol-badge">&bull; Ecosistema &bull;</span>
             <ul class="nav-links">
                 <li><a href="#" id="audio-toggle"><span style="color: #ffffff;">🎵</span> Música: OFF</a></li>
                 <li><a href="#" id="fullscreen-toggle">⛶ Pantalla Completa</a></li>
@@ -535,6 +527,7 @@
     </nav>
 
     <header>
+        <div class="ecosistema-title">ECOSISTEMA</div>
         <h1><a href="#" id="quimera-link"><span class="quimera-letter char-q">Q</span><span class="quimera-letter char-u">U</span><span class="quimera-letter char-i">I</span><span class="quimera-letter char-m">M</span><span class="quimera-letter char-e">E</span><span class="quimera-letter char-r">R</span><span class="quimera-letter char-a">A</span></a></h1>
         <p data-text="Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria."></p>
     </header>
@@ -675,7 +668,7 @@
             }, 3000);
 
             setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 4200);
-            setTimeout(() => { document.querySelector('.vol-badge').style.opacity = '1'; }, 4700);
+            setTimeout(() => { document.querySelector('.ecosistema-title').style.opacity = '1'; }, 4700);
             setTimeout(() => { document.querySelector('header h1').style.opacity = '1'; }, 5200);
 
             setTimeout(() => {
@@ -768,7 +761,7 @@
                 t += 300;
                 setTimeout(() => { document.querySelector('header h1').style.opacity = '0'; }, t);
                 t += 300;
-                setTimeout(() => { document.querySelector('.vol-badge').style.opacity = '0'; }, t);
+                setTimeout(() => { document.querySelector('.ecosistema-title').style.opacity = '0'; }, t);
                 t += 300;
                 setTimeout(() => { document.querySelector('.brand-logo').style.opacity = '0'; }, t);
                 t += 400;
@@ -806,7 +799,7 @@
                 document.getElementById('audio-toggle').style.opacity = '';
                 document.getElementById('fullscreen-toggle').style.opacity = '';
                 document.querySelector('header').style.opacity = '0';
-                document.querySelector('.vol-badge').style.opacity = '0';
+                document.querySelector('.ecosistema-title').style.opacity = '0';
                 document.querySelector('header h1').style.opacity = '0';
                 
                 const subP = document.querySelector('header p');
@@ -847,7 +840,7 @@
                 }, 3000);
 
                 setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 4200);
-                setTimeout(() => { document.querySelector('.vol-badge').style.opacity = '1'; }, 4700);
+                setTimeout(() => { document.querySelector('.ecosistema-title').style.opacity = '1'; }, 4700);
                 setTimeout(() => { document.querySelector('header h1').style.opacity = '1'; }, 5200);
                 
                 setTimeout(() => {
