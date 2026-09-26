@@ -161,12 +161,12 @@
             z-index: 10;
         }
 
+        /* Propiedades visuales compartidas (sin font-size) */
         .ecosistema-title, header h1 {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
             font-family: Georgia, "Times New Roman", serif;
-            font-size: clamp(2rem, 8.5vw, 4rem); 
             line-height: 1.1;
             -webkit-text-stroke: 1.5px #000000;
             text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
@@ -180,12 +180,16 @@
             color: #ffffff;
         }
 
+        /* Tamaño y posición exclusiva para ECOSISTEMA */
         .ecosistema-title {
             top: 27vh;
+            font-size: clamp(1.5rem, 4vw, 2.8rem);
         }
 
+        /* Tamaño y posición exclusiva para QUIMERA */
         header h1 {
             top: 41vh;
+            font-size: clamp(2rem, 8.5vw, 4rem);
         }
 
         header h1 a {
