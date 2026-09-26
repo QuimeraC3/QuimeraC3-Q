@@ -174,7 +174,6 @@
             z-index: 10;
         }
 
-        /* Propiedades visuales compartidas */
         .ecosistema-title, header h1 {
             position: absolute;
             left: 51%;
@@ -214,7 +213,6 @@
             color: #ffffff;
         }
 
-        /* Animación secuencial exacta por bloques de 566ms */
         @keyframes quimeraSequentialWave {
             0%     { color: #ffffff; }
             3.57%  { color: #c88b32; }
@@ -420,7 +418,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: transparent; /* Mantiene transparente el fondo para ver el Matrix nítido */
+            background: transparent;
             z-index: 25000;
             display: flex;
             justify-content: center;
@@ -431,7 +429,7 @@
         }
 
         .contenido-zona-oculta {
-            background: rgba(11, 19, 41, 0.85);
+            background: rgba(11, 19, 41, 0.88);
             border: 1px solid var(--accent);
             border-radius: 8px;
             padding: 2.5rem 3rem;
@@ -440,19 +438,17 @@
             max-height: 85vh;
             overflow-y: auto;
             color: #ffffff;
-            box-shadow: 0 0 40px rgba(200, 139, 50, 0.15);
+            box-shadow: 0 0 50px rgba(200, 139, 50, 0.25);
             font-size: clamp(0.85rem, 1.2vw, 1rem);
             line-height: 1.7;
         }
 
-        /* Oculta inicialmente los bloques del modal para la animación de escritura Matrix */
         .contenido-zona-oculta h2,
         .contenido-zona-oculta p,
         #iniciar-exploracion {
             opacity: 0;
         }
 
-        /* Scrollbar personalizado para el modal */
         .contenido-zona-oculta::-webkit-scrollbar { width: 8px; }
         .contenido-zona-oculta::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.3); }
         .contenido-zona-oculta::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
@@ -491,7 +487,6 @@
             100% { color: var(--accent); }
         }
 
-        /* Animación TV Encendiéndose (Invertido) */
         .tv-turn-on {
             animation: tvTurnOn 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
             pointer-events: auto !important;
@@ -503,7 +498,6 @@
             100% { transform: scale(1, 1); opacity: 1; filter: brightness(1); }
         }
 
-        /* Animación TV Apagándose (Normal) */
         .tv-turn-off {
             animation: tvTurnOff 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
             pointer-events: none !important;
@@ -738,12 +732,12 @@
     </footer>
 
     <script>
-        // MOTOR ANIMACIÓN MATRIX
+        // MOTOR ANIMACIÓN MATRIX ALTA VISIBILIDAD
         const matrixCanvas = document.getElementById('matrix-canvas');
         const matrixCtx = matrixCanvas.getContext('2d');
         let matrixInterval = null;
         let drops = [];
-        const fontSize = 16;
+        const fontSize = 18; // Letra más grande
         const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
         const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         const alphabet = katakana + latin;
@@ -757,17 +751,27 @@
 
         function drawMatrix() {
             matrixCtx.globalCompositeOperation = 'destination-out';
-            matrixCtx.fillStyle = 'rgba(0, 0, 0, 0.08)'; 
+            matrixCtx.fillStyle = 'rgba(0, 0, 0, 0.07)'; 
             matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
 
             matrixCtx.globalCompositeOperation = 'source-over';
-            matrixCtx.fillStyle = '#c88b32';
-            matrixCtx.font = `${fontSize}px monospace`;
+            matrixCtx.font = `bold ${fontSize}px monospace`; // Negrita para mayor presencia
 
             for (let i = 0; i < drops.length; i++) {
                 const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
                 const x = i * fontSize;
                 const y = drops[i] * fontSize;
+
+                // Destello neón: La cabeza de la gota parpadea en blanco y el cuerpo en dorado vivo
+                if (Math.random() > 0.88) {
+                    matrixCtx.fillStyle = '#ffffff';
+                    matrixCtx.shadowColor = '#ffffff';
+                    matrixCtx.shadowBlur = 12;
+                } else {
+                    matrixCtx.fillStyle = '#f59e0b'; // Dorado brillante neón
+                    matrixCtx.shadowColor = '#c88b32';
+                    matrixCtx.shadowBlur = 8;
+                }
 
                 matrixCtx.fillText(text, x, y);
 
@@ -794,8 +798,8 @@
 
         window.addEventListener('resize', initMatrix);
 
-        // MOTOR DE ESCRITURA CON DESCODIFICACIÓN MATRIX
-        function mecaEscribirMatrix(elemento, velocidad = 10, alTerminar = null) {
+        // MOTOR DE ESCRITURA MATRIX A ALTA VELOCIDAD
+        function mecaEscribirMatrix(elemento, velocidad = 2, alTerminar = null) {
             const textoOriginal = elemento.innerHTML;
             elemento.innerHTML = '';
             elemento.style.opacity = '1';
@@ -851,17 +855,17 @@
                     } else {
                         const intervalMatrix = setInterval(() => {
                             const glifoRandom = glifos.charAt(Math.floor(Math.random() * glifos.length));
-                            elemento.innerHTML = htmlAcumulado + `<span style="color: var(--accent); font-weight: bold;">${glifoRandom}</span>`;
+                            elemento.innerHTML = htmlAcumulado + `<span style="color: #f59e0b; font-weight: bold; text-shadow: 0 0 6px #c88b32;">${glifoRandom}</span>`;
                             ciclosMatrix++;
 
-                            if (ciclosMatrix >= 2) { 
+                            if (ciclosMatrix >= 1) { 
                                 clearInterval(intervalMatrix);
                                 htmlAcumulado += charReal;
                                 elemento.innerHTML = htmlAcumulado;
                                 tokenIndex++;
                                 setTimeout(escribirSiguiente, velocidad);
                             }
-                        }, 10);
+                        }, 5);
                     }
                 }
             }
@@ -869,7 +873,7 @@
             escribirSiguiente();
         }
 
-        // Cascada secuencial para escribir todo el modal
+        // Cascada ultrarrápida para escribir todo el modal
         function iniciarEscrituraModalMatrix() {
             const elementos = Array.from(document.querySelectorAll('.contenido-zona-oculta h2, .contenido-zona-oculta p'));
             let index = 0;
@@ -878,7 +882,7 @@
                 if (index < elementos.length) {
                     const el = elementos[index];
                     index++;
-                    mecaEscribirMatrix(el, 8, procesarSiguiente);
+                    mecaEscribirMatrix(el, 2, procesarSiguiente); // Velocidad ultra rápida
                 } else {
                     const btn = document.getElementById('iniciar-exploracion');
                     if (btn) btn.style.opacity = '1';
