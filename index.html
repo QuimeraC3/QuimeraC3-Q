@@ -861,7 +861,7 @@
                                 tokenIndex++;
                                 setTimeout(escribirSiguiente, velocidad);
                             }
-                        }, 10);
+                        }, 5); // Cambiado de 10ms a 5ms (2x más rápido)
                     }
                 }
             }
@@ -878,7 +878,7 @@
                 if (index < elementos.length) {
                     const el = elementos[index];
                     index++;
-                    mecaEscribirMatrix(el, 8, procesarSiguiente);
+                    mecaEscribirMatrix(el, 4, procesarSiguiente); // Cambiado de 8ms a 4ms (2x más rápido)
                 } else {
                     const btn = document.getElementById('iniciar-exploracion');
                     if (btn) btn.style.opacity = '1';
