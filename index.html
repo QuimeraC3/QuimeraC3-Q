@@ -732,12 +732,12 @@
     </footer>
 
     <script>
-        // MOTOR ANIMACIÓN MATRIX ALTA VISIBILIDAD
+        // MOTOR ANIMACIÓN MATRIX FONDO
         const matrixCanvas = document.getElementById('matrix-canvas');
         const matrixCtx = matrixCanvas.getContext('2d');
         let matrixInterval = null;
         let drops = [];
-        const fontSize = 18; // Letra más grande
+        const fontSize = 18;
         const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
         const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         const alphabet = katakana + latin;
@@ -755,20 +755,19 @@
             matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
 
             matrixCtx.globalCompositeOperation = 'source-over';
-            matrixCtx.font = `bold ${fontSize}px monospace`; // Negrita para mayor presencia
+            matrixCtx.font = `bold ${fontSize}px monospace`;
 
             for (let i = 0; i < drops.length; i++) {
                 const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
                 const x = i * fontSize;
                 const y = drops[i] * fontSize;
 
-                // Destello neón: La cabeza de la gota parpadea en blanco y el cuerpo en dorado vivo
                 if (Math.random() > 0.88) {
                     matrixCtx.fillStyle = '#ffffff';
                     matrixCtx.shadowColor = '#ffffff';
                     matrixCtx.shadowBlur = 12;
                 } else {
-                    matrixCtx.fillStyle = '#f59e0b'; // Dorado brillante neón
+                    matrixCtx.fillStyle = '#f59e0b';
                     matrixCtx.shadowColor = '#c88b32';
                     matrixCtx.shadowBlur = 8;
                 }
@@ -798,7 +797,7 @@
 
         window.addEventListener('resize', initMatrix);
 
-        // MOTOR DE ESCRITURA MATRIX A ALTA VELOCIDAD
+        // MOTOR DE ESCRITURA MATRIX A ALTA VELOCIDAD CON CARACTERES BLANCOS ULTRA VISIBLES
         function mecaEscribirMatrix(elemento, velocidad = 2, alTerminar = null) {
             const textoOriginal = elemento.innerHTML;
             elemento.innerHTML = '';
@@ -855,7 +854,8 @@
                     } else {
                         const intervalMatrix = setInterval(() => {
                             const glifoRandom = glifos.charAt(Math.floor(Math.random() * glifos.length));
-                            elemento.innerHTML = htmlAcumulado + `<span style="color: #f59e0b; font-weight: bold; text-shadow: 0 0 6px #c88b32;">${glifoRandom}</span>`;
+                            // Carácter matrix temporal en color blanco brillante resplandeciente (#ffffff)
+                            elemento.innerHTML = htmlAcumulado + `<span style="color: #ffffff; font-weight: bold; text-shadow: 0 0 8px #ffffff, 0 0 12px #ffffff;">${glifoRandom}</span>`;
                             ciclosMatrix++;
 
                             if (ciclosMatrix >= 1) { 
@@ -882,7 +882,7 @@
                 if (index < elementos.length) {
                     const el = elementos[index];
                     index++;
-                    mecaEscribirMatrix(el, 2, procesarSiguiente); // Velocidad ultra rápida
+                    mecaEscribirMatrix(el, 2, procesarSiguiente);
                 } else {
                     const btn = document.getElementById('iniciar-exploracion');
                     if (btn) btn.style.opacity = '1';
