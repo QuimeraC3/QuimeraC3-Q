@@ -174,7 +174,7 @@
             z-index: 10;
         }
 
-        /* Propiedades visuales compartidas (sin font-size) */
+        /* Propiedades visuales compartidas */
         .ecosistema-title, header h1 {
             position: absolute;
             left: 51%;
@@ -193,13 +193,11 @@
             color: #ffffff;
         }
 
-        /* Tamaño y posición exclusiva para ECOSISTEMA */
         .ecosistema-title {
             top: 42vh;
             font-size: clamp(1.5rem, 4vw, 4rem);
         }
 
-        /* Tamaño y posición exclusiva para QUIMERA */
         header h1 {
             top: 55vh;
             font-size: clamp(2rem, 8.5vw, 7rem);
@@ -422,7 +420,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: transparent;
+            background: transparent; /* Mantiene transparente el fondo para ver el Matrix nítido */
             z-index: 25000;
             display: flex;
             justify-content: center;
@@ -445,6 +443,13 @@
             box-shadow: 0 0 40px rgba(200, 139, 50, 0.15);
             font-size: clamp(0.85rem, 1.2vw, 1rem);
             line-height: 1.7;
+        }
+
+        /* Oculta inicialmente los bloques del modal para la animación de escritura Matrix */
+        .contenido-zona-oculta h2,
+        .contenido-zona-oculta p,
+        #iniciar-exploracion {
+            opacity: 0;
         }
 
         /* Scrollbar personalizado para el modal */
@@ -478,6 +483,7 @@
             font-size: 1.1rem;
             letter-spacing: 0.05em;
             animation: parpadeoAcento 0.5s infinite alternate ease-in-out;
+            transition: opacity 500ms ease;
         }
 
         @keyframes parpadeoAcento {
@@ -750,17 +756,14 @@
         }
 
         function drawMatrix() {
-            // 1. Desvanece los fotogramas anteriores hacia la TRANSPARENCIA (sin pintar fondo negro)
             matrixCtx.globalCompositeOperation = 'destination-out';
-            matrixCtx.fillStyle = 'rgba(0, 0, 0, 0.08)'; // Controla la longitud de la estela
+            matrixCtx.fillStyle = 'rgba(0, 0, 0, 0.08)'; 
             matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
 
-            // 2. Restaura el modo de dibujo normal para pintar las letras verdes
             matrixCtx.globalCompositeOperation = 'source-over';
             matrixCtx.fillStyle = '#c88b32';
             matrixCtx.font = `${fontSize}px monospace`;
 
-            // 3. Dibuja los caracteres cayendo
             for (let i = 0; i < drops.length; i++) {
                 const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
                 const x = i * fontSize;
@@ -790,6 +793,100 @@
         }
 
         window.addEventListener('resize', initMatrix);
+
+        // MOTOR DE ESCRITURA CON DESCODIFICACIÓN MATRIX
+        function mecaEscribirMatrix(elemento, velocidad = 10, alTerminar = null) {
+            const textoOriginal = elemento.innerHTML;
+            elemento.innerHTML = '';
+            elemento.style.opacity = '1';
+
+            const glifos = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピ0123456789AZ';
+            
+            const tokens = [];
+            let tagStack = '';
+            let insideTag = false;
+
+            for (let char of textoOriginal) {
+                if (char === '<') {
+                    insideTag = true;
+                    tagStack += char;
+                } else if (char === '>') {
+                    insideTag = false;
+                    tagStack += char;
+                    tokens.push({ type: 'tag', value: tagStack });
+                    tagStack = '';
+                } else if (insideTag) {
+                    tagStack += char;
+                } else {
+                    tokens.push({ type: 'char', value: char });
+                }
+            }
+
+            let tokenIndex = 0;
+            let htmlAcumulado = '';
+
+            function escribirSiguiente() {
+                if (tokenIndex >= tokens.length) {
+                    elemento.innerHTML = textoOriginal;
+                    if (alTerminar) alTerminar();
+                    return;
+                }
+
+                const currentToken = tokens[tokenIndex];
+
+                if (currentToken.type === 'tag') {
+                    htmlAcumulado += currentToken.value;
+                    elemento.innerHTML = htmlAcumulado;
+                    tokenIndex++;
+                    escribirSiguiente();
+                } else {
+                    let ciclosMatrix = 0;
+                    const charReal = currentToken.value;
+
+                    if (charReal === ' ' || charReal === '\n' || charReal === '\r') {
+                        htmlAcumulado += charReal;
+                        elemento.innerHTML = htmlAcumulado;
+                        tokenIndex++;
+                        setTimeout(escribirSiguiente, velocidad);
+                    } else {
+                        const intervalMatrix = setInterval(() => {
+                            const glifoRandom = glifos.charAt(Math.floor(Math.random() * glifos.length));
+                            elemento.innerHTML = htmlAcumulado + `<span style="color: var(--accent); font-weight: bold;">${glifoRandom}</span>`;
+                            ciclosMatrix++;
+
+                            if (ciclosMatrix >= 2) { 
+                                clearInterval(intervalMatrix);
+                                htmlAcumulado += charReal;
+                                elemento.innerHTML = htmlAcumulado;
+                                tokenIndex++;
+                                setTimeout(escribirSiguiente, velocidad);
+                            }
+                        }, 10);
+                    }
+                }
+            }
+
+            escribirSiguiente();
+        }
+
+        // Cascada secuencial para escribir todo el modal
+        function iniciarEscrituraModalMatrix() {
+            const elementos = Array.from(document.querySelectorAll('.contenido-zona-oculta h2, .contenido-zona-oculta p'));
+            let index = 0;
+
+            function procesarSiguiente() {
+                if (index < elementos.length) {
+                    const el = elementos[index];
+                    index++;
+                    mecaEscribirMatrix(el, 8, procesarSiguiente);
+                } else {
+                    const btn = document.getElementById('iniciar-exploracion');
+                    if (btn) btn.style.opacity = '1';
+                }
+            }
+
+            procesarSiguiente();
+        }
 
         // Control del Hover Animado para QUIMERA
         const quimeraLink = document.getElementById('quimera-link');
@@ -868,31 +965,27 @@
             }
         });
 
-        // Función reutilizable dividida para coordinar la secuencia de entrada y el modal
+        // Función secuencial de entrada
         function runIntroSequence() {
             const overlay = document.getElementById('intro-overlay');
             const modalOculto = document.getElementById('modal-zona-oculta');
 
-            // 1. Inicia la transición a negro en el overlay
             setTimeout(() => { 
                 overlay.style.backgroundColor = '#000000'; 
             }, 300);
 
-            // 2. Inicializa Matrix y revela el canvas al mismo tiempo
             setTimeout(() => {
                 initMatrix();                     
                 startMatrix();                    
                 matrixCanvas.style.opacity = '1'; 
                 overlay.style.opacity = '0';      
                 
-                // 3. Lanza el Modal de Zona Oculta con efecto TV invertido (2.5 seg. después del Matrix)
                 setTimeout(() => {
                     modalOculto.classList.add('tv-turn-on');
+                    setTimeout(iniciarEscrituraModalMatrix, 700);
                 }, 2500);
 
             }, 800);
-            
-            // LA ANIMACIÓN SE PAUSA AQUÍ. No avanzará hasta que el usuario decida continuar.
         }
 
         // Control del botón final de la Zona Oculta
@@ -900,23 +993,18 @@
             e.preventDefault();
             const modalOculto = document.getElementById('modal-zona-oculta');
             
-            // Efecto de Apagado de TV normal
             modalOculto.classList.remove('tv-turn-on');
             modalOculto.classList.add('tv-turn-off');
 
-            // Retoma la secuencia de aparición del ecosistema después del apagado (600ms)
             setTimeout(continuarIntroSequence, 600);
         });
 
         function continuarIntroSequence() {
-            // 4. Matrix da paso a la Imagen de Fondo (bg-layer) recalculando los tiempos
             document.getElementById('bg-layer').style.opacity = '1';
             matrixCanvas.style.opacity = '0';
 
-            // Apaga la renderización de Matrix al terminar de desvanecerse
             setTimeout(() => { stopMatrix(); }, 1300);
 
-            // 5. Aparición progresiva de elementos UI (ajustados a la nueva línea de tiempo)
             setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 1000);
 
             setTimeout(() => {
@@ -1053,7 +1141,7 @@
             });
         });
 
-        // Soporte para navegación con botón "Atrás" del navegador
+        // Soporte para navegación con botón "Atrás"
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) {
                 document.body.classList.remove('blurred-page');
