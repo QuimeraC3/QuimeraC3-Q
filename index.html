@@ -284,22 +284,26 @@
             font-family: Georgia, "Times New Roman", serif;
             font-size: clamp(0.9rem, 1.5vw, 1.1rem);
             color: #ffffff;
-            transition: color 0.3s ease;
+            -webkit-text-stroke: 1px #000000;
+            transition: color 0.3s ease, -webkit-text-stroke 0.3s ease;
         }
 
         .info-card:hover h2 {
             color: var(--accent);
+            -webkit-text-stroke: 1px #000000;
         }
 
         .info-card p {
             color: #ffffff;
             font-size: clamp(0.8rem, 1.2vw, 0.95rem);
             font-weight: 500;
-            transition: color 0.3s ease;
+            -webkit-text-stroke: 1px #000000;
+            transition: color 0.3s ease, -webkit-text-stroke 0.3s ease;
         }
 
         .info-card:hover p {
             color: #000000;
+            -webkit-text-stroke: 0;
         }
 
         .card-1 { top: 23vh; left: 5vw; transform: translateX(-10%) translateY(-25%); }
@@ -420,7 +424,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: transparent; /* Mantiene transparente el fondo para ver el Matrix nítido */
+            background: transparent;
             z-index: 25000;
             display: flex;
             justify-content: center;
@@ -445,14 +449,12 @@
             line-height: 1.7;
         }
 
-        /* Oculta inicialmente los bloques del modal para la animación de escritura Matrix */
         .contenido-zona-oculta h2,
         .contenido-zona-oculta p,
         #iniciar-exploracion {
             opacity: 0;
         }
 
-        /* Scrollbar personalizado para el modal */
         .contenido-zona-oculta::-webkit-scrollbar { width: 8px; }
         .contenido-zona-oculta::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.3); }
         .contenido-zona-oculta::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
@@ -861,7 +863,7 @@
                                 tokenIndex++;
                                 setTimeout(escribirSiguiente, velocidad);
                             }
-                        }, 5); // Cambiado de 10ms a 5ms (2x más rápido)
+                        }, 5);
                     }
                 }
             }
@@ -878,7 +880,7 @@
                 if (index < elementos.length) {
                     const el = elementos[index];
                     index++;
-                    mecaEscribirMatrix(el, 4, procesarSiguiente); // Cambiado de 8ms a 4ms (2x más rápido)
+                    mecaEscribirMatrix(el, 4, procesarSiguiente);
                 } else {
                     const btn = document.getElementById('iniciar-exploracion');
                     if (btn) btn.style.opacity = '1';
