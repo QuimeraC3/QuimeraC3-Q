@@ -415,6 +415,102 @@
             color: #ffffff;
         }
 
+        /* --- MODAL ZONA OCULTA Y EFECTOS TV --- */
+        #modal-zona-oculta {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 25000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0, 0.01); 
+        }
+
+        .contenido-zona-oculta {
+            background: rgba(11, 19, 41, 0.85);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 2.5rem 3rem;
+            width: 85vw;
+            max-width: 800px;
+            max-height: 85vh;
+            overflow-y: auto;
+            color: #ffffff;
+            box-shadow: 0 0 40px rgba(200, 139, 50, 0.15);
+            font-size: clamp(0.85rem, 1.2vw, 1rem);
+            line-height: 1.7;
+        }
+
+        /* Scrollbar personalizado para el modal */
+        .contenido-zona-oculta::-webkit-scrollbar { width: 8px; }
+        .contenido-zona-oculta::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.3); }
+        .contenido-zona-oculta::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+
+        .titulo-oculto {
+            color: var(--accent);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .contenido-zona-oculta p {
+            margin-bottom: 1.2rem;
+            color: #ffffff;
+        }
+
+        .contenedor-enlace-final {
+            text-align: right;
+            margin-top: 3rem;
+        }
+
+        #iniciar-exploracion {
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+            animation: parpadeoAcento 0.5s infinite alternate ease-in-out;
+        }
+
+        @keyframes parpadeoAcento {
+            0% { color: #ffffff; }
+            100% { color: var(--accent); }
+        }
+
+        /* Animación TV Encendiéndose (Invertido) */
+        .tv-turn-on {
+            animation: tvTurnOn 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            pointer-events: auto !important;
+        }
+
+        @keyframes tvTurnOn {
+            0% { transform: scale(0, 0.01); opacity: 0; filter: brightness(20); }
+            40% { transform: scale(1, 0.01); opacity: 1; filter: brightness(10); }
+            100% { transform: scale(1, 1); opacity: 1; filter: brightness(1); }
+        }
+
+        /* Animación TV Apagándose (Normal) */
+        .tv-turn-off {
+            animation: tvTurnOff 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            pointer-events: none !important;
+        }
+
+        @keyframes tvTurnOff {
+            0% { transform: scale(1, 1); opacity: 1; filter: brightness(1); }
+            60% { transform: scale(1, 0.01); opacity: 1; filter: brightness(10); }
+            100% { transform: scale(0, 0.01); opacity: 0; filter: brightness(20); }
+        }
+
         @media (max-width: 1200px) {
             body {
                 height: auto;
@@ -528,6 +624,60 @@
 
     <!-- Capa para el efecto de difuminado inicial/final -->
     <div id="intro-overlay"></div>
+
+    <!-- Modal Zona Oculta -->
+    <div id="modal-zona-oculta">
+        <div class="contenido-zona-oculta">
+            <h2 class="titulo-oculto">HAS ENCONTRADO LA ZONA OCULTA DE QUIMERA.</h2>
+            
+            <p>Felicidades, navegante.<br>
+            Si estás leyendo este mensaje, significa que has encontrado uno de los accesos ocultos del ecosistema Quimera.<br>
+            No todos los caminos están señalizados. Algunos deben descubrirse.<br>
+            Has llegado a un espacio concebido para quienes sienten curiosidad por mirar un poco más allá de lo evidente. Aquí comienza una experiencia distinta de navegación: más inmersiva, más exploratoria y, quizá, un poco más enigmática.</p>
+
+            <p><strong>ANTES DE CONTINUAR…</strong><br>
+            Para disfrutar plenamente de esta experiencia, te recomendamos:</p>
+
+            <p>◈ <strong>Activar la pantalla completa:</strong><br>
+            Presiona F11 en tu teclado para ampliar el espacio de navegación y favorecer una experiencia más inmersiva.</p>
+
+            <p>◈ <strong>Enciende la música:</strong><br>
+            Utiliza el botón de música para escuchar el soundtrack del Instituto Quimera.<br>
+            La música no está aquí por accidente: forma parte de la atmósfera de este espacio.</p>
+
+            <p>◈ <strong>Explora sin prisa:</strong><br>
+            Observa los textos, imágenes, símbolos y elementos interactivos. Algunos caminos pueden conducir a lugares que no aparecen a primera vista.</p>
+
+            <p>◈ <strong>Haz clic. Investiga. Regresa.</strong><br>
+            Quimera está diseñado para ser recorrido, no simplemente consultado. Si algo despierta tu curiosidad, síguelo.</p>
+
+            <p>◈ <strong>Presta atención a los detalles:</strong><br>
+            En este ecosistema, algunos elementos cumplen más de una función. Lo que parece ornamental podría ser una pista. Lo que parece una pista podría conducir a otra.</p>
+
+            <p><strong>Y SOBRE TODO…</strong><br>
+            No dejes de buscar.</p>
+
+            <p>Quimera guarda fragmentos de su propia historia en lugares que no siempre se anuncian.<br>
+            Algunos fragmentos de Quimera no se encuentran en los<br>
+            caminos principales: hay que descubrirlos.</p>
+
+            <p>Si has llegado hasta aquí, ya has demostrado que sabes<br>
+            encontrar lo que permanece oculto.</p>
+
+            <p>Ahora comienza la verdadera exploración. Continúa recorriendo el ecosistema. Sigue las pistas. Descubre los símbolos. Encuentra los caminos que no aparecen en el mapa.</p>
+
+            <p>Porque detrás de Quimera existe una historia. Una historia que espera ser descubierta.</p>
+
+            <p>¿Serás capaz de encontrarla?</p>
+
+            <p>BIENVENIDO A LA ZONA OCULTA DE QUIMERA.<br>
+            La exploración apenas comienza.</p>
+
+            <div class="contenedor-enlace-final">
+                <a href="#" id="iniciar-exploracion">COMENZAR LA EXPLORACIÓN.</a>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal con la imagen de la letra Q enlazada a la mitología -->
     <div id="image-modal">
@@ -721,34 +871,56 @@
             }
         });
 
-        // Función reutilizable para coordinar la secuencia de entrada
+        // Función reutilizable dividida para coordinar la secuencia de entrada y el modal
         function runIntroSequence() {
             const overlay = document.getElementById('intro-overlay');
+            const modalOculto = document.getElementById('modal-zona-oculta');
 
             // 1. Inicia la transición a negro en el overlay
             setTimeout(() => { 
                 overlay.style.backgroundColor = '#000000'; 
             }, 300);
 
-            // 2. Inicializa Matrix y revela el canvas al mismo tiempo que se desvanece el overlay
+            // 2. Inicializa Matrix y revela el canvas al mismo tiempo
             setTimeout(() => {
-                initMatrix();                     // Reinicia posiciones en el borde superior
-                startMatrix();                    // Arranca la animación
-                matrixCanvas.style.opacity = '1'; // Muestra la lluvia de letras de inmediato
-                overlay.style.opacity = '0';      // Desvanece la capa del overlay
-            }, 800);
+                initMatrix();                     
+                startMatrix();                    
+                matrixCanvas.style.opacity = '1'; 
+                overlay.style.opacity = '0';      
+                
+                // 3. Lanza el Modal de Zona Oculta con efecto TV invertido (2.5 seg. después del Matrix)
+                setTimeout(() => {
+                    modalOculto.classList.add('tv-turn-on');
+                }, 2500);
 
-            // 3. Matrix da paso a la Imagen de Fondo (bg-layer)
-            setTimeout(() => {
-                document.getElementById('bg-layer').style.opacity = '1';
-                matrixCanvas.style.opacity = '0';
-            }, 4200);
+            }, 800);
+            
+            // LA ANIMACIÓN SE PAUSA AQUÍ. No avanzará hasta que el usuario decida continuar.
+        }
+
+        // Control del botón final de la Zona Oculta
+        document.getElementById('iniciar-exploracion').addEventListener('click', function(e) {
+            e.preventDefault();
+            const modalOculto = document.getElementById('modal-zona-oculta');
+            
+            // Efecto de Apagado de TV normal
+            modalOculto.classList.remove('tv-turn-on');
+            modalOculto.classList.add('tv-turn-off');
+
+            // Retoma la secuencia de aparición del ecosistema después del apagado (600ms)
+            setTimeout(continuarIntroSequence, 600);
+        });
+
+        function continuarIntroSequence() {
+            // 4. Matrix da paso a la Imagen de Fondo (bg-layer) recalculando los tiempos
+            document.getElementById('bg-layer').style.opacity = '1';
+            matrixCanvas.style.opacity = '0';
 
             // Apaga la renderización de Matrix al terminar de desvanecerse
-            setTimeout(() => { stopMatrix(); }, 5500);
+            setTimeout(() => { stopMatrix(); }, 1300);
 
-            // 4. Aparición progresiva de elementos UI
-            setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 5200);
+            // 5. Aparición progresiva de elementos UI (ajustados a la nueva línea de tiempo)
+            setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 1000);
 
             setTimeout(() => {
                 const brandLogo = document.querySelector('.brand-logo');
@@ -762,11 +934,11 @@
                     }
                 }
                 typeBrandLogo();
-            }, 5700);
+            }, 1500);
 
-            setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 6900);
-            setTimeout(() => { document.querySelector('.ecosistema-title').style.opacity = '1'; }, 7400);
-            setTimeout(() => { document.querySelector('header h1').style.opacity = '1'; }, 7900);
+            setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 2700);
+            setTimeout(() => { document.querySelector('.ecosistema-title').style.opacity = '1'; }, 3200);
+            setTimeout(() => { document.querySelector('header h1').style.opacity = '1'; }, 3700);
 
             setTimeout(() => {
                 const subP = document.querySelector('header p');
@@ -781,14 +953,14 @@
                     }
                 }
                 typeSubText();
-            }, 8400);
+            }, 4200);
 
-            setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 10300);
-            setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 10800);
-            setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 11300);
-            setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 11800);
-            setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 12300);
-            setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 12800);
+            setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 6100);
+            setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 6600);
+            setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 7100);
+            setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 7600);
+            setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 8100);
+            setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 8600);
 
             setTimeout(() => {
                 const footerPs = document.querySelectorAll('footer p');
@@ -811,7 +983,7 @@
                     typeChar();
                 }
                 typeFooterP();
-            }, 13300);
+            }, 9100);
         }
 
         window.addEventListener('DOMContentLoaded', runIntroSequence);
@@ -820,7 +992,7 @@
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
-                if (this.id === 'audio-toggle' || this.id === 'fullscreen-toggle' || this.id === 'quimera-link') return;
+                if (this.id === 'audio-toggle' || this.id === 'fullscreen-toggle' || this.id === 'quimera-link' || this.id === 'iniciar-exploracion') return;
                 const href = this.getAttribute('href');
                 if (href.startsWith('#')) return;
 
