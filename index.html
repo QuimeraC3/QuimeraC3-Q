@@ -55,8 +55,6 @@
             width: 100vw;
             height: 100vh;
             background: #ffffff;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             z-index: 9999;
             pointer-events: none;
             opacity: 1;
@@ -618,77 +616,78 @@
 
         // ENTRADA FLUIDA AL ECOSISTEMA
         function runEcosystemEntrance() {
-            const overlay = document.getElementById('intro-overlay');
-            const bgLayer = document.getElementById('bg-layer');
+    const overlay = document.getElementById('intro-overlay');
+    const bgLayer = document.getElementById('bg-layer');
 
-            bgLayer.style.opacity = '1';
-            overlay.style.opacity = '0';
+    function iniciarAnimaciones() {
+        bgLayer.style.opacity = '1';
+        overlay.style.opacity = '0';
 
-            setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 500);
+        setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 500);
 
-            setTimeout(() => {
-                const brandLogo = document.querySelector('.brand-logo');
-                const text = brandLogo.dataset.text;
+        setTimeout(() => {
+            const brandLogo = document.querySelector('.brand-logo');
+            const text = brandLogo.dataset.text;
+            let i = 0;
+            function typeBrandLogo() {
+                if (i <= text.length) {
+                    brandLogo.innerHTML = text.substring(0, i);
+                    i++;
+                    setTimeout(typeBrandLogo, 25);
+                }
+            }
+            typeBrandLogo();
+        }, 1000);
+
+        setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 1800);
+        setTimeout(() => { document.querySelector('.ecosistema-title').style.opacity = '1'; }, 2200);
+        setTimeout(() => { document.querySelector('header h1').style.opacity = '1'; }, 2600);
+
+        setTimeout(() => {
+            const subP = document.querySelector('header p');
+            subP.style.opacity = '1';
+            const subText = subP.dataset.text;
+            let j = 0;
+            function typeSubText() {
+                if (j <= subText.length) {
+                    subP.innerHTML = subText.substring(0, j);
+                    j++;
+                    setTimeout(typeSubText, 20);
+                }
+            }
+            typeSubText();
+        }, 3000);
+
+        setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 4200);
+        setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 4600);
+        setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 5000);
+        setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 5400);
+        setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 5800);
+        setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 6200);
+
+        setTimeout(() => {
+            const footerPs = document.querySelectorAll('footer p');
+            let pIndex = 0;
+            function typeFooterP() {
+                if (pIndex >= footerPs.length) return;
+                let p = footerPs[pIndex];
+                let text = p.dataset.text.replace('2026', new Date().getFullYear());
                 let i = 0;
-                function typeBrandLogo() {
+                function typeChar() {
                     if (i <= text.length) {
-                        brandLogo.innerHTML = text.substring(0, i);
+                        p.innerHTML = text.substring(0, i);
                         i++;
-                        setTimeout(typeBrandLogo, 25);
+                        setTimeout(typeChar, 18);
+                    } else {
+                        pIndex++;
+                        setTimeout(typeFooterP, 100);
                     }
                 }
-                typeBrandLogo();
-            }, 1000);
-
-            setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 1800);
-            setTimeout(() => { document.querySelector('.ecosistema-title').style.opacity = '1'; }, 2200);
-            setTimeout(() => { document.querySelector('header h1').style.opacity = '1'; }, 2600);
-
-            setTimeout(() => {
-                const subP = document.querySelector('header p');
-                subP.style.opacity = '1';
-                const subText = subP.dataset.text;
-                let j = 0;
-                function typeSubText() {
-                    if (j <= subText.length) {
-                        subP.innerHTML = subText.substring(0, j);
-                        j++;
-                        setTimeout(typeSubText, 20);
-                    }
-                }
-                typeSubText();
-            }, 3000);
-
-            setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 4200);
-            setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 4600);
-            setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 5000);
-            setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 5400);
-            setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 5800);
-            setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 6200);
-
-            setTimeout(() => {
-                const footerPs = document.querySelectorAll('footer p');
-                let pIndex = 0;
-                function typeFooterP() {
-                    if (pIndex >= footerPs.length) return;
-                    let p = footerPs[pIndex];
-                    let text = p.dataset.text.replace('2026', new Date().getFullYear());
-                    let i = 0;
-                    function typeChar() {
-                        if (i <= text.length) {
-                            p.innerHTML = text.substring(0, i);
-                            i++;
-                            setTimeout(typeChar, 18);
-                        } else {
-                            pIndex++;
-                            setTimeout(typeFooterP, 100);
-                        }
-                    }
-                    typeChar();
-                }
-                typeFooterP();
-            }, 6600);
-        }
+                typeChar();
+            }
+            typeFooterP();
+        }, 6600);
+    }
 
         window.addEventListener('DOMContentLoaded', runEcosystemEntrance);
 
