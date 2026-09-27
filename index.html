@@ -31,20 +31,7 @@
             background-color: #000000;
         }
 
-        /* Lienzo para el efecto Matrix */
-        #matrix-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 1200ms ease;
-        }
-
-        /* Capa de fondo para la imagen con aparición progresiva */
+        /* Capa de fondo para la imagen */
         #bg-layer {
             position: fixed;
             top: 0;
@@ -174,7 +161,6 @@
             z-index: 10;
         }
 
-        /* Propiedades visuales compartidas */
         .ecosistema-title, header h1 {
             position: absolute;
             left: 51%;
@@ -214,7 +200,6 @@
             color: #ffffff;
         }
 
-        /* Animación secuencial exacta por bloques de 566ms */
         @keyframes quimeraSequentialWave {
             0%     { color: #ffffff; }
             3.57%  { color: #c88b32; }
@@ -417,112 +402,6 @@
             color: #ffffff;
         }
 
-        /* --- MODAL ZONA OCULTA Y EFECTOS TV --- */
-        #modal-zona-oculta {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: transparent;
-            z-index: 25000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(0, 0.01); 
-        }
-
-        .contenido-zona-oculta {
-            background: rgba(11, 19, 41, 0.85);
-            border: 1px solid var(--accent);
-            border-radius: 8px;
-            padding: 2.5rem 3rem;
-            width: 85vw;
-            max-width: 800px;
-            max-height: 85vh;
-            overflow-y: auto;
-            color: #ffffff;
-            box-shadow: 0 0 40px rgba(200, 139, 50, 0.15);
-            font-size: clamp(0.85rem, 1.2vw, 1rem);
-            line-height: 1.7;
-        }
-
-        .contenido-zona-oculta h2,
-        .contenido-zona-oculta p,
-        #iniciar-exploracion {
-            opacity: 0;
-        }
-
-        .contenido-zona-oculta::-webkit-scrollbar { width: 8px; }
-        .contenido-zona-oculta::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.3); }
-        .contenido-zona-oculta::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
-
-        .titulo-oculto {
-            color: var(--accent);
-            font-family: Georgia, "Times New Roman", serif;
-            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-            margin-bottom: 1.5rem;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .contenido-zona-oculta p {
-            margin-bottom: 1.2rem;
-            color: #ffffff;
-        }
-
-        .contenedor-enlace-final {
-            text-align: right;
-            margin-top: 3rem;
-        }
-
-        #iniciar-exploracion {
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            letter-spacing: 0.05em;
-            color: #ffffff;
-            transition: opacity 500ms ease;
-            display: inline-block;
-        }
-
-        .exploracion-letter {
-            display: inline-block;
-            color: #ffffff;
-            white-space: pre;
-        }
-
-        #iniciar-exploracion.active-wave .exploracion-letter {
-            animation: quimeraSequentialWave 2.264s infinite linear;
-        }
-
-        /* Animación TV Encendiéndose (Invertido) */
-        .tv-turn-on {
-            animation: tvTurnOn 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-            pointer-events: auto !important;
-        }
-
-        @keyframes tvTurnOn {
-            0% { transform: scale(0, 0.01); opacity: 0; filter: brightness(20); }
-            40% { transform: scale(1, 0.01); opacity: 1; filter: brightness(10); }
-            100% { transform: scale(1, 1); opacity: 1; filter: brightness(1); }
-        }
-
-        /* Animación TV Apagándose (Normal) */
-        .tv-turn-off {
-            animation: tvTurnOff 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-            pointer-events: none !important;
-        }
-
-        @keyframes tvTurnOff {
-            0% { transform: scale(1, 1); opacity: 1; filter: brightness(1); }
-            60% { transform: scale(1, 0.01); opacity: 1; filter: brightness(10); }
-            100% { transform: scale(0, 0.01); opacity: 0; filter: brightness(20); }
-        }
-
         @media (max-width: 1200px) {
             body {
                 height: auto;
@@ -625,72 +504,10 @@
 </head>
 <body>
 
-    <!-- Elemento de Audio -->
     <audio id="bg-music" src="Tango_Futuro_(Lado_B).mp3" loop preload="auto"></audio>
-
-    <!-- Canvas para animación de Matrix -->
-    <canvas id="matrix-canvas"></canvas>
-
-    <!-- Capa de fondo -->
     <div id="bg-layer"></div>
-
-    <!-- Capa para el efecto de difuminado inicial/final -->
     <div id="intro-overlay"></div>
 
-    <!-- Modal Zona Oculta -->
-    <div id="modal-zona-oculta">
-        <div class="contenido-zona-oculta">
-            <h2 class="titulo-oculto">HAS ENCONTRADO LA ZONA OCULTA DE QUIMERA.</h2>
-            
-            <p>¡FELICIDADES, NAVEGANTE!</p>
-            <p>Si estás leyendo este mensaje, significa que has encontrado uno de los accesos ocultos del ecosistema QUIMERA.</p>
-            <p>No todos los caminos están señalizados. Algunos deben descubrirse.</p>
-            <p>Has llegado a un espacio concebido para quienes sienten curiosidad por mirar un poco más allá de lo evidente. Aquí comienza una experiencia distinta de navegación: más inmersiva, más exploratoria y quizá, un poco más enigmática.</p>
-
-            <p><strong>ANTES DE CONTINUAR…</strong><br>
-            Para disfrutar plenamente de esta experiencia, te recomendamos:</p>
-
-            <p>◈ <strong>Activar la pantalla completa:</strong><br>
-            Presiona F11 en tu teclado para ampliar el espacio de navegación y favorecer una experiencia más inmersiva.</p>
-
-            <p>◈ <strong>Enciende la música:</strong><br>
-            Utiliza el botón de música para escuchar el soundtrack del Instituto QUIMERA.<br>
-            La música no está aquí por accidente: forma parte de la atmósfera de este espacio.</p>
-
-            <p>◈ <strong>Explora sin prisa:</strong><br>
-            Observa los textos, imágenes, símbolos y elementos interactivos. Algunos caminos pueden conducir a lugares que no aparecen a primera vista.</p>
-
-            <p>◈ <strong>Haz clic. Investiga. Regresa.</strong><br>
-            QUIMERA está diseñado para ser recorrido, no simplemente consultado. Si algo despierta tu curiosidad, síguelo.</p>
-
-            <p>◈ <strong>Presta atención a los detalles:</strong><br>
-            En este ecosistema, algunos elementos cumplen más de una función. Lo que parece ornamental podría ser una pista. Lo que parece una pista podría conducir a otra.</p>
-
-            <p><strong>Y SOBRE TODO…</strong><br>
-            No dejes de buscar.</p>
-
-            <p>QUIMERA guarda fragmentos de su propia historia en lugares que no siempre se anuncian.<br>
-            Algunos fragmentos de QUIMERA no se encuentran en los caminos principales: hay que descubrirlos.</p>
-
-            <p>Si has llegado hasta aquí, ya has demostrado que sabes encontrar lo que permanece oculto.</p>
-
-            <p>Ahora comienza la verdadera exploración. Continúa recorriendo el ecosistema. Sigue las pistas. Descubre los símbolos. Encuentra los caminos que no aparecen en el mapa.</p>
-
-            <p>Porque detrás de QUIMERA existe una historia. Una historia que espera ser descubierta.</p>
-
-            <p>¿Serás capaz de encontrarla?</p>
-
-            <p>La exploración apenas comienza...</p>
-
-            <p>BIENVENIDOS A LA ZONA OCULTA DE QUIMERA</p>
-
-            <div class="contenedor-enlace-final">
-                <a href="#" id="iniciar-exploracion">COMENZAR LA EXPLORACIÓN.</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal con la imagen de la letra Q enlazada a la mitología -->
     <div id="image-modal">
         <button class="close-modal">&times;</button>
         <a href="https://quimerac3.github.io/QuimeraC3-Q-MDQ/">
@@ -746,185 +563,12 @@
     </footer>
 
     <script>
-        // MOTOR ANIMACIÓN MATRIX
-        const matrixCanvas = document.getElementById('matrix-canvas');
-        const matrixCtx = matrixCanvas.getContext('2d');
-        let matrixInterval = null;
-        let drops = [];
-        const fontSize = 16;
-        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
-        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        const alphabet = katakana + latin;
-
-        function initMatrix() {
-            matrixCanvas.width = window.innerWidth;
-            matrixCanvas.height = window.innerHeight;
-            const columns = Math.floor(matrixCanvas.width / fontSize);
-            drops = Array(columns).fill(1);
-        }
-
-        function drawMatrix() {
-            matrixCtx.globalCompositeOperation = 'destination-out';
-            matrixCtx.fillStyle = 'rgba(0, 0, 0, 0.08)'; 
-            matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
-
-            matrixCtx.globalCompositeOperation = 'source-over';
-            matrixCtx.fillStyle = '#c88b32';
-            matrixCtx.font = `${fontSize}px monospace`;
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-                const x = i * fontSize;
-                const y = drops[i] * fontSize;
-
-                matrixCtx.fillText(text, x, y);
-
-                if (y > matrixCanvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
-        }
-
-        function startMatrix() {
-            initMatrix();
-            if (!matrixInterval) {
-                matrixInterval = setInterval(drawMatrix, 33);
-            }
-        }
-
-        function stopMatrix() {
-            if (matrixInterval) {
-                clearInterval(matrixInterval);
-                matrixInterval = null;
-            }
-        }
-
-        window.addEventListener('resize', initMatrix);
-
-        // MOTOR DE ESCRITURA CON DESCODIFICACIÓN MATRIX
-        function mecaEscribirMatrix(elemento, velocidad = 10, alTerminar = null) {
-            const textoOriginal = elemento.innerHTML;
-            elemento.innerHTML = '';
-            elemento.style.opacity = '1';
-
-            const glifos = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピ0123456789AZ';
-            
-            const tokens = [];
-            let tagStack = '';
-            let insideTag = false;
-
-            for (let char of textoOriginal) {
-                if (char === '<') {
-                    insideTag = true;
-                    tagStack += char;
-                } else if (char === '>') {
-                    insideTag = false;
-                    tagStack += char;
-                    tokens.push({ type: 'tag', value: tagStack });
-                    tagStack = '';
-                } else if (insideTag) {
-                    tagStack += char;
-                } else {
-                    tokens.push({ type: 'char', value: char });
-                }
-            }
-
-            let tokenIndex = 0;
-            let htmlAcumulado = '';
-
-            function escribirSiguiente() {
-                if (tokenIndex >= tokens.length) {
-                    elemento.innerHTML = textoOriginal;
-                    if (alTerminar) alTerminar();
-                    return;
-                }
-
-                const currentToken = tokens[tokenIndex];
-
-                if (currentToken.type === 'tag') {
-                    htmlAcumulado += currentToken.value;
-                    elemento.innerHTML = htmlAcumulado;
-                    tokenIndex++;
-                    escribirSiguiente();
-                } else {
-                    let ciclosMatrix = 0;
-                    const charReal = currentToken.value;
-
-                    if (charReal === ' ' || charReal === '\n' || charReal === '\r') {
-                        htmlAcumulado += charReal;
-                        elemento.innerHTML = htmlAcumulado;
-                        tokenIndex++;
-                        setTimeout(escribirSiguiente, velocidad);
-                    } else {
-                        const intervalMatrix = setInterval(() => {
-                            const glifoRandom = glifos.charAt(Math.floor(Math.random() * glifos.length));
-                            elemento.innerHTML = htmlAcumulado + `<span style="color: var(--accent); font-weight: bold;">${glifoRandom}</span>`;
-                            ciclosMatrix++;
-
-                            if (ciclosMatrix >= 2) { 
-                                clearInterval(intervalMatrix);
-                                htmlAcumulado += charReal;
-                                elemento.innerHTML = htmlAcumulado;
-                                tokenIndex++;
-                                setTimeout(escribirSiguiente, velocidad);
-                            }
-                        }, 5);
-                    }
-                }
-            }
-
-            escribirSiguiente();
-        }
-
-        // Cascada secuencial para escribir todo el modal
-        function iniciarEscrituraModalMatrix() {
-            const elementos = Array.from(document.querySelectorAll('.contenido-zona-oculta h2, .contenido-zona-oculta p'));
-            let index = 0;
-
-            function procesarSiguiente() {
-                if (index < elementos.length) {
-                    const el = elementos[index];
-                    index++;
-                    mecaEscribirMatrix(el, 4, procesarSiguiente);
-                } else {
-                    const btn = document.getElementById('iniciar-exploracion');
-                    if (btn) {
-                        btn.classList.remove('active-wave');
-                        btn.textContent = 'COMENZAR LA EXPLORACIÓN.';
-                        
-                        // Escritura pausada y progresiva para el texto final (velocidad 25ms)
-                        mecaEscribirMatrix(btn, 25, function() {
-                            const texto = btn.textContent;
-                            btn.innerHTML = '';
-                            [...texto].forEach((char, idx) => {
-                                const span = document.createElement('span');
-                                span.className = 'exploracion-letter';
-                                span.textContent = char;
-                                span.style.animationDelay = `${idx * 80.85}ms`;
-                                btn.appendChild(span);
-                            });
-                            btn.classList.add('active-wave');
-                        });
-                    }
-                }
-            }
-
-            procesarSiguiente();
-        }
-
-        // Control del Hover Animado para QUIMERA
+        // HOVER Y ANIMACIONES QUIMERA
         const quimeraLink = document.getElementById('quimera-link');
-        
-        quimeraLink.addEventListener('mouseenter', () => {
-            quimeraLink.classList.add('active-wave');
-        });
+        quimeraLink.addEventListener('mouseenter', () => quimeraLink.classList.add('active-wave'));
+        quimeraLink.addEventListener('mouseleave', () => quimeraLink.classList.remove('active-wave'));
 
-        quimeraLink.addEventListener('mouseleave', () => {
-            quimeraLink.classList.remove('active-wave');
-        });
-
-        // Control del Modal de la Letra Q
+        // MODAL DE LA LETRA Q
         const imageModal = document.getElementById('image-modal');
         const closeModal = document.querySelector('.close-modal');
 
@@ -933,17 +577,12 @@
             imageModal.classList.add('active');
         });
 
-        closeModal.addEventListener('click', () => {
-            imageModal.classList.remove('active');
-        });
-
+        closeModal.addEventListener('click', () => imageModal.classList.remove('active'));
         imageModal.addEventListener('click', (e) => {
-            if (e.target === imageModal) {
-                imageModal.classList.remove('active');
-            }
+            if (e.target === imageModal) imageModal.classList.remove('active');
         });
 
-        // Control de Reproducción de Música
+        // CONTROL DE MÚSICA
         const music = document.getElementById('bg-music');
         const audioToggle = document.getElementById('audio-toggle');
         let isMusicPlaying = false;
@@ -958,22 +597,17 @@
                 music.play().then(() => {
                     audioToggle.innerHTML = '<span style="color: #ffffff;">🎶</span> Música: ON';
                     isMusicPlaying = true;
-                }).catch(error => {
-                    console.log("Error al reproducir audio:", error);
-                });
+                }).catch(err => console.log(err));
             }
         });
 
-        // Control de Pantalla Completa
+        // CONTROL PANTALLA COMPLETA
         const fullscreenToggle = document.getElementById('fullscreen-toggle');
-
         fullscreenToggle.addEventListener('click', (e) => {
             e.preventDefault();
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().then(() => {
                     fullscreenToggle.textContent = '❌ Salir Pantalla Completa';
-                }).catch(err => {
-                    console.log("Error al intentar entrar en pantalla completa:", err);
                 });
             } else {
                 document.exitFullscreen().then(() => {
@@ -982,55 +616,15 @@
             }
         });
 
-        document.addEventListener('fullscreenchange', () => {
-            if (!document.fullscreenElement) {
-                fullscreenToggle.textContent = '⛶ Pantalla Completa';
-            } else {
-                fullscreenToggle.textContent = '❌ Salir Pantalla Completa';
-            }
-        });
-
-        // Función secuencial de entrada
-        function runIntroSequence() {
+        // ENTRADA FLUIDA AL ECOSISTEMA
+        function runEcosystemEntrance() {
             const overlay = document.getElementById('intro-overlay');
-            const modalOculto = document.getElementById('modal-zona-oculta');
+            const bgLayer = document.getElementById('bg-layer');
 
-            setTimeout(() => { 
-                overlay.style.backgroundColor = '#000000'; 
-            }, 300);
+            bgLayer.style.opacity = '1';
+            overlay.style.opacity = '0';
 
-            setTimeout(() => {
-                initMatrix();                     
-                startMatrix();                    
-                matrixCanvas.style.opacity = '1'; 
-                overlay.style.opacity = '0';      
-                
-                setTimeout(() => {
-                    modalOculto.classList.add('tv-turn-on');
-                    setTimeout(iniciarEscrituraModalMatrix, 700);
-                }, 2500);
-
-            }, 800);
-        }
-
-        // Control del botón final de la Zona Oculta
-        document.getElementById('iniciar-exploracion').addEventListener('click', function(e) {
-            e.preventDefault();
-            const modalOculto = document.getElementById('modal-zona-oculta');
-            
-            modalOculto.classList.remove('tv-turn-on');
-            modalOculto.classList.add('tv-turn-off');
-
-            setTimeout(continuarIntroSequence, 600);
-        });
-
-        function continuarIntroSequence() {
-            document.getElementById('bg-layer').style.opacity = '1';
-            matrixCanvas.style.opacity = '0';
-
-            setTimeout(() => { stopMatrix(); }, 1300);
-
-            setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 1000);
+            setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 500);
 
             setTimeout(() => {
                 const brandLogo = document.querySelector('.brand-logo');
@@ -1044,11 +638,11 @@
                     }
                 }
                 typeBrandLogo();
-            }, 1500);
+            }, 1000);
 
-            setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 2700);
-            setTimeout(() => { document.querySelector('.ecosistema-title').style.opacity = '1'; }, 3200);
-            setTimeout(() => { document.querySelector('header h1').style.opacity = '1'; }, 3700);
+            setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 1800);
+            setTimeout(() => { document.querySelector('.ecosistema-title').style.opacity = '1'; }, 2200);
+            setTimeout(() => { document.querySelector('header h1').style.opacity = '1'; }, 2600);
 
             setTimeout(() => {
                 const subP = document.querySelector('header p');
@@ -1063,14 +657,14 @@
                     }
                 }
                 typeSubText();
-            }, 4200);
+            }, 3000);
 
-            setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 6100);
-            setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 6600);
-            setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 7100);
-            setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 7600);
-            setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 8100);
-            setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 8600);
+            setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 4200);
+            setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 4600);
+            setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 5000);
+            setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 5400);
+            setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 5800);
+            setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 6200);
 
             setTimeout(() => {
                 const footerPs = document.querySelectorAll('footer p');
@@ -1093,16 +687,16 @@
                     typeChar();
                 }
                 typeFooterP();
-            }, 9100);
+            }, 6600);
         }
 
-        window.addEventListener('DOMContentLoaded', runIntroSequence);
+        window.addEventListener('DOMContentLoaded', runEcosystemEntrance);
 
-        // Control de salida en enlaces
+        // TRANSICIÓN DE SALIDA EN ENLACES
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
-                if (this.id === 'audio-toggle' || this.id === 'fullscreen-toggle' || this.id === 'quimera-link' || this.id === 'iniciar-exploracion') return;
+                if (this.id === 'audio-toggle' || this.id === 'fullscreen-toggle' || this.id === 'quimera-link') return;
                 const href = this.getAttribute('href');
                 if (href.startsWith('#')) return;
 
@@ -1115,9 +709,7 @@
                     overlay.style.backgroundColor = '#000000';
                     overlay.style.opacity = '1';
 
-                    setTimeout(() => {
-                        window.location.href = targetUrl;
-                    }, 1000);
+                    setTimeout(() => { window.location.href = targetUrl; }, 1000);
                     return;
                 }
 
@@ -1164,45 +756,6 @@
 
                 setTimeout(() => { window.location.href = targetUrl; }, t);
             });
-        });
-
-        // Soporte para navegación con botón "Atrás"
-        window.addEventListener('pageshow', (event) => {
-            if (event.persisted) {
-                document.body.classList.remove('blurred-page');
-                const overlay = document.getElementById('intro-overlay');
-                overlay.style.zIndex = '9999';
-                overlay.style.backgroundColor = '#ffffff';
-                overlay.style.opacity = '1';
-
-                document.getElementById('bg-layer').style.opacity = '0';
-                matrixCanvas.style.opacity = '0';
-                document.querySelector('.top-bar').style.opacity = '0';
-                document.getElementById('audio-toggle').style.opacity = '';
-                document.getElementById('fullscreen-toggle').style.opacity = '';
-                document.querySelector('header').style.opacity = '0';
-                document.querySelector('.ecosistema-title').style.opacity = '0';
-                document.querySelector('header h1').style.opacity = '0';
-                
-                const subP = document.querySelector('header p');
-                subP.style.opacity = '0';
-                subP.innerHTML = '';
-                
-                const brandLogo = document.querySelector('.brand-logo');
-                brandLogo.style.opacity = ''; 
-                brandLogo.innerHTML = '';
-
-                ['.card-1', '.card-2', '.card-3', '.card-4', '.card-5'].forEach(selector => {
-                    const el = document.querySelector(selector);
-                    if (el) el.style.opacity = '0';
-                });
-
-                const footer = document.querySelector('footer');
-                footer.style.opacity = '0';
-                document.querySelectorAll('footer p').forEach(p => p.innerHTML = '');
-
-                runIntroSequence();
-            }
         });
     </script>
 </body>
