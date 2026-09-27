@@ -47,7 +47,7 @@
             transition: opacity 1200ms ease;
         }
 
-        /* Capa de pantalla completa para el difuminado inicial/final */
+        /* Capa de pantalla completa para la transición */
         #intro-overlay {
             position: fixed;
             top: 0;
@@ -58,7 +58,7 @@
             z-index: 9999;
             pointer-events: none;
             opacity: 1;
-            transition: opacity 1000ms ease, background-color 1000ms ease, backdrop-filter 1000ms ease;
+            transition: opacity 1000ms ease;
         }
 
         body.blurred-page {
@@ -67,8 +67,6 @@
         body.blurred-page #intro-overlay {
             opacity: 1;
             background-color: #ffffff;
-            backdrop-filter: blur(0px);
-            -webkit-backdrop-filter: blur(0px);
             transition: opacity 500ms ease, background-color 500ms ease;
         }
 
@@ -614,80 +612,91 @@
             }
         });
 
-        // ENTRADA FLUIDA AL ECOSISTEMA
+        // ENTRADA FLUIDA AL ECOSISTEMA CON PRECARGA DE IMAGEN
         function runEcosystemEntrance() {
-    const overlay = document.getElementById('intro-overlay');
-    const bgLayer = document.getElementById('bg-layer');
+            const overlay = document.getElementById('intro-overlay');
+            const bgLayer = document.getElementById('bg-layer');
 
-    function iniciarAnimaciones() {
-        bgLayer.style.opacity = '1';
-        overlay.style.opacity = '0';
+            function iniciarAnimaciones() {
+                bgLayer.style.opacity = '1';
+                overlay.style.opacity = '0';
 
-        setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 500);
+                setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 500);
 
-        setTimeout(() => {
-            const brandLogo = document.querySelector('.brand-logo');
-            const text = brandLogo.dataset.text;
-            let i = 0;
-            function typeBrandLogo() {
-                if (i <= text.length) {
-                    brandLogo.innerHTML = text.substring(0, i);
-                    i++;
-                    setTimeout(typeBrandLogo, 25);
-                }
-            }
-            typeBrandLogo();
-        }, 1000);
-
-        setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 1800);
-        setTimeout(() => { document.querySelector('.ecosistema-title').style.opacity = '1'; }, 2200);
-        setTimeout(() => { document.querySelector('header h1').style.opacity = '1'; }, 2600);
-
-        setTimeout(() => {
-            const subP = document.querySelector('header p');
-            subP.style.opacity = '1';
-            const subText = subP.dataset.text;
-            let j = 0;
-            function typeSubText() {
-                if (j <= subText.length) {
-                    subP.innerHTML = subText.substring(0, j);
-                    j++;
-                    setTimeout(typeSubText, 20);
-                }
-            }
-            typeSubText();
-        }, 3000);
-
-        setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 4200);
-        setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 4600);
-        setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 5000);
-        setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 5400);
-        setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 5800);
-        setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 6200);
-
-        setTimeout(() => {
-            const footerPs = document.querySelectorAll('footer p');
-            let pIndex = 0;
-            function typeFooterP() {
-                if (pIndex >= footerPs.length) return;
-                let p = footerPs[pIndex];
-                let text = p.dataset.text.replace('2026', new Date().getFullYear());
-                let i = 0;
-                function typeChar() {
-                    if (i <= text.length) {
-                        p.innerHTML = text.substring(0, i);
-                        i++;
-                        setTimeout(typeChar, 18);
-                    } else {
-                        pIndex++;
-                        setTimeout(typeFooterP, 100);
+                setTimeout(() => {
+                    const brandLogo = document.querySelector('.brand-logo');
+                    const text = brandLogo.dataset.text;
+                    let i = 0;
+                    function typeBrandLogo() {
+                        if (i <= text.length) {
+                            brandLogo.innerHTML = text.substring(0, i);
+                            i++;
+                            setTimeout(typeBrandLogo, 25);
+                        }
                     }
-                }
-                typeChar();
+                    typeBrandLogo();
+                }, 1000);
+
+                setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 1800);
+                setTimeout(() => { document.querySelector('.ecosistema-title').style.opacity = '1'; }, 2200);
+                setTimeout(() => { document.querySelector('header h1').style.opacity = '1'; }, 2600);
+
+                setTimeout(() => {
+                    const subP = document.querySelector('header p');
+                    subP.style.opacity = '1';
+                    const subText = subP.dataset.text;
+                    let j = 0;
+                    function typeSubText() {
+                        if (j <= subText.length) {
+                            subP.innerHTML = subText.substring(0, j);
+                            j++;
+                            setTimeout(typeSubText, 20);
+                        }
+                    }
+                    typeSubText();
+                }, 3000);
+
+                setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 4200);
+                setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 4600);
+                setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 5000);
+                setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 5400);
+                setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 5800);
+                setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 6200);
+
+                setTimeout(() => {
+                    const footerPs = document.querySelectorAll('footer p');
+                    let pIndex = 0;
+                    function typeFooterP() {
+                        if (pIndex >= footerPs.length) return;
+                        let p = footerPs[pIndex];
+                        let text = p.dataset.text.replace('2026', new Date().getFullYear());
+                        let i = 0;
+                        function typeChar() {
+                            if (i <= text.length) {
+                                p.innerHTML = text.substring(0, i);
+                                i++;
+                                setTimeout(typeChar, 18);
+                            } else {
+                                pIndex++;
+                                setTimeout(typeFooterP, 100);
+                            }
+                        }
+                        typeChar();
+                    }
+                    typeFooterP();
+                }, 6600);
             }
-            typeFooterP();
-        }, 6600);
-    }
+
+            const imgFondo = new Image();
+            imgFondo.src = 'Quimera_Ecosistema01.webp';
+
+            if (imgFondo.complete) {
+                requestAnimationFrame(iniciarAnimaciones);
+            } else {
+                imgFondo.onload = () => requestAnimationFrame(iniciarAnimaciones);
+                imgFondo.onerror = () => requestAnimationFrame(iniciarAnimaciones);
+            }
+        }
 
         window.addEventListener('DOMContentLoaded', runEcosystemEntrance);
 
