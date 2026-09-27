@@ -559,10 +559,18 @@
     </footer>
 
     <script>
-        // REDIRECCIÓN AL RETROCEDER EN EL NAVEGADOR (FLECHA ATRÁS / ALT + FLECHA IZQ)
+        // REDIRECCIÓN AL RETROCEDER EN EL NAVEGADOR (BOTÓN ATRÁS NATIVO)
         history.pushState(null, "", window.location.href);
         window.addEventListener('popstate', function () {
             window.location.href = 'https://quimerac3.github.io/';
+        });
+
+        // REDIRECCIÓN AL USAR COMANDO DE TECLADO ALT + FLECHA IZQUIERDA
+        window.addEventListener('keydown', function (e) {
+            if (e.altKey && (e.key === 'ArrowLeft' || e.keyCode === 37)) {
+                e.preventDefault();
+                window.location.href = 'https://quimerac3.github.io/';
+            }
         });
 
         // HOVER Y ANIMACIONES QUIMERA
