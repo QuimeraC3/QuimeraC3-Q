@@ -559,19 +559,27 @@
     </footer>
 
     <script>
-        // REDIRECCIÓN AL RETROCEDER EN EL NAVEGADOR (BOTÓN ATRÁS NATIVO)
-        history.pushState(null, "", window.location.href);
-        window.addEventListener('popstate', function () {
+        // CONTROL UNIFICADO DE REDIRECCIÓN HACIA ATRÁS
+        function redirigirAInicio(e) {
+            if (e && e.type === 'keydown') {
+                e.preventDefault();
+                e.stopPropagation();
+            }
             window.location.href = 'https://quimerac3.github.io/';
+        }
+
+        // 1. Interceptar el botón atrás de la interfaz del navegador (Mouse / UI)
+        history.pushState({ page: 'ecosistema' }, "", window.location.href);
+        window.addEventListener('popstate', function () {
+            redirigirAInicio();
         });
 
-        // REDIRECCIÓN AL USAR COMANDO DE TECLADO ALT + FLECHA IZQUIERDA
+        // 2. Interceptar el comando de teclado Alt + Flecha Izquierda (Fase de captura)
         window.addEventListener('keydown', function (e) {
             if (e.altKey && (e.key === 'ArrowLeft' || e.keyCode === 37)) {
-                e.preventDefault();
-                window.location.href = 'https://quimerac3.github.io/';
+                redirigirAInicio(e);
             }
-        });
+        }, true);
 
         // HOVER Y ANIMACIONES QUIMERA
         const quimeraLink = document.getElementById('quimera-link');
