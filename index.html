@@ -559,6 +559,12 @@
     </footer>
 
     <script>
+        // REDIRECCIÓN AL RETROCEDER EN EL NAVEGADOR (FLECHA ATRÁS / ALT + FLECHA IZQ)
+        history.pushState(null, "", window.location.href);
+        window.addEventListener('popstate', function () {
+            window.location.href = 'https://quimerac3.github.io/';
+        });
+
         // HOVER Y ANIMACIONES QUIMERA
         const quimeraLink = document.getElementById('quimera-link');
         quimeraLink.addEventListener('mouseenter', () => quimeraLink.classList.add('active-wave'));
