@@ -559,25 +559,33 @@
     </footer>
 
     <script>
-        // CONTROL UNIFICADO DE REDIRECCIÓN HACIA ATRÁS
-        function redirigirAInicio(e) {
-            if (e && e.type === 'keydown') {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-            window.location.href = 'https://quimerac3.github.io/';
+        // REDIRECCIÓN CONTROLADA HACIA ATRÁS
+        function irAInicio() {
+            window.location.replace('https://quimerac3.github.io/');
         }
 
-        // 1. Interceptar el botón atrás de la interfaz del navegador (Mouse / UI)
+        // 1. Inserción inicial en el historial
         history.pushState({ page: 'ecosistema' }, "", window.location.href);
-        window.addEventListener('popstate', function () {
-            redirigirAInicio();
+
+        // 2. Reforzar la trampa tras la primera interacción del usuario
+        // (Bypass de la protección contra hijacking de navegadores como Chrome/Edge)
+        ['click', 'touchstart', 'keydown', 'scroll'].forEach(evt => {
+            window.addEventListener(evt, function () {
+                history.pushState({ page: 'ecosistema' }, "", window.location.href);
+            }, { once: true });
         });
 
-        // 2. Interceptar el comando de teclado Alt + Flecha Izquierda (Fase de captura)
+        // 3. Capturar retroceso desde el botón de la interfaz del navegador
+        window.addEventListener('popstate', function () {
+            irAInicio();
+        });
+
+        // 4. Capturar la combinación Alt + Flecha Izquierda
         window.addEventListener('keydown', function (e) {
             if (e.altKey && (e.key === 'ArrowLeft' || e.keyCode === 37)) {
-                redirigirAInicio(e);
+                e.preventDefault();
+                e.stopPropagation();
+                irAInicio();
             }
         }, true);
 
