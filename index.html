@@ -261,18 +261,22 @@
             text-align: center;
         }
 
+        /* REGLA AJUSTADA PARA LOS TÍTULOS DE LAS TARJETAS */
         .info-card h2 {
             font-family: Georgia, "Times New Roman", serif;
             font-size: clamp(1.4rem, 2.0vw, 1.6rem);
-            font-weight: 800;
+            font-weight: 700;
+            letter-spacing: 0.06em; /* Expande el ancho horizontal de los caracteres */
             color: #ffffff;
             -webkit-text-stroke: 0.5px #000000;
-            transition: color 0.3s ease, -webkit-text-stroke 0.3s ease;
+            text-shadow: 0 0 1px #ffffff, 0 0 1px #ffffff; /* Refuerza el grosor óptico del color blanco */
+            transition: color 0.3s ease, -webkit-text-stroke 0.3s ease, text-shadow 0.3s ease;
         }
 
         .info-card:hover h2 {
             color: var(--accent);
             -webkit-text-stroke: 0.5px #000000;
+            text-shadow: none;
         }
 
         .info-card p {
@@ -569,7 +573,6 @@
         history.pushState({ page: 'ecosistema' }, "", window.location.href);
 
         // 2. Reforzar la trampa tras la primera interacción del usuario
-        // (Bypass de la protección contra hijacking de navegadores como Chrome/Edge)
         ['click', 'touchstart', 'keydown', 'scroll'].forEach(evt => {
             window.addEventListener(evt, function () {
                 history.pushState({ page: 'ecosistema' }, "", window.location.href);
