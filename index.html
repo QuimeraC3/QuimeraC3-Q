@@ -47,6 +47,19 @@
             transition: opacity 1200ms ease;
         }
 
+        /* Canvas para Lluvia de Código Matrix */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 20000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1200ms ease;
+        }
+
         /* Capa de pantalla completa para la transición */
         #intro-overlay {
             position: fixed;
@@ -58,7 +71,7 @@
             z-index: 9999;
             pointer-events: none;
             opacity: 1;
-            transition: opacity 1000ms ease;
+            transition: opacity 1000ms ease, background-color 500ms ease;
         }
 
         body.blurred-page {
@@ -261,15 +274,14 @@
             text-align: center;
         }
 
-        /* REGLA AJUSTADA PARA LOS TÍTULOS DE LAS TARJETAS */
         .info-card h2 {
             font-family: Georgia, "Times New Roman", serif;
             font-size: clamp(1.4rem, 2.0vw, 1.6rem);
             font-weight: 700;
-            letter-spacing: 0.06em; /* Expande el ancho horizontal de los caracteres */
+            letter-spacing: 0.06em;
             color: #ffffff;
             -webkit-text-stroke: 0.5px #000000;
-            text-shadow: 0 0 1px #ffffff, 0 0 1px #ffffff; /* Refuerza el grosor óptico del color blanco */
+            text-shadow: 0 0 1px #ffffff, 0 0 1px #ffffff;
             transition: color 0.3s ease, -webkit-text-stroke 0.3s ease, text-shadow 0.3s ease;
         }
 
@@ -313,9 +325,9 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -506,6 +518,7 @@
 <body>
 
     <audio id="bg-music" src="Tango_Futuro_(Lado_B).mp3" loop preload="auto"></audio>
+    <canvas id="matrix-canvas"></canvas>
     <div id="bg-layer"></div>
     <div id="intro-overlay"></div>
 
@@ -598,18 +611,104 @@
         quimeraLink.addEventListener('mouseenter', () => quimeraLink.classList.add('active-wave'));
         quimeraLink.addEventListener('mouseleave', () => quimeraLink.classList.remove('active-wave'));
 
-        // MODAL DE LA LETRA Q
+        // GENERADOR Y CONTROL DE LA LLUVIA MATRIX DORADA
+        let matrixInterval = null;
+
+        function startMatrixRain() {
+            const canvas = document.getElementById('matrix-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.removeEventListener('resize', resizeCanvas);
+            window.addEventListener('resize', resizeCanvas);
+
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZカタカナアアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            const fontSize = 16;
+            let columns = Math.floor(canvas.width / fontSize);
+            let drops = Array(columns).fill(1);
+
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.font = fontSize + 'px monospace';
+
+                for (let i = 0; i < drops.length; i++) {
+                    const text = chars.charAt(Math.floor(Math.random() * chars.length));
+
+                    if (Math.random() > 0.88) {
+                        ctx.fillStyle = '#fffbeb';
+                    } else {
+                        ctx.fillStyle = '#c88b32';
+                    }
+
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+
+            if (matrixInterval) clearInterval(matrixInterval);
+            matrixInterval = setInterval(draw, 33);
+        }
+
+        function stopMatrixRain() {
+            const canvas = document.getElementById('matrix-canvas');
+            if (canvas) {
+                canvas.style.opacity = '0';
+                setTimeout(() => {
+                    if (matrixInterval) {
+                        clearInterval(matrixInterval);
+                        matrixInterval = null;
+                    }
+                    const ctx = canvas.getContext('2d');
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }, 1200);
+            }
+        }
+
+        // MODAL DE LA LETRA Q Y SECUENCIA MATRIX
         const imageModal = document.getElementById('image-modal');
         const closeModal = document.querySelector('.close-modal');
 
         quimeraLink.addEventListener('click', (e) => {
             e.preventDefault(); 
-            imageModal.classList.add('active');
+            
+            const overlay = document.getElementById('intro-overlay');
+            overlay.style.zIndex = '25000';
+            overlay.style.backgroundColor = '#000000';
+            overlay.style.transition = 'opacity 600ms ease';
+            overlay.style.opacity = '1';
+
+            setTimeout(() => {
+                startMatrixRain();
+                const canvas = document.getElementById('matrix-canvas');
+                if (canvas) canvas.style.opacity = '1';
+
+                imageModal.classList.add('active');
+
+                setTimeout(() => {
+                    overlay.style.opacity = '0';
+                }, 100);
+            }, 600);
         });
 
-        closeModal.addEventListener('click', () => imageModal.classList.remove('active'));
+        function cerrarModalYMatriz() {
+            imageModal.classList.remove('active');
+            stopMatrixRain();
+        }
+
+        closeModal.addEventListener('click', cerrarModalYMatriz);
         imageModal.addEventListener('click', (e) => {
-            if (e.target === imageModal) imageModal.classList.remove('active');
+            if (e.target === imageModal) cerrarModalYMatriz();
         });
 
         // CONTROL DE MÚSICA
@@ -746,10 +845,8 @@
                 const targetUrl = this.href;
 
                 if (targetUrl.includes('https://quimerac3.github.io/QuimeraC3-Q-MDQ/')) {
-                    const overlay = document.getElementById('intro-overlay');
-                    overlay.style.zIndex = '40000';
-                    overlay.style.backgroundColor = '#000000';
-                    overlay.style.opacity = '1';
+                    stopMatrixRain();
+                    imageModal.classList.remove('active');
 
                     setTimeout(() => { window.location.href = targetUrl; }, 1000);
                     return;
