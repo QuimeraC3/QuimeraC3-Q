@@ -157,11 +157,13 @@
             z-index: 10;
         }
 
-        .ecosistema-title, header h1 {
+        .ecosistema-title {
             position: absolute;
+            top: 12vh;
             left: 50.5%;
             transform: translateX(-50%);
             font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(1.5rem, 4vw, 4rem);
             line-height: 1.1;
             -webkit-text-stroke: 1.5px #000000;
             text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
@@ -175,14 +177,24 @@
             color: #ffffff;
         }
 
-        .ecosistema-title {
-            top: 12vh;
-            font-size: clamp(1.5rem, 4vw, 4rem);
-        }
-
         header h1 {
-            top: 59.5vh;
+            position: absolute;
+            top: 60vh;
+            left: 50.5%;
+            transform: translateX(-50%);
+            font-family: Georgia, "Times New Roman", serif;
             font-size: clamp(2rem, 8.5vw, 7rem);
+            line-height: 1.1;
+            -webkit-text-stroke: 1.5px #000000;
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            width: 100%;
+            text-align: center;
+            pointer-events: auto;
+            margin: 0;
+            color: #ffffff;
         }
 
         header h1 a {
@@ -218,7 +230,7 @@
 
         header p {
             position: absolute;
-            top: calc(59.5vh + 6.25rem + 1.0rem);
+            top: calc(60vh + 6.25rem + 1.0rem);
             left: 50%;
             transform: translateX(-50%);
             font-size: clamp(1rem, 2.5vw, 1.5rem);
@@ -266,10 +278,10 @@
             font-family: Georgia, "Times New Roman", serif;
             font-size: clamp(1.4rem, 2.0vw, 1.6rem);
             font-weight: 700;
-            letter-spacing: 0.06em; /* Expande el ancho horizontal de los caracteres */
+            letter-spacing: 0.06em;
             color: #ffffff;
             -webkit-text-stroke: 0.5px #000000;
-            text-shadow: 0 0 1px #ffffff, 0 0 1px #ffffff; /* Refuerza el grosor óptico del color blanco */
+            text-shadow: 0 0 1px #ffffff, 0 0 1px #ffffff;
             transition: color 0.3s ease, -webkit-text-stroke 0.3s ease, text-shadow 0.3s ease;
         }
 
