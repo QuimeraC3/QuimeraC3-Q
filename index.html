@@ -71,7 +71,7 @@
         }
 
         /* Elementos con opacidad inicial 0 */
-        .top-bar, header, .ecosistema-title, header h1, header p, .card-1, .card-2, .card-3, .card-4, .card-5, footer {
+        .top-bar, header, .ecosistema-title, header h1, header p, footer {
             opacity: 0;
             transition: opacity 500ms ease;
         }
@@ -256,6 +256,7 @@
         }
 
         .info-card {
+            opacity: 0;
             pointer-events: auto;
             position: absolute;
             text-decoration: none;
@@ -266,15 +267,15 @@
             width: 20vw;
             max-width: 350px;
             box-shadow: var(--shadow);
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, opacity 500ms ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, opacity 1200ms ease;
             display: flex;
             flex-direction: column;
             gap: 0.2rem;
             text-align: center;
         }
 
-        /* REGLA AJUSTADA PARA LOS TÍTULOS DE LAS TARJETAS */
         .info-card h2 {
+            opacity: 0;
             font-family: Georgia, "Times New Roman", serif;
             font-size: clamp(1.4rem, 2.0vw, 1.6rem);
             font-weight: 700;
@@ -282,24 +283,27 @@
             color: #ffffff;
             -webkit-text-stroke: 0.5px #000000;
             text-shadow: 0 0 1px #ffffff, 0 0 1px #ffffff;
-            transition: color 0.3s ease, -webkit-text-stroke 0.3s ease, text-shadow 0.3s ease;
+            transition: color 0.3s ease, -webkit-text-stroke 0.3s ease, text-shadow 0.3s ease, opacity 0.3s ease;
         }
 
         .info-card:hover h2 {
+            opacity: 1;
             color: var(--accent);
             -webkit-text-stroke: 0.5px #000000;
             text-shadow: none;
         }
 
         .info-card p {
+            opacity: 0;
             color: #ffffff;
             font-size: clamp(1.1rem, 1.5vw, 1.25rem);
             font-weight: 600;
             -webkit-text-stroke: 0.5px #000000;
-            transition: color 0.3s ease, -webkit-text-stroke 0.3s ease;
+            transition: color 0.3s ease, -webkit-text-stroke 0.3s ease, opacity 0.3s ease;
         }
 
         .info-card:hover p {
+            opacity: 1;
             color: #000000;
             -webkit-text-stroke: 0;
         }
@@ -664,8 +668,13 @@
             const bgLayer = document.getElementById('bg-layer');
 
             function iniciarAnimaciones() {
+                // El fondo y las tarjetas aparecen al mismo tiempo con la misma velocidad
                 bgLayer.style.opacity = '1';
                 overlay.style.opacity = '0';
+                
+                document.querySelectorAll('.info-card').forEach(card => {
+                    card.style.opacity = '1';
+                });
 
                 setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 500);
 
@@ -702,11 +711,8 @@
                     typeSubText();
                 }, 3000);
 
-                setTimeout(() => { document.querySelector('.card-1').style.opacity = '1'; }, 4200);
-                setTimeout(() => { document.querySelector('.card-2').style.opacity = '1'; }, 4600);
-                setTimeout(() => { document.querySelector('.card-3').style.opacity = '1'; }, 5000);
-                setTimeout(() => { document.querySelector('.card-4').style.opacity = '1'; }, 5400);
-                setTimeout(() => { document.querySelector('.card-5').style.opacity = '1'; }, 5800);
+                // Las tarjetas ya no tienen timeouts aquí porque aparecen desde el inicio
+
                 setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 6200);
 
                 setTimeout(() => {
