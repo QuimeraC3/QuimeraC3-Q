@@ -31,7 +31,7 @@
             background-color: #000000;
         }
 
-        /* Capa de fondo para la imagen con soporte de glitch de entrada */
+        /* Capa de fondo para la imagen con soporte de glitch de entrada y frame skipping ambiental */
         #bg-layer {
             position: fixed;
             top: 0;
@@ -58,6 +58,19 @@
             60% { filter: invert(30%) contrast(250%); transform: translate(-4px, 2px); }
             80% { filter: hue-rotate(45deg) contrast(150%); transform: translate(4px, -2px); }
             100% { filter: none; transform: translate(0); }
+        }
+
+        /* ANIMACIÓN DE FRAME SKIPPING AMBIENTAL PARA LA ESPERA */
+        #bg-layer.bg-skipping-active {
+            animation: bgFrameSkipAnim 0.25s steps(3, jump-none) 1 both;
+        }
+
+        @keyframes bgFrameSkipAnim {
+            0% { filter: contrast(120%) brightness(100%); transform: translate(0, 0); }
+            30% { filter: invert(20%) hue-rotate(180deg) contrast(200%); transform: translate(6px, -4px); }
+            60% { filter: brightness(150%) saturate(200%); transform: translate(-6px, 4px); }
+            90% { filter: grayscale(80%) contrast(150%); transform: translate(2px, -2px); }
+            100% { filter: none; transform: translate(0, 0); }
         }
 
         /* Capa de pantalla completa para la transición */
@@ -762,6 +775,27 @@
             }
         });
 
+        // BUCLE ALEATORIO DE FRAME SKIPPING AMBIENTAL PARA LA IMAGEN DE FONDO
+        function iniciarFrameSkippingAmbiental() {
+            const bgLayer = document.getElementById('bg-layer');
+
+            function dispararSkip() {
+                // Solo si la página está activa y visible
+                if (!document.hidden && bgLayer.style.opacity === '1') {
+                    bgLayer.classList.add('bg-skipping-active');
+                    setTimeout(() => {
+                        bgLayer.classList.remove('bg-skipping-active');
+                    }, 250);
+                }
+                // Programar el siguiente salto de cuadro en un intervalo aleatorio entre 6 y 14 segundos
+                const tiempoSiguiente = Math.random() * 8000 + 6000;
+                setTimeout(dispararSkip, tiempoSiguiente);
+            }
+
+            // Primer disparo aleatorio tras 5 segundos de haber cargado la intro
+            setTimeout(dispararSkip, 7000);
+        }
+
         // ENTRADA SINCRONIZADA PASO A PASO CON RESPLANDOR HOLOGRÁFICO EN RECUADROS
         function runEcosystemEntrance() {
             const overlay = document.getElementById('intro-overlay');
@@ -869,6 +903,9 @@
                     }
                     typeFooterP();
                 }, 5800);
+
+                // Iniciar los saltos de cuadro ambientales en la imagen posterior durante la espera
+                iniciarFrameSkippingAmbiental();
             }
 
             const imgFondo = new Image();
