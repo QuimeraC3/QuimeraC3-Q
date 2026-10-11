@@ -31,7 +31,25 @@
             background-color: #000000;
         }
 
-        /* Capa de fondo para la imagen con soporte de glitch de entrada y frame skipping ambiental */
+        /* Capa de luz reactiva exclusiva para el movimiento del puntero del ratón */
+        .cursor-light-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(circle 400px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(56, 189, 248, 0.18), rgba(200, 139, 50, 0.1) 45%, transparent 80%);
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        .cursor-light-glow.visible {
+            opacity: 1;
+        }
+
+        /* Capa de fondo estática, nítida y completa con soporte de glitch de entrada y frame skipping ambiental */
         #bg-layer {
             position: fixed;
             top: 0;
@@ -635,7 +653,13 @@
 <body>
 
     <audio id="bg-music" src="Tango_Futuro_(Lado_B).mp3" loop preload="auto"></audio>
+    
+    <!-- Capa de fondo estática, nítida y completa -->
     <div id="bg-layer"></div>
+
+    <!-- Capa de luz reactiva exclusiva del puntero del ratón -->
+    <div class="cursor-light-glow" id="cursor-light-glow"></div>
+
     <div id="intro-overlay"></div>
 
     <div id="image-modal">
@@ -693,6 +717,16 @@
     </footer>
 
     <script>
+        // CONTROL DE MOVIMIENTO DEL CURSOR (EXCLUSIVO PARA LA LUZ REACTIVA)
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            // Actualizar coordenadas del haz de luz para que sigan con precisión al ratón
+            document.documentElement.style.setProperty('--mouse-x', `${x}px`);
+            document.documentElement.style.setProperty('--mouse-y', `${y}px`);
+        });
+
         // REDIRECCIÓN CONTROLADA HACIA ATRÁS
         function irAInicio() {
             window.location.replace('https://quimerac3.github.io/');
@@ -780,19 +814,16 @@
             const bgLayer = document.getElementById('bg-layer');
 
             function dispararSkip() {
-                // Solo si la página está activa y visible
                 if (!document.hidden && bgLayer.style.opacity === '1') {
                     bgLayer.classList.add('bg-skipping-active');
                     setTimeout(() => {
                         bgLayer.classList.remove('bg-skipping-active');
                     }, 250);
                 }
-                // Programar el siguiente salto de cuadro en un intervalo aleatorio entre 6 y 14 segundos
                 const tiempoSiguiente = Math.random() * 8000 + 6000;
                 setTimeout(dispararSkip, tiempoSiguiente);
             }
 
-            // Primer disparo aleatorio tras 5 segundos de haber cargado la intro
             setTimeout(dispararSkip, 7000);
         }
 
@@ -800,15 +831,16 @@
         function runEcosystemEntrance() {
             const overlay = document.getElementById('intro-overlay');
             const bgLayer = document.getElementById('bg-layer');
+            const cursorGlow = document.getElementById('cursor-light-glow');
 
             function iniciarAnimaciones() {
                 overlay.style.opacity = '0';
 
                 // =========================================================================
-                // GRUPO 1: A LA PAR CON LA IMAGEN DE FONDO
-                // Fondo, 5 Recuadros y Top-Bar (Textos del header y controles) con Glitch Supremo
+                // GRUPO 1: A LA PAR CON LA IMAGEN DE FONDO Y EL HAZ DE LUZ DEL CURSOR
                 // =========================================================================
                 bgLayer.style.opacity = '1';
+                cursorGlow.classList.add('visible');
                 bgLayer.classList.add('bg-glitch-active');
                 setTimeout(() => {
                     bgLayer.classList.remove('bg-glitch-active');
@@ -831,7 +863,6 @@
                     card.classList.add('glitch-slice-active');
                     setTimeout(() => {
                         card.classList.remove('glitch-slice-active');
-                        // Activamos el efecto de iluminación posterior (holograma) en espera de selección
                         card.classList.add('card-hologram-glow');
                     }, 1050);
                 });
@@ -869,16 +900,10 @@
                     }, delay);
                 }
 
-                // 1. ECOSISTEMA comienza después de que termina el primer grupo (aprox. t = 1400ms)
                 ejecutarGlitchSupremo('.ecosistema-title', 1400);
-
-                // 2. QUIMERA comienza estrictamente al terminar ECOSISTEMA
                 ejecutarGlitchSupremo('header h1', 2650);
-
-                // 3. Subtítulo comienza estrictamente al terminar QUIMERA
                 ejecutarGlitchSupremo('header p', 3900);
 
-                // Footer al final de toda la secuencia
                 setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 5400);
 
                 setTimeout(() => {
@@ -904,7 +929,6 @@
                     typeFooterP();
                 }, 5800);
 
-                // Iniciar los saltos de cuadro ambientales en la imagen posterior durante la espera
                 iniciarFrameSkippingAmbiental();
             }
 
@@ -945,14 +969,13 @@
                 document.body.classList.add('blurred-page');
                 imageModal.classList.remove('active');
 
-                // 1. Desvanecimiento simultáneo de TODOS los elementos
                 document.querySelectorAll('.top-bar, header, .container').forEach(el => {
                     el.style.transition = 'opacity 800ms ease';
                     el.style.opacity = '0';
                 });
                 document.getElementById('bg-layer').style.opacity = '0';
+                document.getElementById('cursor-light-glow').style.opacity = '0';
 
-                // 2. Fundido a negro intermedio y cierre al blanco final con el overlay
                 const overlay = document.getElementById('intro-overlay');
                 overlay.style.zIndex = '40000';
                 overlay.style.backgroundColor = '#000000';
@@ -962,7 +985,6 @@
                     overlay.style.backgroundColor = '#ffffff';
                 }, 600);
 
-                // 3. Redirección final sincronizada
                 setTimeout(() => { window.location.href = targetUrl; }, 1200);
             });
         });
