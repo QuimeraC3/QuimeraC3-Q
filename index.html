@@ -31,7 +31,7 @@
             background-color: #000000;
         }
 
-        /* Capa de fondo para la imagen */
+        /* Capa de fondo para la imagen con soporte de glitch de entrada */
         #bg-layer {
             position: fixed;
             top: 0;
@@ -45,6 +45,19 @@
             background-attachment: fixed;
             opacity: 0;
             transition: opacity 1200ms ease;
+        }
+
+        #bg-layer.bg-glitch-active {
+            animation: bgGlitchAnim 0.35s steps(2, end) 3 both;
+        }
+
+        @keyframes bgGlitchAnim {
+            0% { filter: hue-rotate(0deg) contrast(100%); transform: translate(0); }
+            20% { filter: hue-rotate(90deg) contrast(220%) invert(15%); transform: translate(-8px, 4px); }
+            40% { filter: hue-rotate(-90deg) contrast(180%); transform: translate(8px, -4px); }
+            60% { filter: invert(30%) contrast(250%); transform: translate(-4px, 2px); }
+            80% { filter: hue-rotate(45deg) contrast(150%); transform: translate(4px, -2px); }
+            100% { filter: none; transform: translate(0); }
         }
 
         /* Capa de pantalla completa para la transición */
@@ -71,7 +84,7 @@
         }
 
         /* Elementos con opacidad inicial 0 */
-        .top-bar, header, .ecosistema-title, header h1, header p, footer {
+        .top-bar, header, footer {
             opacity: 0;
             transition: opacity 500ms ease;
         }
@@ -216,7 +229,7 @@
             -webkit-background-clip: text;
         }
 
-        /* REGLAS DE REBANADO (SLICE GLITCH) ACTIVO X3 */
+        /* REGLAS DE REBANADO CON ABERRACIÓN CROMÁTICA RGB (SLICE GLITCH SUPREMO) */
         .glitch-slice-active {
             animation: sliceGlitchMaster 0.35s steps(2, end) 3 both;
         }
@@ -236,38 +249,38 @@
         }
 
         .glitch-slice-active::before {
-            left: 3px;
-            text-shadow: -2px 0 #ff0055;
+            left: 4px;
+            text-shadow: -3px 0 #ff0055, 0 3px #00e5ff;
             clip-path: inset(0 0 52% 0);
             animation: sliceTopShift 0.35s steps(2, end) 3 both;
         }
 
         .glitch-slice-active::after {
-            left: -3px;
-            text-shadow: -2px 0 #00e5ff;
+            left: -4px;
+            text-shadow: 3px 0 #00e5ff, 0 -3px #ff0055;
             clip-path: inset(48% 0 0 0);
             animation: sliceBottomShift 0.35s steps(2, end) 3 both;
         }
 
         @keyframes sliceGlitchMaster {
             0% { transform: translateX(-50%) translate(0); filter: hue-rotate(0deg); }
-            20% { transform: translateX(-50%) translate(-10px, 5px); filter: contrast(200%); }
-            40% { transform: translateX(-50%) translate(8px, -5px); filter: hue-rotate(90deg); }
-            60% { transform: translateX(-50%) translate(-6px, 3px); filter: invert(20%); }
-            80% { transform: translateX(-50%) translate(7px, -3px); filter: contrast(150%); }
+            20% { transform: translateX(-50%) translate(-12px, 6px); filter: contrast(220%) hue-rotate(90deg); }
+            40% { transform: translateX(-50%) translate(10px, -6px); filter: contrast(180%) invert(20%); }
+            60% { transform: translateX(-50%) translate(-8px, 4px); filter: contrast(250%) hue-rotate(-90deg); }
+            80% { transform: translateX(-50%) translate(9px, -4px); filter: contrast(150%); }
             100% { transform: translateX(-50%) translate(0); filter: none; }
         }
 
         @keyframes sliceTopShift {
             0%, 100% { transform: translate(0, 0); }
-            30% { transform: translate(-16px, -4px); }
-            60% { transform: translate(10px, 3px); }
+            30% { transform: translate(-20px, -5px); }
+            60% { transform: translate(14px, 4px); }
         }
 
         @keyframes sliceBottomShift {
             0%, 100% { transform: translate(0, 0); }
-            30% { transform: translate(16px, 4px); }
-            60% { transform: translate(-10px, -3px); }
+            30% { transform: translate(20px, 5px); }
+            60% { transform: translate(-14px, -4px); }
         }
 
         .hologram-mode {
@@ -619,27 +632,27 @@
     </header>
 
     <main class="container">
-        <a href="https://quimerac3.github.io/QuimeraC3-Q-01QE/" class="info-card card-1">
+        <a href="https://quimerac3.github.io/QuimeraC3-Q-01QE/" class="info-card card-1" data-text="QUIMERA">
             <h2>QUIMERA</h2>
             <p>Esto somos.</p>
         </a>
 
-        <a href="https://quimerac3.github.io/QuimeraC3-Q-02M/" class="info-card card-2">
+        <a href="https://quimerac3.github.io/QuimeraC3-Q-02M/" class="info-card card-2" data-text="MISIÓN.">
             <h2>MISIÓN.</h2>
             <p>Para esto existimos.</p>
         </a>
 
-        <a href="https://quimerac3.github.io/QuimeraC3-Q-03V/" class="info-card card-3">
+        <a href="https://quimerac3.github.io/QuimeraC3-Q-03V/" class="info-card card-3" data-text="VISIÓN.">
             <h2>VISIÓN.</h2>
             <p>Hacia esto vamos.</p>
         </a>
 
-        <a href="https://quimerac3.github.io/QuimeraC3-Q-04P/" class="info-card card-4">
+        <a href="https://quimerac3.github.io/QuimeraC3-Q-04P/" class="info-card card-4" data-text="PRINCIPIOS.">
             <h2>PRINCIPIOS.</h2>
             <p>Así creamos.</p>
         </a>
 
-        <a href="https://quimerac3.github.io/QuimeraC3-Q-05D/" class="info-card card-5">
+        <a href="https://quimerac3.github.io/QuimeraC3-Q-05D/" class="info-card card-5" data-text="DESARROLLO.">
             <h2>DESARROLLO.</h2>
             <p>Aquí es donde creamos.</p>
         </a>
@@ -732,17 +745,33 @@
             }
         });
 
-        // ENTRADA SECUENCIAL Y FLUIDA (ECOSISTEMA -> QUIMERA -> SUBTÍTULO)
+        // ENTRADA SECUENCIAL CON GLITCH SUPREMO RGB Y ESTABILIZACIÓN HOLOGRÁFICA
         function runEcosystemEntrance() {
             const overlay = document.getElementById('intro-overlay');
             const bgLayer = document.getElementById('bg-layer');
 
             function iniciarAnimaciones() {
+                // 0. Fondo con glitch supremo de entrada y estabilización
                 bgLayer.style.opacity = '1';
+                bgLayer.classList.add('bg-glitch-active');
+                setTimeout(() => {
+                    bgLayer.classList.remove('bg-glitch-active');
+                }, 1050);
+
                 overlay.style.opacity = '0';
                 
-                document.querySelectorAll('.info-card').forEach(card => {
-                    card.style.opacity = '1';
+                // Tarjetas con glitch supremo sincronizado en cadena
+                const cards = ['.card-1', '.card-2', '.card-3', '.card-4', '.card-5'];
+                cards.forEach((cardSel, idx) => {
+                    setTimeout(() => {
+                        const card = document.querySelector(cardSel);
+                        if (!card) return;
+                        card.style.opacity = '1';
+                        card.classList.add('glitch-slice-active');
+                        setTimeout(() => {
+                            card.classList.remove('glitch-slice-active');
+                        }, 1050);
+                    }, 400 + (idx * 250));
                 });
 
                 setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 500);
@@ -763,8 +792,8 @@
 
                 setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 1800);
 
-                // Función auxiliar para ejecutar la entrada en cadena estricta
-                function ejecutarSecuenciaEntrada(selector, delay) {
+                // Función auxiliar para ejecutar la entrada con glitch supremo RGB (x3) y pasar a holograma
+                function ejecutarGlitchSupremo(selector, delay) {
                     setTimeout(() => {
                         const el = document.querySelector(selector);
                         if (!el) return;
@@ -778,14 +807,14 @@
                     }, delay);
                 }
 
-                // 1. Entra ECOSISTEMA primero (Termina aprox en t = 2200 + 1050 = 3250ms)
-                ejecutarSecuenciaEntrada('.ecosistema-title', 2200);
+                // 1. Entra ECOSISTEMA primero
+                ejecutarGlitchSupremo('.ecosistema-title', 2200);
 
                 // 2. Entra QUIMERA después de que termina ECOSISTEMA
-                ejecutarSecuenciaEntrada('header h1', 3450);
+                ejecutarGlitchSupremo('header h1', 3450);
 
                 // 3. Entra el Subtítulo después de que termina QUIMERA
-                ejecutarSecuenciaEntrada('header p', 4700);
+                ejecutarGlitchSupremo('header p', 4700);
 
                 setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 6200);
 
@@ -850,8 +879,8 @@
                 document.body.classList.add('blurred-page');
                 imageModal.classList.remove('active');
 
-                // 1. Desvanecimiento simultáneo de TODOS los elementos (textos, tarjetas, fondo, footer)
-                document.querySelectorAll('.top-bar, header, .container, footer').forEach(el => {
+                // 1. Desvanecimiento simultáneo de TODOS los elementos (excepto el footer que se mantiene limpio según solicitud)
+                document.querySelectorAll('.top-bar, header, .container').forEach(el => {
                     el.style.transition = 'opacity 800ms ease';
                     el.style.opacity = '0';
                 });
