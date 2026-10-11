@@ -366,7 +366,7 @@
             color: #ffffff;
             -webkit-text-stroke: 0.5px #000000;
             text-shadow: 0 0 1px #ffffff, 0 0 1px #ffffff;
-            transition: color 0.3s ease, -webkit-text-stroke: 0.3s ease, text-shadow: 0.3s ease, opacity 0.3s ease;
+            transition: color 0.3s ease, -webkit-text-stroke 0.3s ease, text-shadow 0.3s ease, opacity 0.3s ease;
         }
 
         .info-card:hover h2 {
@@ -745,24 +745,35 @@
             }
         });
 
-        // ENTRADA SECUENCIAL Y SINCRONIZADA
+        // ENTRADA SINCRONIZADA: FONDO, RECUADROS Y TOP-BAR A LA PAR, LUEGO TÍTULOS EN SECUENCIA
         function runEcosystemEntrance() {
             const overlay = document.getElementById('intro-overlay');
             const bgLayer = document.getElementById('bg-layer');
 
             function iniciarAnimaciones() {
-                // 1. INICIO A LA PAR: Fondo, 5 Recuadros, Barra Superior (Logo, Música, Pantalla Completa)
+                overlay.style.opacity = '0';
+
+                // 1.GRUPO 1: Fondo, 5 Recuadros y Top-Bar (con logo y controles) inician A LA PAR exacto
                 bgLayer.style.opacity = '1';
                 bgLayer.classList.add('bg-glitch-active');
-
-                document.querySelectorAll('.info-card').forEach(card => {
-                    card.style.opacity = '1';
-                    card.classList.add('glitch-slice-active');
-                });
+                setTimeout(() => {
+                    bgLayer.classList.remove('bg-glitch-active');
+                }, 1050);
 
                 document.querySelector('.top-bar').style.opacity = '1';
 
-                // Tipado del logo superior de manera simultánea al inicio
+                const cards = ['.card-1', '.card-2', '.card-3', '.card-4', '.card-5'];
+                cards.forEach(cardSel => {
+                    const card = document.querySelector(cardSel);
+                    if (!card) return;
+                    card.style.opacity = '1';
+                    card.classList.add('glitch-slice-active');
+                    setTimeout(() => {
+                        card.classList.remove('glitch-slice-active');
+                    }, 1050);
+                });
+
+                // Efecto máquina de escribir para el logo superior de forma simultánea
                 const brandLogo = document.querySelector('.brand-logo');
                 const textLogo = brandLogo.dataset.text;
                 let iLogo = 0;
@@ -775,18 +786,10 @@
                 }
                 typeBrandLogo();
 
-                overlay.style.opacity = '0';
+                // Asegurar contenedor header visible para las animaciones posteriores
+                document.querySelector('header').style.opacity = '1';
 
-                // Al finalizar los efectos de glitch iniciales (1050ms), aplicamos el efecto holograma permanente a los 5 recuadros
-                setTimeout(() => {
-                    bgLayer.classList.remove('bg-glitch-active');
-                    document.querySelectorAll('.info-card').forEach(card => {
-                        card.classList.remove('glitch-slice-active');
-                        card.classList.add('hologram-mode');
-                    });
-                }, 1050);
-
-                // Función auxiliar para ejecutar el glitch supremo en los títulos centrales
+                // Función auxiliar para ejecutar las animaciones restantes en secuencia ordenada
                 function ejecutarGlitchSupremo(selector, delay) {
                     setTimeout(() => {
                         const el = document.querySelector(selector);
@@ -801,17 +804,17 @@
                     }, delay);
                 }
 
-                // 2. DESPUÉS COMIENZAN LOS TÍTULOS CENTRALES EN SECUENCIA ESTRICTA
-                // Entra ECOSISTEMA
+                // 2. GRUPO 2: Las animaciones restantes en secuencia estricta
+                // Comienza ECOSISTEMA
                 ejecutarGlitchSupremo('.ecosistema-title', 1400);
 
-                // Entra QUIMERA después de que termina ECOSISTEMA
+                // Comienza QUIMERA después de ECOSISTEMA
                 ejecutarGlitchSupremo('header h1', 2650);
 
-                // Entra el Subtítulo después de que termina QUIMERA
+                // Comienza el Subtítulo después de QUIMERA
                 ejecutarGlitchSupremo('header p', 3900);
 
-                // Footer aparece al final de todo
+                // Finalmente aparece el Footer
                 setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 5400);
 
                 setTimeout(() => {
@@ -875,7 +878,7 @@
                 document.body.classList.add('blurred-page');
                 imageModal.classList.remove('active');
 
-                // 1. Desvanecimiento simultáneo de TODOS los elementos (excepto el footer según solicitud previa)
+                // 1. Desvanecimiento simultáneo de TODOS los elementos (excepto el footer que se mantiene limpio)
                 document.querySelectorAll('.top-bar, header, .container').forEach(el => {
                     el.style.transition = 'opacity 800ms ease';
                     el.style.opacity = '0';
