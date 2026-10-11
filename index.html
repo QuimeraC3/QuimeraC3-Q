@@ -157,6 +157,7 @@
             z-index: 10;
         }
 
+        /* OPCIÓN 1: EFECTO GLITCH PARA "ECOSISTEMA" */
         .ecosistema-title {
             position: absolute;
             top: 12vh;
@@ -177,6 +178,43 @@
             color: #ffffff;
         }
 
+        .ecosistema-title.glitch-active {
+            animation: glitchAnim 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+        }
+
+        @keyframes glitchAnim {
+            0% {
+                transform: translateX(-50%) translate(0);
+                text-shadow: -2px 0 #ff0055, 2px 0 #00e5ff;
+            }
+            20% {
+                transform: translateX(-50%) translate(-3px, 3px);
+                text-shadow: 3px -2px #ff0055, -3px 2px #00e5ff;
+                clip-path: inset(10% 0 30% 0);
+            }
+            40% {
+                transform: translateX(-50%) translate(-2px, -2px);
+                text-shadow: -3px 2px #ff0055, 3px -2px #00e5ff;
+                clip-path: inset(40% 0 10% 0);
+            }
+            60% {
+                transform: translateX(-50%) translate(3px, 1px);
+                text-shadow: 2px 2px #ff0055, -2px -2px #00e5ff;
+                clip-path: inset(20% 0 50% 0);
+            }
+            80% {
+                transform: translateX(-50%) translate(1px, -1px);
+                text-shadow: -1px -2px #ff0055, 1px 2px #00e5ff;
+                clip-path: inset(60% 0 5% 0);
+            }
+            100% {
+                transform: translateX(-50%) translate(0);
+                text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
+                clip-path: inset(0 0 0 0);
+            }
+        }
+
+        /* OPCIÓN 4: EFECTO HOLOGRAMA PARA "QUIMERA" Y EL SUBTÍTULO */
         header h1 {
             position: absolute;
             top: 60vh;
@@ -186,7 +224,7 @@
             font-size: clamp(2rem, 8.5vw, 7rem);
             line-height: 1.1;
             -webkit-text-stroke: 1.5px #000000;
-            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.6), 0 0 30px rgba(200, 139, 50, 0.4), 4px 4px 10px rgba(0, 0, 0, 0.8);
             font-weight: 700;
             letter-spacing: 0.25em;
             text-transform: uppercase;
@@ -195,6 +233,30 @@
             pointer-events: auto;
             margin: 0;
             color: #ffffff;
+            animation: hologramFlicker 4s infinite ease-in-out;
+        }
+
+        @keyframes hologramFlicker {
+            0%, 100% {
+                opacity: 1;
+                filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
+            }
+            33% {
+                opacity: 0.92;
+                filter: drop-shadow(0 0 4px rgba(200, 139, 50, 0.3));
+            }
+            35% {
+                opacity: 0.98;
+                filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.7));
+            }
+            67% {
+                opacity: 0.88;
+                filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.4));
+            }
+            70% {
+                opacity: 1;
+                filter: drop-shadow(0 0 10px rgba(200, 139, 50, 0.6));
+            }
         }
 
         header h1 a {
@@ -206,6 +268,7 @@
         .quimera-letter {
             display: inline-block;
             color: #ffffff;
+            transition: transform 0.3s ease, filter 0.3s ease;
         }
 
         @keyframes quimeraSequentialWave {
@@ -242,7 +305,10 @@
             text-align: center;
             pointer-events: auto;
             -webkit-text-stroke: 1px #000000;
-            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
+            text-shadow: 0 0 8px rgba(56, 189, 248, 0.4), 4px 4px 10px rgba(0, 0, 0, 0.8);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(226, 232, 240, 0.85) 100%);
+            -webkit-background-clip: text;
+            animation: hologramFlicker 5s infinite ease-in-out;
         }
 
         .container {
@@ -662,13 +728,12 @@
             }
         });
 
-        // ENTRADA FLUIDA AL ECOSISTEMA CON PRECARGA DE IMAGEN
+        // ENTRADA FLUIDA AL ECOSISTEMA CON PRECARGA DE IMAGEN Y EFECTOS
         function runEcosystemEntrance() {
             const overlay = document.getElementById('intro-overlay');
             const bgLayer = document.getElementById('bg-layer');
 
             function iniciarAnimaciones() {
-                // El fondo y las tarjetas aparecen al mismo tiempo con la misma velocidad
                 bgLayer.style.opacity = '1';
                 overlay.style.opacity = '0';
                 
@@ -693,9 +758,22 @@
                 }, 1000);
 
                 setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 1800);
-                setTimeout(() => { document.querySelector('.ecosistema-title').style.opacity = '1'; }, 2200);
-                setTimeout(() => { document.querySelector('header h1').style.opacity = '1'; }, 2600);
 
+                // Entrada con efecto Glitch a ECOSISTEMA
+                setTimeout(() => { 
+                    const ecoTitle = document.querySelector('.ecosistema-title');
+                    ecoTitle.style.opacity = '1';
+                    ecoTitle.classList.add('glitch-active');
+                    setTimeout(() => ecoTitle.classList.remove('glitch-active'), 450);
+                }, 2200);
+
+                // Entrada Holográfica para QUIMERA
+                setTimeout(() => { 
+                    const h1 = document.querySelector('header h1');
+                    h1.style.opacity = '1'; 
+                }, 2600);
+
+                // Entrada Holográfica para Subtítulo
                 setTimeout(() => {
                     const subP = document.querySelector('header p');
                     subP.style.opacity = '1';
@@ -710,8 +788,6 @@
                     }
                     typeSubText();
                 }, 3000);
-
-                // Las tarjetas ya no tienen timeouts aquí porque aparecen desde el inicio
 
                 setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 6200);
 
@@ -752,7 +828,7 @@
 
         window.addEventListener('DOMContentLoaded', runEcosystemEntrance);
 
-        // TRANSICIÓN DE SALIDA EN ENLACES
+        // TRANSICIÓN DE SALIDA EN ENLACES CON EFECTOS
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -789,12 +865,32 @@
                 });
                 t += 1000;
 
-                setTimeout(() => { document.querySelector('header p').style.opacity = '0'; }, t);
+                // Salida holográfica para subtítulo
+                setTimeout(() => { 
+                    const subP = document.querySelector('header p');
+                    subP.style.transition = 'opacity 300ms ease, filter 300ms ease';
+                    subP.style.filter = 'blur(6px)';
+                    subP.style.opacity = '0'; 
+                }, t);
                 t += 300;
-                setTimeout(() => { document.querySelector('header h1').style.opacity = '0'; }, t);
+
+                // Salida holográfica para QUIMERA
+                setTimeout(() => { 
+                    const h1 = document.querySelector('header h1');
+                    h1.style.transition = 'opacity 300ms ease, filter 300ms ease';
+                    h1.style.filter = 'blur(10px)';
+                    h1.style.opacity = '0'; 
+                }, t);
                 t += 300;
-                setTimeout(() => { document.querySelector('.ecosistema-title').style.opacity = '0'; }, t);
+
+                // Salida Glitch para ECOSISTEMA
+                setTimeout(() => { 
+                    const ecoTitle = document.querySelector('.ecosistema-title');
+                    ecoTitle.classList.add('glitch-active');
+                    setTimeout(() => { ecoTitle.style.opacity = '0'; }, 200);
+                }, t);
                 t += 300;
+
                 setTimeout(() => { document.querySelector('.brand-logo').style.opacity = '0'; }, t);
                 t += 400;
 
