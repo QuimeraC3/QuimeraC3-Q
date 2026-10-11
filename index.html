@@ -157,7 +157,7 @@
             z-index: 10;
         }
 
-        /* OPCIÓN 1: EFECTO GLITCH PARA "ECOSISTEMA" */
+        /* EFECTO GLITCH (x3 repeticiones) Y TRANSICIÓN A HOLOGRAMA PARA "ECOSISTEMA" */
         .ecosistema-title {
             position: absolute;
             top: 12vh;
@@ -179,33 +179,23 @@
         }
 
         .ecosistema-title.glitch-active {
-            animation: glitchAnim 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+            animation: glitchAnimTriple 0.35s steps(2, end) 3 both;
         }
 
-        @keyframes glitchAnim {
+        @keyframes glitchAnimTriple {
             0% {
                 transform: translateX(-50%) translate(0);
-                text-shadow: -2px 0 #ff0055, 2px 0 #00e5ff;
+                text-shadow: -3px 0 #ff0055, 3px 0 #00e5ff;
             }
-            20% {
-                transform: translateX(-50%) translate(-3px, 3px);
-                text-shadow: 3px -2px #ff0055, -3px 2px #00e5ff;
-                clip-path: inset(10% 0 30% 0);
+            33% {
+                transform: translateX(-50%) translate(-4px, 2px);
+                text-shadow: 4px -2px #ff0055, -4px 2px #00e5ff;
+                clip-path: inset(10% 0 40% 0);
             }
-            40% {
-                transform: translateX(-50%) translate(-2px, -2px);
-                text-shadow: -3px 2px #ff0055, 3px -2px #00e5ff;
-                clip-path: inset(40% 0 10% 0);
-            }
-            60% {
-                transform: translateX(-50%) translate(3px, 1px);
-                text-shadow: 2px 2px #ff0055, -2px -2px #00e5ff;
-                clip-path: inset(20% 0 50% 0);
-            }
-            80% {
-                transform: translateX(-50%) translate(1px, -1px);
-                text-shadow: -1px -2px #ff0055, 1px 2px #00e5ff;
-                clip-path: inset(60% 0 5% 0);
+            66% {
+                transform: translateX(-50%) translate(3px, -2px);
+                text-shadow: -4px 2px #ff0055, 4px -2px #00e5ff;
+                clip-path: inset(50% 0 10% 0);
             }
             100% {
                 transform: translateX(-50%) translate(0);
@@ -214,7 +204,12 @@
             }
         }
 
-        /* OPCIÓN 4: EFECTO HOLOGRAMA PARA "QUIMERA" Y EL SUBTÍTULO */
+        .ecosistema-title.hologram-mode {
+            animation: hologramFlicker 4s infinite ease-in-out;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.6), 0 0 30px rgba(200, 139, 50, 0.4), 4px 4px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        /* EFECTO GLITCH Y HOLOGRAMA PARA "QUIMERA" */
         header h1 {
             position: absolute;
             top: 60vh;
@@ -224,7 +219,7 @@
             font-size: clamp(2rem, 8.5vw, 7rem);
             line-height: 1.1;
             -webkit-text-stroke: 1.5px #000000;
-            text-shadow: 0 0 15px rgba(56, 189, 248, 0.6), 0 0 30px rgba(200, 139, 50, 0.4), 4px 4px 10px rgba(0, 0, 0, 0.8);
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
             font-weight: 700;
             letter-spacing: 0.25em;
             text-transform: uppercase;
@@ -233,7 +228,15 @@
             pointer-events: auto;
             margin: 0;
             color: #ffffff;
+        }
+
+        header h1.glitch-active {
+            animation: glitchAnimTriple 0.35s steps(2, end) 3 both;
+        }
+
+        header h1.hologram-mode {
             animation: hologramFlicker 4s infinite ease-in-out;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.6), 0 0 30px rgba(200, 139, 50, 0.4), 4px 4px 10px rgba(0, 0, 0, 0.8);
         }
 
         @keyframes hologramFlicker {
@@ -291,6 +294,7 @@
         #quimera-link.active-wave .char-r { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 404.25ms; }
         #quimera-link.active-wave .char-a { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 485.10ms; }
 
+        /* EFECTO GLITCH Y HOLOGRAMA PARA EL SUBTÍTULO (SIN MÁQUINA DE ESCRIBIR) */
         header p {
             position: absolute;
             top: calc(60vh + 6.25rem + 1.0rem);
@@ -308,6 +312,13 @@
             text-shadow: 0 0 8px rgba(56, 189, 248, 0.4), 4px 4px 10px rgba(0, 0, 0, 0.8);
             background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(226, 232, 240, 0.85) 100%);
             -webkit-background-clip: text;
+        }
+
+        header p.glitch-active {
+            animation: glitchAnimTriple 0.35s steps(2, end) 3 both;
+        }
+
+        header p.hologram-mode {
             animation: hologramFlicker 5s infinite ease-in-out;
         }
 
@@ -611,7 +622,7 @@
     <header>
         <div class="ecosistema-title">ECOSISTEMA</div>
         <h1><a href="#" id="quimera-link"><span class="quimera-letter char-q">Q</span><span class="quimera-letter char-u">U</span><span class="quimera-letter char-i">I</span><span class="quimera-letter char-m">M</span><span class="quimera-letter char-e">E</span><span class="quimera-letter char-r">R</span><span class="quimera-letter char-a">A</span></a></h1>
-        <p data-text="Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria."></p>
+        <p>Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria.</p>
     </header>
 
     <main class="container">
@@ -728,7 +739,7 @@
             }
         });
 
-        // ENTRADA FLUIDA AL ECOSISTEMA CON PRECARGA DE IMAGEN Y EFECTOS
+        // ENTRADA FLUIDA AL ECOSISTEMA CON DOBLE EFECTO (GLITCH X3 -> HOLOGRAMA)
         function runEcosystemEntrance() {
             const overlay = document.getElementById('intro-overlay');
             const bgLayer = document.getElementById('bg-layer');
@@ -759,37 +770,29 @@
 
                 setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 1800);
 
-                // Entrada con efecto Glitch a ECOSISTEMA
-                setTimeout(() => { 
-                    const ecoTitle = document.querySelector('.ecosistema-title');
-                    ecoTitle.style.opacity = '1';
-                    ecoTitle.classList.add('glitch-active');
-                    setTimeout(() => ecoTitle.classList.remove('glitch-active'), 450);
-                }, 2200);
+                // Función auxiliar para aplicar la fusión: Glitch (x3) seguido de Holograma permanente
+                function aplicarFusionGlitchHolograma(selector, delay) {
+                    setTimeout(() => {
+                        const el = document.querySelector(selector);
+                        if (!el) return;
+                        el.style.opacity = '1';
+                        // Paso 1: Activar Glitch (dura aprox 1.05s por las 3 repeticiones)
+                        el.classList.add('glitch-active');
+                        
+                        // Paso 2: Al terminar el glitch, transicionar directo al modo holográfico
+                        setTimeout(() => {
+                            el.classList.remove('glitch-active');
+                            el.classList.add('hologram-mode');
+                        }, 1050);
+                    }, delay);
+                }
 
-                // Entrada Holográfica para QUIMERA
-                setTimeout(() => { 
-                    const h1 = document.querySelector('header h1');
-                    h1.style.opacity = '1'; 
-                }, 2600);
+                // Aplicar la fusión sincronizada a los tres elementos
+                aplicarFusionGlitchHolograma('.ecosistema-title', 2200);
+                aplicarFusionGlitchHolograma('header h1', 2500);
+                aplicarFusionGlitchHolograma('header p', 2800);
 
-                // Entrada Holográfica para Subtítulo
-                setTimeout(() => {
-                    const subP = document.querySelector('header p');
-                    subP.style.opacity = '1';
-                    const subText = subP.dataset.text;
-                    let j = 0;
-                    function typeSubText() {
-                        if (j <= subText.length) {
-                            subP.innerHTML = subText.substring(0, j);
-                            j++;
-                            setTimeout(typeSubText, 20);
-                        }
-                    }
-                    typeSubText();
-                }, 3000);
-
-                setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 6200);
+                setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 5200);
 
                 setTimeout(() => {
                     const footerPs = document.querySelectorAll('footer p');
@@ -812,7 +815,7 @@
                         typeChar();
                     }
                     typeFooterP();
-                }, 6600);
+                }, 5600);
             }
 
             const imgFondo = new Image();
