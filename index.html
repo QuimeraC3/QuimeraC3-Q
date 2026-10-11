@@ -382,7 +382,7 @@
             font-size: clamp(1.1rem, 1.5vw, 1.25rem);
             font-weight: 600;
             -webkit-text-stroke: 0.5px #000000;
-            transition: color 0.3s ease, -webkit-text-stroke: 0.5px #000000, opacity 0.3s ease;
+            transition: color 0.3s ease, -webkit-text-stroke 0.5px #000000, opacity 0.3s ease;
         }
 
         .info-card:hover p {
@@ -745,51 +745,54 @@
             }
         });
 
-        // ENTRADA SINCRONIZADA: FONDO, RECUADROS Y TOP-BAR A LA PAR, LUEGO TÍTULOS EN SECUENCIA
+        // ENTRADA SECUENCIAL CON GLITCH SUPREMO RGB Y ESTABILIZACIÓN HOLOGRÁFICA
         function runEcosystemEntrance() {
             const overlay = document.getElementById('intro-overlay');
             const bgLayer = document.getElementById('bg-layer');
 
             function iniciarAnimaciones() {
-                overlay.style.opacity = '0';
-
-                // 1.GRUPO 1: Fondo, 5 Recuadros y Top-Bar (con logo y controles) inician A LA PAR exacto
+                // 0. Fondo con glitch supremo de entrada y estabilización
                 bgLayer.style.opacity = '1';
                 bgLayer.classList.add('bg-glitch-active');
                 setTimeout(() => {
                     bgLayer.classList.remove('bg-glitch-active');
                 }, 1050);
 
-                document.querySelector('.top-bar').style.opacity = '1';
-
+                overlay.style.opacity = '0';
+                
+                // Tarjetas con glitch supremo sincronizado en cadena
                 const cards = ['.card-1', '.card-2', '.card-3', '.card-4', '.card-5'];
-                cards.forEach(cardSel => {
-                    const card = document.querySelector(cardSel);
-                    if (!card) return;
-                    card.style.opacity = '1';
-                    card.classList.add('glitch-slice-active');
+                cards.forEach((cardSel, idx) => {
                     setTimeout(() => {
-                        card.classList.remove('glitch-slice-active');
-                    }, 1050);
+                        const card = document.querySelector(cardSel);
+                        if (!card) return;
+                        card.style.opacity = '1';
+                        card.classList.add('glitch-slice-active');
+                        setTimeout(() => {
+                            card.classList.remove('glitch-slice-active');
+                        }, 1050);
+                    }, 400 + (idx * 250));
                 });
 
-                // Efecto máquina de escribir para el logo superior de forma simultánea
-                const brandLogo = document.querySelector('.brand-logo');
-                const textLogo = brandLogo.dataset.text;
-                let iLogo = 0;
-                function typeBrandLogo() {
-                    if (iLogo <= textLogo.length) {
-                        brandLogo.innerHTML = textLogo.substring(0, iLogo);
-                        iLogo++;
-                        setTimeout(typeBrandLogo, 25);
+                setTimeout(() => { document.querySelector('.top-bar').style.opacity = '1'; }, 500);
+
+                setTimeout(() => {
+                    const brandLogo = document.querySelector('.brand-logo');
+                    const text = brandLogo.dataset.text;
+                    let i = 0;
+                    function typeBrandLogo() {
+                        if (i <= text.length) {
+                            brandLogo.innerHTML = text.substring(0, i);
+                            i++;
+                            setTimeout(typeBrandLogo, 25);
+                        }
                     }
-                }
-                typeBrandLogo();
+                    typeBrandLogo();
+                }, 1000);
 
-                // Asegurar contenedor header visible para las animaciones posteriores
-                document.querySelector('header').style.opacity = '1';
+                setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 1800);
 
-                // Función auxiliar para ejecutar las animaciones restantes en secuencia ordenada
+                // Función auxiliar para ejecutar la entrada con glitch supremo RGB (x3) y pasar a holograma
                 function ejecutarGlitchSupremo(selector, delay) {
                     setTimeout(() => {
                         const el = document.querySelector(selector);
@@ -804,18 +807,16 @@
                     }, delay);
                 }
 
-                // 2. GRUPO 2: Las animaciones restantes en secuencia estricta
-                // Comienza ECOSISTEMA
-                ejecutarGlitchSupremo('.ecosistema-title', 1400);
+                // 1. Entra ECOSISTEMA primero
+                ejecutarGlitchSupremo('.ecosistema-title', 2200);
 
-                // Comienza QUIMERA después de ECOSISTEMA
-                ejecutarGlitchSupremo('header h1', 2650);
+                // 2. Entra QUIMERA después de que termina ECOSISTEMA
+                ejecutarGlitchSupremo('header h1', 3450);
 
-                // Comienza el Subtítulo después de QUIMERA
-                ejecutarGlitchSupremo('header p', 3900);
+                // 3. Entra el Subtítulo después de que termina QUIMERA
+                ejecutarGlitchSupremo('header p', 4700);
 
-                // Finalmente aparece el Footer
-                setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 5400);
+                setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 6200);
 
                 setTimeout(() => {
                     const footerPs = document.querySelectorAll('footer p');
@@ -838,7 +839,7 @@
                         typeChar();
                     }
                     typeFooterP();
-                }, 5800);
+                }, 6600);
             }
 
             const imgFondo = new Image();
@@ -878,7 +879,7 @@
                 document.body.classList.add('blurred-page');
                 imageModal.classList.remove('active');
 
-                // 1. Desvanecimiento simultáneo de TODOS los elementos (excepto el footer que se mantiene limpio)
+                // 1. Desvanecimiento simultáneo de TODOS los elementos (excepto el footer que se mantiene limpio según solicitud)
                 document.querySelectorAll('.top-bar, header, .container').forEach(el => {
                     el.style.transition = 'opacity 800ms ease';
                     el.style.opacity = '0';
