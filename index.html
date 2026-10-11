@@ -291,6 +291,20 @@
             text-shadow: 0 0 15px rgba(56, 189, 248, 0.6), 0 0 30px rgba(200, 139, 50, 0.4), 4px 4px 10px rgba(0, 0, 0, 0.8);
         }
 
+        /* EFECTO DE ILUMINACIÓN HOLOGRÁFICA PARA LOS RECUADROS */
+        .card-hologram-glow {
+            animation: cardHologramFlicker 4s infinite ease-in-out;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4), 0 0 30px rgba(200, 139, 50, 0.2), var(--shadow);
+        }
+
+        @keyframes cardHologramFlicker {
+            0%, 100% { box-shadow: 0 0 12px rgba(56, 189, 248, 0.4), 0 0 25px rgba(200, 139, 50, 0.2), var(--shadow); border-color: rgba(255, 255, 255, 0.8); }
+            33% { box-shadow: 0 0 6px rgba(200, 139, 50, 0.3), var(--shadow); border-color: rgba(255, 255, 255, 0.5); }
+            35% { box-shadow: 0 0 18px rgba(56, 189, 248, 0.6), var(--shadow); border-color: rgba(56, 189, 248, 0.9); }
+            67% { box-shadow: 0 0 8px rgba(56, 189, 248, 0.3), var(--shadow); border-color: rgba(255, 255, 255, 0.6); }
+            70% { box-shadow: 0 0 15px rgba(200, 139, 50, 0.5), var(--shadow); border-color: rgba(200, 139, 50, 0.8); }
+        }
+
         @keyframes hologramFlicker {
             0%, 100% { opacity: 1; filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5)); }
             33% { opacity: 0.92; filter: drop-shadow(0 0 4px rgba(200, 139, 50, 0.3)); }
@@ -748,7 +762,7 @@
             }
         });
 
-        // ENTRADA SINCRONIZADA PASO A PASO
+        // ENTRADA SINCRONIZADA PASO A PASO CON RESPLANDOR HOLOGRÁFICO EN RECUADROS
         function runEcosystemEntrance() {
             const overlay = document.getElementById('intro-overlay');
             const bgLayer = document.getElementById('bg-layer');
@@ -758,7 +772,7 @@
 
                 // =========================================================================
                 // GRUPO 1: A LA PAR CON LA IMAGEN DE FONDO
-                // Fondo, 5 Recuadros y Top-Bar (Textos del header y controles) con Glitch Supremó
+                // Fondo, 5 Recuadros y Top-Bar (Textos del header y controles) con Glitch Supremo
                 // =========================================================================
                 bgLayer.style.opacity = '1';
                 bgLayer.classList.add('bg-glitch-active');
@@ -774,7 +788,7 @@
                     topBar.classList.remove('glitch-slice-active');
                 }, 1050);
 
-                // Los 5 recuadros con glitch supremo a la par
+                // Los 5 recuadros con glitch supremo a la par y luego modo resplandor holográfico
                 const cards = ['.card-1', '.card-2', '.card-3', '.card-4', '.card-5'];
                 cards.forEach(cardSel => {
                     const card = document.querySelector(cardSel);
@@ -783,6 +797,8 @@
                     card.classList.add('glitch-slice-active');
                     setTimeout(() => {
                         card.classList.remove('glitch-slice-active');
+                        // Activamos el efecto de iluminación posterior (holograma) en espera de selección
+                        card.classList.add('card-hologram-glow');
                     }, 1050);
                 });
 
