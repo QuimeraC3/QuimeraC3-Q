@@ -157,7 +157,6 @@
             z-index: 10;
         }
 
-        /* ECOSISTEMA CON EFECTO DE CORTE DE REBANADO INTENSO (SLICE GLITCH) */
         .ecosistema-title {
             position: absolute;
             top: 12vh;
@@ -178,7 +177,6 @@
             color: #ffffff;
         }
 
-        /* QUIMERA CON EFECTO DE CORTE DE REBANADO INTENSO */
         header h1 {
             position: absolute;
             top: 60vh;
@@ -199,7 +197,6 @@
             color: #ffffff;
         }
 
-        /* SUBTÍTULO CON EFECTO DE CORTE DE REBANADO INTENSO */
         header p {
             position: absolute;
             top: calc(60vh + 6.25rem + 1.0rem);
@@ -372,7 +369,7 @@
             font-size: clamp(1.1rem, 1.5vw, 1.25rem);
             font-weight: 600;
             -webkit-text-stroke: 0.5px #000000;
-            transition: color 0.3s ease, -webkit-text-stroke: 0.5px #000000, opacity 0.3s ease;
+            transition: color 0.3s ease, -webkit-text-stroke 0.5px #000000, opacity 0.3s ease;
         }
 
         .info-card:hover p {
@@ -735,7 +732,7 @@
             }
         });
 
-        // ENTRADA FLUIDA CON REBANADO INTENSO (SLICE GLITCH X3 -> HOLOGRAMA)
+        // ENTRADA SECUENCIAL Y FLUIDA (ECOSISTEMA -> QUIMERA -> SUBTÍTULO)
         function runEcosystemEntrance() {
             const overlay = document.getElementById('intro-overlay');
             const bgLayer = document.getElementById('bg-layer');
@@ -766,16 +763,14 @@
 
                 setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 1800);
 
-                // Función auxiliar para fundir el rebanado (x3) y pasar al holograma
-                function aplicarSliceGlitchHolograma(selector, delay) {
+                // Función auxiliar para ejecutar la entrada en cadena estricta
+                function ejecutarSecuenciaEntrada(selector, delay) {
                     setTimeout(() => {
                         const el = document.querySelector(selector);
                         if (!el) return;
                         el.style.opacity = '1';
-                        // Inicia el corte de rebanado x3 veces
                         el.classList.add('glitch-slice-active');
                         
-                        // Transición limpia al modo holograma permanente al terminar el corte
                         setTimeout(() => {
                             el.classList.remove('glitch-slice-active');
                             el.classList.add('hologram-mode');
@@ -783,12 +778,16 @@
                     }, delay);
                 }
 
-                // Sincronizar los tres elementos principales
-                aplicarSliceGlitchHolograma('.ecosistema-title', 2200);
-                aplicarSliceGlitchHolograma('header h1', 2500);
-                aplicarSliceGlitchHolograma('header p', 2800);
+                // 1. Entra ECOSISTEMA primero (Termina aprox en t = 2200 + 1050 = 3250ms)
+                ejecutarSecuenciaEntrada('.ecosistema-title', 2200);
 
-                setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 5200);
+                // 2. Entra QUIMERA después de que termina ECOSISTEMA
+                ejecutarSecuenciaEntrada('header h1', 3450);
+
+                // 3. Entra el Subtítulo después de que termina QUIMERA
+                ejecutarSecuenciaEntrada('header p', 4700);
+
+                setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 6200);
 
                 setTimeout(() => {
                     const footerPs = document.querySelectorAll('footer p');
@@ -811,7 +810,7 @@
                         typeChar();
                     }
                     typeFooterP();
-                }, 5600);
+                }, 6600);
             }
 
             const imgFondo = new Image();
@@ -827,7 +826,7 @@
 
         window.addEventListener('DOMContentLoaded', runEcosystemEntrance);
 
-        // TRANSICIÓN DE SALIDA EN ENLACES CON EFECTOS
+        // TRANSICIÓN DE SALIDA UNIFICADA (TODOS A LA VEZ: NEGRO Y LUEGO BLANCO)
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -851,63 +850,25 @@
                 document.body.classList.add('blurred-page');
                 imageModal.classList.remove('active');
 
-                let t = 0;
-                setTimeout(() => { document.querySelectorAll('footer p').forEach(p => p.style.opacity = '0'); }, t);
-                t += 300;
-                setTimeout(() => { document.querySelector('footer').style.opacity = '0'; }, t);
-                t += 300;
-
-                const cards = ['.card-5', '.card-4', '.card-3', '.card-2', '.card-1'];
-                const cardInterval = 1000 / cards.length; 
-                cards.forEach((cardSelector, index) => {
-                    setTimeout(() => { document.querySelector(cardSelector).style.opacity = '0'; }, t + (index * cardInterval));
+                // 1. Desvanecimiento simultáneo de TODOS los elementos (textos, tarjetas, fondo, footer)
+                document.querySelectorAll('.top-bar, header, .container, footer').forEach(el => {
+                    el.style.transition = 'opacity 800ms ease';
+                    el.style.opacity = '0';
                 });
-                t += 1000;
+                document.getElementById('bg-layer').style.opacity = '0';
 
-                // Salida con rebanado y desenfoque
-                setTimeout(() => { 
-                    const subP = document.querySelector('header p');
-                    subP.style.transition = 'opacity 300ms ease, filter 300ms ease';
-                    subP.style.filter = 'blur(6px)';
-                    subP.style.opacity = '0'; 
-                }, t);
-                t += 300;
-
-                setTimeout(() => { 
-                    const h1 = document.querySelector('header h1');
-                    h1.style.transition = 'opacity 300ms ease, filter 300ms ease';
-                    h1.style.filter = 'blur(10px)';
-                    h1.style.opacity = '0'; 
-                }, t);
-                t += 300;
-
-                setTimeout(() => { 
-                    const ecoTitle = document.querySelector('.ecosistema-title');
-                    ecoTitle.classList.add('glitch-slice-active');
-                    setTimeout(() => { ecoTitle.style.opacity = '0'; }, 200);
-                }, t);
-                t += 300;
-
-                setTimeout(() => { document.querySelector('.brand-logo').style.opacity = '0'; }, t);
-                t += 400;
-
-                setTimeout(() => { 
-                    document.getElementById('audio-toggle').style.opacity = '0';
-                    document.getElementById('fullscreen-toggle').style.opacity = '0';
-                }, t);
-                t += 300;
-
-                setTimeout(() => { document.getElementById('bg-layer').style.opacity = '0'; }, t);
-                t += 500;
+                // 2. Fundido a negro intermedio y cierre al blanco final con el overlay
+                const overlay = document.getElementById('intro-overlay');
+                overlay.style.zIndex = '40000';
+                overlay.style.backgroundColor = '#000000';
+                overlay.style.opacity = '1';
 
                 setTimeout(() => {
-                    const overlay = document.getElementById('intro-overlay');
                     overlay.style.backgroundColor = '#ffffff';
-                    overlay.style.opacity = '1';
-                }, t);
-                t += 500;
+                }, 600);
 
-                setTimeout(() => { window.location.href = targetUrl; }, t);
+                // 3. Redirección final sincronizada
+                setTimeout(() => { window.location.href = targetUrl; }, 1200);
             });
         });
     </script>
