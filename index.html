@@ -157,7 +157,7 @@
             z-index: 10;
         }
 
-        /* EFECTO GLITCH (x3 repeticiones) Y TRANSICIÓN A HOLOGRAMA PARA "ECOSISTEMA" */
+        /* ECOSISTEMA CON EFECTO DE CORTE DE REBANADO INTENSO (SLICE GLITCH) */
         .ecosistema-title {
             position: absolute;
             top: 12vh;
@@ -178,38 +178,7 @@
             color: #ffffff;
         }
 
-        .ecosistema-title.glitch-active {
-            animation: glitchAnimTriple 0.35s steps(2, end) 3 both;
-        }
-
-        @keyframes glitchAnimTriple {
-            0% {
-                transform: translateX(-50%) translate(0);
-                text-shadow: -3px 0 #ff0055, 3px 0 #00e5ff;
-            }
-            33% {
-                transform: translateX(-50%) translate(-4px, 2px);
-                text-shadow: 4px -2px #ff0055, -4px 2px #00e5ff;
-                clip-path: inset(10% 0 40% 0);
-            }
-            66% {
-                transform: translateX(-50%) translate(3px, -2px);
-                text-shadow: -4px 2px #ff0055, 4px -2px #00e5ff;
-                clip-path: inset(50% 0 10% 0);
-            }
-            100% {
-                transform: translateX(-50%) translate(0);
-                text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
-                clip-path: inset(0 0 0 0);
-            }
-        }
-
-        .ecosistema-title.hologram-mode {
-            animation: hologramFlicker 4s infinite ease-in-out;
-            text-shadow: 0 0 15px rgba(56, 189, 248, 0.6), 0 0 30px rgba(200, 139, 50, 0.4), 4px 4px 10px rgba(0, 0, 0, 0.8);
-        }
-
-        /* EFECTO GLITCH Y HOLOGRAMA PARA "QUIMERA" */
+        /* QUIMERA CON EFECTO DE CORTE DE REBANADO INTENSO */
         header h1 {
             position: absolute;
             top: 60vh;
@@ -230,36 +199,91 @@
             color: #ffffff;
         }
 
-        header h1.glitch-active {
-            animation: glitchAnimTriple 0.35s steps(2, end) 3 both;
+        /* SUBTÍTULO CON EFECTO DE CORTE DE REBANADO INTENSO */
+        header p {
+            position: absolute;
+            top: calc(60vh + 6.25rem + 1.0rem);
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: #ffffff;
+            font-weight: 700;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0;
+            text-align: center;
+            pointer-events: auto;
+            -webkit-text-stroke: 1px #000000;
+            text-shadow: 0 0 8px rgba(56, 189, 248, 0.4), 4px 4px 10px rgba(0, 0, 0, 0.8);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(226, 232, 240, 0.85) 100%);
+            -webkit-background-clip: text;
         }
 
-        header h1.hologram-mode {
+        /* REGLAS DE REBANADO (SLICE GLITCH) ACTIVO X3 */
+        .glitch-slice-active {
+            animation: sliceGlitchMaster 0.35s steps(2, end) 3 both;
+        }
+
+        .glitch-slice-active::before,
+        .glitch-slice-active::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .glitch-slice-active::before {
+            left: 3px;
+            text-shadow: -2px 0 #ff0055;
+            clip-path: inset(0 0 52% 0);
+            animation: sliceTopShift 0.35s steps(2, end) 3 both;
+        }
+
+        .glitch-slice-active::after {
+            left: -3px;
+            text-shadow: -2px 0 #00e5ff;
+            clip-path: inset(48% 0 0 0);
+            animation: sliceBottomShift 0.35s steps(2, end) 3 both;
+        }
+
+        @keyframes sliceGlitchMaster {
+            0% { transform: translateX(-50%) translate(0); filter: hue-rotate(0deg); }
+            20% { transform: translateX(-50%) translate(-10px, 5px); filter: contrast(200%); }
+            40% { transform: translateX(-50%) translate(8px, -5px); filter: hue-rotate(90deg); }
+            60% { transform: translateX(-50%) translate(-6px, 3px); filter: invert(20%); }
+            80% { transform: translateX(-50%) translate(7px, -3px); filter: contrast(150%); }
+            100% { transform: translateX(-50%) translate(0); filter: none; }
+        }
+
+        @keyframes sliceTopShift {
+            0%, 100% { transform: translate(0, 0); }
+            30% { transform: translate(-16px, -4px); }
+            60% { transform: translate(10px, 3px); }
+        }
+
+        @keyframes sliceBottomShift {
+            0%, 100% { transform: translate(0, 0); }
+            30% { transform: translate(16px, 4px); }
+            60% { transform: translate(-10px, -3px); }
+        }
+
+        .hologram-mode {
             animation: hologramFlicker 4s infinite ease-in-out;
             text-shadow: 0 0 15px rgba(56, 189, 248, 0.6), 0 0 30px rgba(200, 139, 50, 0.4), 4px 4px 10px rgba(0, 0, 0, 0.8);
         }
 
         @keyframes hologramFlicker {
-            0%, 100% {
-                opacity: 1;
-                filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
-            }
-            33% {
-                opacity: 0.92;
-                filter: drop-shadow(0 0 4px rgba(200, 139, 50, 0.3));
-            }
-            35% {
-                opacity: 0.98;
-                filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.7));
-            }
-            67% {
-                opacity: 0.88;
-                filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.4));
-            }
-            70% {
-                opacity: 1;
-                filter: drop-shadow(0 0 10px rgba(200, 139, 50, 0.6));
-            }
+            0%, 100% { opacity: 1; filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5)); }
+            33% { opacity: 0.92; filter: drop-shadow(0 0 4px rgba(200, 139, 50, 0.3)); }
+            35% { opacity: 0.98; filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.7)); }
+            67% { opacity: 0.88; filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.4)); }
+            70% { opacity: 1; filter: drop-shadow(0 0 10px rgba(200, 139, 50, 0.6)); }
         }
 
         header h1 a {
@@ -293,34 +317,6 @@
         #quimera-link.active-wave .char-e { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 323.40ms; }
         #quimera-link.active-wave .char-r { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 404.25ms; }
         #quimera-link.active-wave .char-a { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 485.10ms; }
-
-        /* EFECTO GLITCH Y HOLOGRAMA PARA EL SUBTÍTULO (SIN MÁQUINA DE ESCRIBIR) */
-        header p {
-            position: absolute;
-            top: calc(60vh + 6.25rem + 1.0rem);
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: clamp(1rem, 2.5vw, 1.5rem);
-            color: #ffffff;
-            font-weight: 700;
-            width: 100%;
-            max-width: 1000px;
-            margin: 0;
-            text-align: center;
-            pointer-events: auto;
-            -webkit-text-stroke: 1px #000000;
-            text-shadow: 0 0 8px rgba(56, 189, 248, 0.4), 4px 4px 10px rgba(0, 0, 0, 0.8);
-            background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(226, 232, 240, 0.85) 100%);
-            -webkit-background-clip: text;
-        }
-
-        header p.glitch-active {
-            animation: glitchAnimTriple 0.35s steps(2, end) 3 both;
-        }
-
-        header p.hologram-mode {
-            animation: hologramFlicker 5s infinite ease-in-out;
-        }
 
         .container {
             position: absolute;
@@ -376,7 +372,7 @@
             font-size: clamp(1.1rem, 1.5vw, 1.25rem);
             font-weight: 600;
             -webkit-text-stroke: 0.5px #000000;
-            transition: color 0.3s ease, -webkit-text-stroke 0.3s ease, opacity 0.3s ease;
+            transition: color 0.3s ease, -webkit-text-stroke: 0.5px #000000, opacity 0.3s ease;
         }
 
         .info-card:hover p {
@@ -620,9 +616,9 @@
     </nav>
 
     <header>
-        <div class="ecosistema-title">ECOSISTEMA</div>
-        <h1><a href="#" id="quimera-link"><span class="quimera-letter char-q">Q</span><span class="quimera-letter char-u">U</span><span class="quimera-letter char-i">I</span><span class="quimera-letter char-m">M</span><span class="quimera-letter char-e">E</span><span class="quimera-letter char-r">R</span><span class="quimera-letter char-a">A</span></a></h1>
-        <p>Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria.</p>
+        <div class="ecosistema-title" data-text="ECOSISTEMA">ECOSISTEMA</div>
+        <h1 data-text="QUIMERA"><a href="#" id="quimera-link"><span class="quimera-letter char-q">Q</span><span class="quimera-letter char-u">U</span><span class="quimera-letter char-i">I</span><span class="quimera-letter char-m">M</span><span class="quimera-letter char-e">E</span><span class="quimera-letter char-r">R</span><span class="quimera-letter char-a">A</span></a></h1>
+        <p data-text="Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria.">Un ecosistema para el conocimiento, la formación y la práctica interdisciplinaria.</p>
     </header>
 
     <main class="container">
@@ -739,7 +735,7 @@
             }
         });
 
-        // ENTRADA FLUIDA AL ECOSISTEMA CON DOBLE EFECTO (GLITCH X3 -> HOLOGRAMA)
+        // ENTRADA FLUIDA CON REBANADO INTENSO (SLICE GLITCH X3 -> HOLOGRAMA)
         function runEcosystemEntrance() {
             const overlay = document.getElementById('intro-overlay');
             const bgLayer = document.getElementById('bg-layer');
@@ -770,27 +766,27 @@
 
                 setTimeout(() => { document.querySelector('header').style.opacity = '1'; }, 1800);
 
-                // Función auxiliar para aplicar la fusión: Glitch (x3) seguido de Holograma permanente
-                function aplicarFusionGlitchHolograma(selector, delay) {
+                // Función auxiliar para fundir el rebanado (x3) y pasar al holograma
+                function aplicarSliceGlitchHolograma(selector, delay) {
                     setTimeout(() => {
                         const el = document.querySelector(selector);
                         if (!el) return;
                         el.style.opacity = '1';
-                        // Paso 1: Activar Glitch (dura aprox 1.05s por las 3 repeticiones)
-                        el.classList.add('glitch-active');
+                        // Inicia el corte de rebanado x3 veces
+                        el.classList.add('glitch-slice-active');
                         
-                        // Paso 2: Al terminar el glitch, transicionar directo al modo holográfico
+                        // Transición limpia al modo holograma permanente al terminar el corte
                         setTimeout(() => {
-                            el.classList.remove('glitch-active');
+                            el.classList.remove('glitch-slice-active');
                             el.classList.add('hologram-mode');
                         }, 1050);
                     }, delay);
                 }
 
-                // Aplicar la fusión sincronizada a los tres elementos
-                aplicarFusionGlitchHolograma('.ecosistema-title', 2200);
-                aplicarFusionGlitchHolograma('header h1', 2500);
-                aplicarFusionGlitchHolograma('header p', 2800);
+                // Sincronizar los tres elementos principales
+                aplicarSliceGlitchHolograma('.ecosistema-title', 2200);
+                aplicarSliceGlitchHolograma('header h1', 2500);
+                aplicarSliceGlitchHolograma('header p', 2800);
 
                 setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 5200);
 
@@ -868,7 +864,7 @@
                 });
                 t += 1000;
 
-                // Salida holográfica para subtítulo
+                // Salida con rebanado y desenfoque
                 setTimeout(() => { 
                     const subP = document.querySelector('header p');
                     subP.style.transition = 'opacity 300ms ease, filter 300ms ease';
@@ -877,7 +873,6 @@
                 }, t);
                 t += 300;
 
-                // Salida holográfica para QUIMERA
                 setTimeout(() => { 
                     const h1 = document.querySelector('header h1');
                     h1.style.transition = 'opacity 300ms ease, filter 300ms ease';
@@ -886,10 +881,9 @@
                 }, t);
                 t += 300;
 
-                // Salida Glitch para ECOSISTEMA
                 setTimeout(() => { 
                     const ecoTitle = document.querySelector('.ecosistema-title');
-                    ecoTitle.classList.add('glitch-active');
+                    ecoTitle.classList.add('glitch-slice-active');
                     setTimeout(() => { ecoTitle.style.opacity = '0'; }, 200);
                 }, t);
                 t += 300;
