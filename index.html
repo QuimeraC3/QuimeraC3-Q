@@ -115,7 +115,7 @@
         }
 
         /* Elementos con opacidad inicial 0 */
-        .top-bar, header, footer {
+        .top-bar, header {
             opacity: 0;
             transition: opacity 500ms ease;
         }
@@ -261,6 +261,96 @@
             background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(226, 232, 240, 0.85) 100%);
             -webkit-background-clip: text;
             opacity: 0;
+        }
+
+        /* EFECTO LÁSER COMÚN PARA EL FOOTER */
+        .laser-burn-effect {
+            opacity: 0;
+            clip-path: inset(0 100% 0 0);
+            position: relative;
+        }
+
+        .laser-burn-effect.active-laser {
+            opacity: 1;
+            animation: hyperLaserReveal 1.2s cubic-bezier(0.15, 1, 0.2, 1) forwards;
+        }
+
+        .laser-burn-effect.revealed {
+            opacity: 1;
+            clip-path: inset(0 0 0 0);
+        }
+
+        .laser-burn-effect.active-laser::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            bottom: -30px;
+            left: 0;
+            width: 16px;
+            background: radial-gradient(circle, #ffffff 0%, #38bdf8 40%, #c88b32 80%, transparent 100%);
+            box-shadow: 0 0 35px #38bdf8, 0 0 70px #fffbeb, 0 0 100px #c88b32, inset 0 0 15px #ffffff;
+            animation: hyperLaserBarMove 1.2s cubic-bezier(0.15, 1, 0.2, 1) forwards;
+            z-index: 15;
+            filter: blur(0.5px);
+        }
+
+        .laser-burn-effect.active-laser::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            bottom: -10px;
+            left: 0;
+            right: 0;
+            height: 120%;
+            pointer-events: none;
+            background: linear-gradient(90deg, rgba(255,255,255,0.9) 0%, rgba(56,189,248,0.6) 30%, rgba(200,139,50,0.3) 60%, transparent 100%);
+            mix-blend-mode: color-dodge;
+            animation: hyperLaserSparksWave 1.2s cubic-bezier(0.15, 1, 0.2, 1) forwards;
+            z-index: 12;
+        }
+
+        @keyframes hyperLaserReveal {
+            0% {
+                clip-path: inset(0 100% 0 0);
+                filter: brightness(4) contrast(200%) drop-shadow(0 0 30px rgba(56, 189, 248, 1));
+            }
+            50% {
+                filter: brightness(2.5) contrast(150%) drop-shadow(0 0 15px rgba(200, 139, 50, 0.9));
+            }
+            100% {
+                clip-path: inset(0 0 0 0);
+                filter: brightness(1) contrast(100%) drop-shadow(0 0 0px transparent);
+            }
+        }
+
+        @keyframes hyperLaserBarMove {
+            0% {
+                left: 0%;
+                opacity: 1;
+                transform: scaleY(1.8) skewX(-15deg);
+            }
+            50% {
+                transform: scaleY(2.2) skewX(5deg);
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                left: 100%;
+                opacity: 0;
+                transform: scaleY(0.5) skewX(0deg);
+            }
+        }
+
+        @keyframes hyperLaserSparksWave {
+            0% {
+                opacity: 1;
+                clip-path: inset(0 100% 0 0);
+            }
+            100% {
+                opacity: 0;
+                clip-path: inset(0 0 0 0);
+            }
         }
 
         /* REGLAS DE REBANADO CON ABERRACIÓN CROMÁTICA RGB (SLICE GLITCH SUPREMO) */
@@ -712,8 +802,8 @@
         </a>
     </main>
 
-    <footer>
-        <p data-text="&bull; &copy; 2026 Instituto Quimera. &bull; Centro de Investigación, Docencia, Servicio y Difusión. &bull; Dr.C. Cesar Cerezo Camacho. &bull; Todos los derechos reservados. &bull;"></p>
+    <footer class="laser-burn-effect" id="main-footer">
+        <p id="footer-text" data-text="&bull; &copy; 2026 Instituto Quimera. &bull; Centro de Investigación, Docencia, Servicio y Difusión. &bull; Dr.C. Cesar Cerezo Camacho. &bull; Todos los derechos reservados. &bull;"></p>
     </footer>
 
     <script>
@@ -904,30 +994,16 @@
                 ejecutarGlitchSupremo('header h1', 2650);
                 ejecutarGlitchSupremo('header p', 3900);
 
-                setTimeout(() => { document.querySelector('footer').style.opacity = '1'; }, 5400);
-
-                setTimeout(() => {
-                    const footerPs = document.querySelectorAll('footer p');
-                    let pIndex = 0;
-                    function typeFooterP() {
-                        if (pIndex >= footerPs.length) return;
-                        let p = footerPs[pIndex];
-                        let text = p.dataset.text.replace('2026', new Date().getFullYear());
-                        let i = 0;
-                        function typeChar() {
-                            if (i <= text.length) {
-                                p.innerHTML = text.substring(0, i);
-                                i++;
-                                setTimeout(typeChar, 18);
-                            } else {
-                                pIndex++;
-                                setTimeout(typeFooterP, 100);
-                            }
-                        }
-                        typeChar();
-                    }
-                    typeFooterP();
-                }, 5800);
+                // 3. ENTRADA LÁSER PARA EL FOOTER + HOLOGRAPHIC MODE
+                setTimeout(async () => {
+                    const mainFooter = document.getElementById('main-footer');
+                    const footerText = document.getElementById('footer-text');
+                    footerText.textContent = footerText.dataset.text.replace('2026', new Date().getFullYear());
+                    mainFooter.classList.add('active-laser');
+                    await new Promise(r => setTimeout(r, 1200));
+                    mainFooter.classList.remove('active-laser');
+                    mainFooter.classList.add('revealed', 'hologram-mode');
+                }, 5400);
 
                 iniciarFrameSkippingAmbiental();
             }
