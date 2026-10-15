@@ -31,55 +31,6 @@
             background-color: #000000;
         }
 
-        /* CAPA CRT SCANLINES Y ABERRACIÓN CROMÁTICA EXTREMA */
-        .crt-scanlines {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 2000;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.015), rgba(0, 0, 255, 0.04));
-            background-size: 100% 3px, 6px 100%;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-        }
-
-        /* ESTADO DE ABERRACIÓN CROMÁTICA Y GLITCH EXTREMO AL SELECCIONAR UN RECUADRO */
-        body.chromatic-meltdown-active .crt-scanlines {
-            opacity: 0.95;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.5) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.2), rgba(0, 255, 0, 0.05), rgba(0, 0, 255, 0.2));
-            animation: crtMeltdownShake 0.15s infinite steps(2);
-        }
-
-        body.chromatic-meltdown-active header,
-        body.chromatic-meltdown-active .container {
-            animation: elementAberrationSplit 0.18s infinite alternate;
-        }
-
-        @keyframes crtMeltdownShake {
-            0% { transform: translate(0, 0) skew(0deg); filter: hue-rotate(0deg); }
-            50% { transform: translate(-5px, 4px) skew(-1.5deg); filter: hue-rotate(90deg) contrast(160%); }
-            100% { transform: translate(5px, -4px) skew(1.5deg); filter: hue-rotate(-90deg) contrast(160%); }
-        }
-
-        @keyframes elementAberrationSplit {
-            0% { filter: drop-shadow(3px 0 #ff0055) drop-shadow(-3px 0 #00e5ff); }
-            100% { filter: drop-shadow(-6px 0 #ff0055) drop-shadow(6px 0 #00e5ff); }
-        }
-
-        /* Canvas para Partículas con Física de Destrucción */
-        #destruction-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 2500;
-        }
-
         /* Capa de luz reactiva exclusiva para el movimiento del puntero del ratón */
         .cursor-light-glow {
             position: fixed;
@@ -98,7 +49,7 @@
             opacity: 1;
         }
 
-        /* Capa de fondo estática con soporte de glitch de entrada[cite: 5] */
+        /* Capa de fondo estática, nítida y completa con soporte de glitch de entrada y frame skipping ambiental[cite: 3] */
         #bg-layer {
             position: fixed;
             top: 0;
@@ -127,6 +78,7 @@
             100% { filter: none; transform: translate(0); }
         }
 
+        /* ANIMACIÓN DE FRAME SKIPPING AMBIENTAL PARA LA ESPERA[cite: 3] */
         #bg-layer.bg-skipping-active {
             animation: bgFrameSkipAnim 0.25s steps(3, jump-none) 1 both;
         }
@@ -139,6 +91,7 @@
             100% { filter: none; transform: translate(0, 0); }
         }
 
+        /* Capa de pantalla completa para la transición[cite: 3] */
         #intro-overlay {
             position: fixed;
             top: 0;
@@ -161,6 +114,7 @@
             transition: opacity 500ms ease, background-color 500ms ease;
         }
 
+        /* Elementos con opacidad inicial 0[cite: 3] */
         .top-bar, header {
             opacity: 0;
             transition: opacity 500ms ease;
@@ -170,6 +124,7 @@
             transition: opacity 500ms ease;
         }
 
+        /* NAVEGACIÓN SUPERIOR[cite: 3] */
         .top-bar {
             background-color: rgba(11, 19, 41, 0.0);
             padding: 0.85rem 2rem;
@@ -235,6 +190,7 @@
             color: #ffffff;
         }
 
+        /* ENCABEZADO CARTESIANO CENTRAL[cite: 3] */
         header {
             position: absolute;
             top: 0;
@@ -254,7 +210,7 @@
             font-size: clamp(1.5rem, 4vw, 4rem);
             line-height: 1.1;
             -webkit-text-stroke: 1.5px #000000;
-            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8), 2px 0 rgba(255,0,85,0.7), -2px 0 rgba(0,229,255,0.7);
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
             font-weight: 700;
             letter-spacing: 0.1em;
             text-transform: uppercase;
@@ -275,7 +231,7 @@
             font-size: clamp(2rem, 8.5vw, 7rem);
             line-height: 1.1;
             -webkit-text-stroke: 1.5px #000000;
-            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8), 3px 0 rgba(255,0,85,0.8), -3px 0 rgba(0,229,255,0.8);
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
             font-weight: 700;
             letter-spacing: 0.25em;
             text-transform: uppercase;
@@ -307,6 +263,7 @@
             opacity: 0;
         }
 
+        /* EFECTO LÁSER COMÚN PARA EL FOOTER CON POSICIÓN ABSOLUTA BLINDADA[cite: 3] */
         footer.laser-burn-effect {
             position: absolute !important;
             bottom: 0 !important;
@@ -407,6 +364,7 @@
             }
         }
 
+        /* REGLAS DE REBANADO CON GLITCH SUPREMO[cite: 3] */
         .glitch-slice-active {
             animation: sliceGlitchMaster 0.35s steps(2, end) 3 both;
         }
@@ -462,7 +420,7 @@
 
         .hologram-mode {
             animation: hologramFlicker 4s infinite ease-in-out;
-            text-shadow: 0 0 15px rgba(56, 189, 248, 0.6), 0 0 30px rgba(200, 139, 50, 0.4), 4px 4px 10px rgba(0, 0, 0, 0.8), 2px 0 #ff0055, -2px 0 #00e5ff;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.6), 0 0 30px rgba(200, 139, 50, 0.4), 4px 4px 10px rgba(0, 0, 0, 0.8);
         }
 
         .card-hologram-glow {
@@ -777,16 +735,14 @@
 </head>
 <body>
 
-    <!-- Capa CRT Scanlines y Aberración Cromática Extrema -->
-    <div class="crt-scanlines"></div>
-
-    <!-- Canvas para el Sistema de Partículas con Física de Destrucción -->
-    <canvas id="destruction-canvas"></canvas>
-
     <audio id="bg-music" src="Tango_Futuro_(Lado_B).mp3" loop preload="auto"></audio>
     
+    <!-- Capa de fondo estática, nítida y completa -->
     <div id="bg-layer"></div>
+
+    <!-- Capa de luz reactiva exclusiva del puntero del ratón -->
     <div class="cursor-light-glow" id="cursor-light-glow"></div>
+
     <div id="intro-overlay"></div>
 
     <div id="image-modal">
@@ -844,96 +800,37 @@
     </footer>
 
     <script>
-        // MOTOR DE PARTÍCULAS CON FÍSICA DE DESTRUCCIÓN
-        const canvas = document.getElementById('destruction-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function resizeDestructionCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeDestructionCanvas);
-        resizeDestructionCanvas();
-
-        function triggerDestructionPhysics(e) {
-            const rect = e.currentTarget.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            const colors = ['#c88b32', '#38bdf8', '#ffffff', '#0f766e', '#ff0055'];
-
-            for (let i = 0; i < 45; i++) {
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 10 + 3;
-                particles.push({
-                    x: centerX,
-                    y: centerY,
-                    vx: Math.cos(angle) * speed,
-                    vy: Math.sin(angle) * speed - 2.5,
-                    size: Math.random() * 5 + 2,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    alpha: 1.0,
-                    decay: Math.random() * 0.015 + 0.008,
-                    gravity: 0.3,
-                    friction: 0.97,
-                    rotation: Math.random() * 360,
-                    vRot: (Math.random() - 0.5) * 18
-                });
-            }
-        }
-
-        function updateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = particles.length - 1; i >= 0; i--) {
-                let p = particles[i];
-                p.vx *= p.friction;
-                p.vy += p.gravity;
-                p.x += p.vx;
-                p.y += p.vy;
-                p.rotation += p.vRot;
-                p.alpha -= p.decay;
-
-                if (p.alpha <= 0) {
-                    particles.splice(i, 1);
-                    continue;
-                }
-
-                ctx.save();
-                ctx.translate(p.x, p.y);
-                ctx.rotate((p.rotation * Math.PI) / 180);
-                ctx.globalAlpha = p.alpha;
-                ctx.fillStyle = p.color;
-                ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-                ctx.restore();
-            }
-            requestAnimationFrame(updateParticles);
-        }
-        updateParticles();
-
-        // CONTROL DE MOVIMIENTO DEL CURSOR
+        // CONTROL DE MOVIMIENTO DEL CURSOR (EXCLUSIVO PARA LA LUZ REACTIVA)
         document.addEventListener('mousemove', (e) => {
             const x = e.clientX;
             const y = e.clientY;
+            
+            // Actualizar coordenadas del haz de luz para que sigan con precisión al ratón[cite: 3]
             document.documentElement.style.setProperty('--mouse-x', `${x}px`);
             document.documentElement.style.setProperty('--mouse-y', `${y}px`);
         });
 
+        // REDIRECCIÓN CONTROLADA HACIA ATRÁS[cite: 3]
         function irAInicio() {
             window.location.replace('https://quimerac3.github.io/');
         }
 
+        // 1. Inserción inicial en el historial[cite: 3]
         history.pushState({ page: 'ecosistema' }, "", window.location.href);
 
+        // 2. Reforzar la trampa tras la primera interacción del usuario[cite: 3]
         ['click', 'touchstart', 'keydown', 'scroll'].forEach(evt => {
             window.addEventListener(evt, function () {
                 history.pushState({ page: 'ecosistema' }, "", window.location.href);
             }, { once: true });
         });
 
+        // 3. Capturar retroceso desde el botón de la interfaz del navegador[cite: 3]
         window.addEventListener('popstate', function () {
             irAInicio();
         });
 
+        // 4. Capturar la combinación Alt + Flecha Izquierda[cite: 3]
         window.addEventListener('keydown', function (e) {
             if (e.altKey && (e.key === 'ArrowLeft' || e.keyCode === 37)) {
                 e.preventDefault();
@@ -942,10 +839,12 @@
             }
         }, true);
 
+        // HOVER Y ANIMACIONES QUIMERA[cite: 3]
         const quimeraLink = document.getElementById('quimera-link');
         quimeraLink.addEventListener('mouseenter', () => quimeraLink.classList.add('active-wave'));
         quimeraLink.addEventListener('mouseleave', () => quimeraLink.classList.remove('active-wave'));
 
+        // MODAL DE LA LETRA Q[cite: 3]
         const imageModal = document.getElementById('image-modal');
         const closeModal = document.querySelector('.close-modal');
 
@@ -959,6 +858,7 @@
             if (e.target === imageModal) imageModal.classList.remove('active');
         });
 
+        // CONTROL DE MÚSICA[cite: 3]
         const music = document.getElementById('bg-music');
         const audioToggle = document.getElementById('audio-toggle');
         let isMusicPlaying = false;
@@ -977,6 +877,7 @@
             }
         });
 
+        // CONTROL PANTALLA COMPLETA[cite: 3]
         const fullscreenToggle = document.getElementById('fullscreen-toggle');
         fullscreenToggle.addEventListener('click', (e) => {
             e.preventDefault();
@@ -991,6 +892,7 @@
             }
         });
 
+        // BUCLE ALEATORIO DE FRAME SKIPPING AMBIENTAL PARA LA IMAGEN DE FONDO[cite: 3]
         function iniciarFrameSkippingAmbiental() {
             const bgLayer = document.getElementById('bg-layer');
 
@@ -1008,6 +910,7 @@
             setTimeout(dispararSkip, 7000);
         }
 
+        // ENTRADA SINCRONIZADA PASO A PASO CON RESPLANDOR HOLOGRÁFICO EN RECUADROS[cite: 3]
         function runEcosystemEntrance() {
             const overlay = document.getElementById('intro-overlay');
             const bgLayer = document.getElementById('bg-layer');
@@ -1016,6 +919,9 @@
             function iniciarAnimaciones() {
                 overlay.style.opacity = '0';
 
+                // =========================================================================
+                // GRUPO 1: A LA PAR CON LA IMAGEN DE FONDO Y EL HAZ DE LUZ DEL CURSOR[cite: 3]
+                // =========================================================================
                 bgLayer.style.opacity = '1';
                 cursorGlow.classList.add('visible');
                 bgLayer.classList.add('bg-glitch-active');
@@ -1023,6 +929,7 @@
                     bgLayer.classList.remove('bg-glitch-active');
                 }, 1050);
 
+                // Top-bar visible con glitch supremo[cite: 3]
                 const topBar = document.querySelector('.top-bar');
                 topBar.style.opacity = '1';
                 topBar.classList.add('glitch-slice-active');
@@ -1030,6 +937,7 @@
                     topBar.classList.remove('glitch-slice-active');
                 }, 1050);
 
+                // Los 5 recuadros con glitch supremo a la par y luego modo resplandor holográfico[cite: 3]
                 const cards = ['.card-1', '.card-2', '.card-3', '.card-4', '.card-5'];
                 cards.forEach(cardSel => {
                     const card = document.querySelector(cardSel);
@@ -1042,6 +950,7 @@
                     }, 1050);
                 });
 
+                // Efecto de mecanografía para el logotipo superior a la par[cite: 3]
                 const brandLogo = document.querySelector('.brand-logo');
                 const textLogo = brandLogo.dataset.text;
                 let iLogo = 0;
@@ -1054,6 +963,10 @@
                 }
                 typeBrandLogo();
 
+
+                // =========================================================================
+                // GRUPO 2: TÍTULOS RESTANTES EN SECUENCIA ESTRICTA (SIN ADELANTARSE)[cite: 3]
+                // =========================================================================
                 document.querySelector('header').style.opacity = '1';
 
                 function ejecutarGlitchSupremo(selector, delay) {
@@ -1074,6 +987,7 @@
                 ejecutarGlitchSupremo('header h1', 2650);
                 ejecutarGlitchSupremo('header p', 3900);
 
+                // 3. ENTRADA LÁSER PARA EL FOOTER + HOLOGRAPHIC MODE[cite: 3]
                 setTimeout(async () => {
                     const mainFooter = document.getElementById('main-footer');
                     const footerText = document.getElementById('footer-text');
@@ -1094,13 +1008,13 @@
                 requestAnimationFrame(iniciarAnimaciones);
             } else {
                 imgFondo.onload = () => requestAnimationFrame(iniciarAnimaciones);
-                imgFound.onerror = () => requestAnimationFrame(iniciarAnimaciones);
+                imgFondo.onerror = () => requestAnimationFrame(iniciarAnimaciones);
             }
         }
 
         window.addEventListener('DOMContentLoaded', runEcosystemEntrance);
 
-        // TRANSICIÓN DE SALIDA RETARDADA PARA OBSERVAR LA ABERRACIÓN CROMÁTICA Y EL CRT EXTREMO
+        // TRANSICIÓN DE SALIDA UNIFICADA ORIGINAL (LIMPIA Y FLUIDA)[cite: 3]
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -1111,38 +1025,36 @@
                 e.preventDefault(); 
                 const targetUrl = this.href;
 
-                // Activar el modo de fusión/aberración cromática intensa al hacer clic
-                document.body.classList.add('chromatic-meltdown-active');
+                if (targetUrl.includes('https://quimerac3.github.io/QuimeraC3-Q-MDQ/')) {
+                    const overlay = document.getElementById('intro-overlay');
+                    overlay.style.zIndex = '40000';
+                    overlay.style.backgroundColor = '#000000';
+                    overlay.style.opacity = '1';
+
+                    setTimeout(() => { window.location.href = targetUrl; }, 1000);
+                    return;
+                }
+
+                document.body.classList.add('blurred-page');
                 imageModal.classList.remove('active');
 
-                // Disparar las partículas de destrucción física
-                if (this.classList.contains('info-card')) {
-                    triggerDestructionPhysics({ currentTarget: this });
-                }
+                document.querySelectorAll('.top-bar, header, .container').forEach(el => {
+                    el.style.transition = 'opacity 800ms ease';
+                    el.style.opacity = '0';
+                });
+                document.getElementById('bg-layer').style.opacity = '0';
+                document.getElementById('cursor-light-glow').style.opacity = '0';
 
                 const overlay = document.getElementById('intro-overlay');
                 overlay.style.zIndex = '40000';
-                overlay.style.backgroundColor = 'transparent';
+                overlay.style.backgroundColor = '#000000';
                 overlay.style.opacity = '1';
-
-                // Retrasar el desvanecimiento a negro/blanco (aprox. 1.8 segundos para admirar los efectos)
-                setTimeout(() => {
-                    document.body.classList.add('blurred-page');
-                    document.querySelectorAll('.top-bar, header, .container').forEach(el => {
-                        el.style.transition = 'opacity 800ms ease';
-                        el.style.opacity = '0';
-                    });
-                    document.getElementById('bg-layer').style.opacity = '0';
-                    document.getElementById('cursor-light-glow').style.opacity = '0';
-                    overlay.style.backgroundColor = '#000000';
-                }, 1800);
 
                 setTimeout(() => {
                     overlay.style.backgroundColor = '#ffffff';
-                }, 2600);
+                }, 600);
 
-                // Redirección final tras completar el espectáculo visual
-                setTimeout(() => { window.location.href = targetUrl; }, 3200);
+                setTimeout(() => { window.location.href = targetUrl; }, 1200);
             });
         });
     </script>
