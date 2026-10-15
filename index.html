@@ -263,11 +263,22 @@
             opacity: 0;
         }
 
-        /* EFECTO LÁSER COMÚN PARA EL FOOTER */
-        .laser-burn-effect {
-            opacity: 0;
+        /* EFECTO LÁSER COMÚN PARA EL FOOTER CON POSICIÓN ABSOLUTA BLINDADA */
+        footer.laser-burn-effect {
+            position: absolute !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            text-align: center;
+            padding: 0.4rem 2rem;
+            background-color: rgba(11, 19, 41, 0.2);
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+            font-size: clamp(0.65rem, 1vw, 0.8rem);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
             clip-path: inset(0 100% 0 0);
-            position: relative;
+            opacity: 0;
         }
 
         .laser-burn-effect.active-laser {
@@ -621,25 +632,6 @@
             color: #000000;
         }
 
-        footer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            padding: 0.4rem 2rem;
-            background-color: rgba(11, 19, 41, 0.2);
-            backdrop-filter: blur(8px);
-            color: #ffffff;
-            font-size: clamp(0.65rem, 1vw, 0.8rem);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 100;
-        }
-
-        footer p {
-            color: #ffffff;
-        }
-
         @media (max-width: 1200px) {
             body {
                 height: auto;
@@ -732,10 +724,12 @@
                 background-color: #ffffff;
             }
 
-            footer {
-                position: relative;
+            footer.laser-burn-effect {
+                position: relative !important;
                 margin-top: 1rem;
                 padding: 1rem;
+                bottom: auto !important;
+                left: auto !important;
             }
         }
     </style>
