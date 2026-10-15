@@ -43,6 +43,30 @@
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.015), rgba(0, 0, 255, 0.04));
             background-size: 100% 3px, 6px 100%;
             opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        /* ESTADO DE ABERRACIÓN CROMÁTICA Y GLITCH EXTREMO AL SELECCIONAR UN RECUADRO */
+        body.chromatic-meltdown-active .crt-scanlines {
+            opacity: 0.95;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.5) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.2), rgba(0, 255, 0, 0.05), rgba(0, 0, 255, 0.2));
+            animation: crtMeltdownShake 0.15s infinite steps(2);
+        }
+
+        body.chromatic-meltdown-active header,
+        body.chromatic-meltdown-active .container {
+            animation: elementAberrationSplit 0.18s infinite alternate;
+        }
+
+        @keyframes crtMeltdownShake {
+            0% { transform: translate(0, 0) skew(0deg); filter: hue-rotate(0deg); }
+            50% { transform: translate(-5px, 4px) skew(-1.5deg); filter: hue-rotate(90deg) contrast(160%); }
+            100% { transform: translate(5px, -4px) skew(1.5deg); filter: hue-rotate(-90deg) contrast(160%); }
+        }
+
+        @keyframes elementAberrationSplit {
+            0% { filter: drop-shadow(3px 0 #ff0055) drop-shadow(-3px 0 #00e5ff); }
+            100% { filter: drop-shadow(-6px 0 #ff0055) drop-shadow(6px 0 #00e5ff); }
         }
 
         /* Canvas para Partículas con Física de Destrucción */
@@ -838,23 +862,22 @@
             const centerY = rect.top + rect.height / 2;
             const colors = ['#c88b32', '#38bdf8', '#ffffff', '#0f766e', '#ff0055'];
 
-            // Generar fragmentos con física de explosión y gravedad
-            for (let i = 0; i < 35; i++) {
+            for (let i = 0; i < 45; i++) {
                 const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 8 + 2;
+                const speed = Math.random() * 10 + 3;
                 particles.push({
                     x: centerX,
                     y: centerY,
                     vx: Math.cos(angle) * speed,
-                    vy: Math.sin(angle) * speed - 2, // impulso hacia arriba inicial
-                    size: Math.random() * 4 + 2,
+                    vy: Math.sin(angle) * speed - 2.5,
+                    size: Math.random() * 5 + 2,
                     color: colors[Math.floor(Math.random() * colors.length)],
                     alpha: 1.0,
-                    decay: Math.random() * 0.02 + 0.015,
-                    gravity: 0.35,
-                    friction: 0.96,
+                    decay: Math.random() * 0.015 + 0.008,
+                    gravity: 0.3,
+                    friction: 0.97,
                     rotation: Math.random() * 360,
-                    vRot: (Math.random() - 0.5) * 15
+                    vRot: (Math.random() - 0.5) * 18
                 });
             }
         }
@@ -886,13 +909,6 @@
             requestAnimationFrame(updateParticles);
         }
         updateParticles();
-
-        // Vincular físicas de destrucción al hacer clic en las tarjetas del ecosistema
-        document.querySelectorAll('.info-card').forEach(card => {
-            card.addEventListener('click', (e) => {
-                triggerDestructionPhysics(e);
-            });
-        });
 
         // CONTROL DE MOVIMIENTO DEL CURSOR
         document.addEventListener('mousemove', (e) => {
@@ -1078,12 +1094,13 @@
                 requestAnimationFrame(iniciarAnimaciones);
             } else {
                 imgFondo.onload = () => requestAnimationFrame(iniciarAnimaciones);
-                imgFondo.onerror = () => requestAnimationFrame(iniciarAnimaciones);
+                imgFound.onerror = () => requestAnimationFrame(iniciarAnimaciones);
             }
         }
 
         window.addEventListener('DOMContentLoaded', runEcosystemEntrance);
 
+        // TRANSICIÓN DE SALIDA RETARDADA PARA OBSERVAR LA ABERRACIÓN CROMÁTICA Y EL CRT EXTREMO
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -1094,36 +1111,38 @@
                 e.preventDefault(); 
                 const targetUrl = this.href;
 
-                if (targetUrl.includes('https://quimerac3.github.io/QuimeraC3-Q-MDQ/')) {
-                    const overlay = document.getElementById('intro-overlay');
-                    overlay.style.zIndex = '40000';
-                    overlay.style.backgroundColor = '#000000';
-                    overlay.style.opacity = '1';
-
-                    setTimeout(() => { window.location.href = targetUrl; }, 1000);
-                    return;
-                }
-
-                document.body.classList.add('blurred-page');
+                // Activar el modo de fusión/aberración cromática intensa al hacer clic
+                document.body.classList.add('chromatic-meltdown-active');
                 imageModal.classList.remove('active');
 
-                document.querySelectorAll('.top-bar, header, .container').forEach(el => {
-                    el.style.transition = 'opacity 800ms ease';
-                    el.style.opacity = '0';
-                });
-                document.getElementById('bg-layer').style.opacity = '0';
-                document.getElementById('cursor-light-glow').style.opacity = '0';
+                // Disparar las partículas de destrucción física
+                if (this.classList.contains('info-card')) {
+                    triggerDestructionPhysics({ currentTarget: this });
+                }
 
                 const overlay = document.getElementById('intro-overlay');
                 overlay.style.zIndex = '40000';
-                overlay.style.backgroundColor = '#000000';
+                overlay.style.backgroundColor = 'transparent';
                 overlay.style.opacity = '1';
+
+                // Retrasar el desvanecimiento a negro/blanco (aprox. 1.8 segundos para admirar los efectos)
+                setTimeout(() => {
+                    document.body.classList.add('blurred-page');
+                    document.querySelectorAll('.top-bar, header, .container').forEach(el => {
+                        el.style.transition = 'opacity 800ms ease';
+                        el.style.opacity = '0';
+                    });
+                    document.getElementById('bg-layer').style.opacity = '0';
+                    document.getElementById('cursor-light-glow').style.opacity = '0';
+                    overlay.style.backgroundColor = '#000000';
+                }, 1800);
 
                 setTimeout(() => {
                     overlay.style.backgroundColor = '#ffffff';
-                }, 600);
+                }, 2600);
 
-                setTimeout(() => { window.location.href = targetUrl; }, 1200);
+                // Redirección final tras completar el espectáculo visual
+                setTimeout(() => { window.location.href = targetUrl; }, 3200);
             });
         });
     </script>
