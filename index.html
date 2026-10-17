@@ -49,7 +49,7 @@
             opacity: 1;
         }
 
-        /* Capa de fondo estática, nítida y completa con soporte de glitch de entrada y frame skipping ambiental[cite: 3] */
+        /* Capa de fondo estática, nítida y completa con soporte de glitch único de entrada y frame skipping ambiental[cite: 3, 10] */
         #bg-layer {
             position: fixed;
             top: 0;
@@ -66,7 +66,7 @@
         }
 
         #bg-layer.bg-glitch-active {
-            animation: bgGlitchAnim 0.35s steps(2, end) 3 both;
+            animation: bgGlitchAnim 0.35s steps(2, end) 1 both;
         }
 
         @keyframes bgGlitchAnim {
@@ -78,7 +78,7 @@
             100% { filter: none; transform: translate(0); }
         }
 
-        /* ANIMACIÓN DE FRAME SKIPPING AMBIENTAL PARA LA ESPERA[cite: 3] */
+        /* ANIMACIÓN DE FRAME SKIPPING AMBIENTAL PARA LA ESPERA[cite: 3, 10] */
         #bg-layer.bg-skipping-active {
             animation: bgFrameSkipAnim 0.25s steps(3, jump-none) 1 both;
         }
@@ -91,7 +91,7 @@
             100% { filter: none; transform: translate(0, 0); }
         }
 
-        /* Capa de pantalla completa para la transición[cite: 3] */
+        /* Capa de pantalla completa para la transición[cite: 3, 10] */
         #intro-overlay {
             position: fixed;
             top: 0;
@@ -114,7 +114,7 @@
             transition: opacity 500ms ease, background-color 500ms ease;
         }
 
-        /* Elementos con opacidad inicial 0[cite: 3] */
+        /* Elementos con opacidad inicial 0[cite: 3, 10] */
         .top-bar, header {
             opacity: 0;
             transition: opacity 500ms ease;
@@ -124,7 +124,7 @@
             transition: opacity 500ms ease;
         }
 
-        /* NAVEGACIÓN SUPERIOR[cite: 3] */
+        /* NAVEGACIÓN SUPERIOR[cite: 3, 10] */
         .top-bar {
             background-color: rgba(11, 19, 41, 0.0);
             padding: 0.85rem 2rem;
@@ -190,7 +190,7 @@
             color: #ffffff;
         }
 
-        /* ENCABEZADO CARTESIANO CENTRAL[cite: 3] */
+        /* ENCABEZADO CARTESIANO CENTRAL[cite: 3, 10] */
         header {
             position: absolute;
             top: 0;
@@ -263,7 +263,7 @@
             opacity: 0;
         }
 
-        /* EFECTO LÁSER COMÚN PARA EL FOOTER CON POSICIÓN ABSOLUTA BLINDADA[cite: 3] */
+        /* EFECTO LÁSER COMÚN PARA EL FOOTER CON POSICIÓN ABSOLUTA BLINDADA[cite: 3, 10] */
         footer.laser-burn-effect {
             position: absolute !important;
             bottom: 0 !important;
@@ -364,9 +364,9 @@
             }
         }
 
-        /* REGLAS DE REBANADO CON GLITCH SUPREMO[cite: 3] */
+        /* REGLAS DE REBANADO CON GLITCH ÚNICO (SIMPLE Y DEFINITIVO)[cite: 3, 10] */
         .glitch-slice-active {
-            animation: sliceGlitchMaster 0.35s steps(2, end) 3 both;
+            animation: sliceGlitchMaster 0.35s steps(2, end) 1 both;
         }
 
         .glitch-slice-active::before,
@@ -387,14 +387,14 @@
             left: 4px;
             text-shadow: -3px 0 #ff0055, 0 3px #00e5ff;
             clip-path: inset(0 0 52% 0);
-            animation: sliceTopShift 0.35s steps(2, end) 3 both;
+            animation: sliceTopShift 0.35s steps(2, end) 1 both;
         }
 
         .glitch-slice-active::after {
             left: -4px;
             text-shadow: 3px 0 #00e5ff, 0 -3px #ff0055;
             clip-path: inset(48% 0 0 0);
-            animation: sliceBottomShift 0.35s steps(2, end) 3 both;
+            animation: sliceBottomShift 0.35s steps(2, end) 1 both;
         }
 
         @keyframes sliceGlitchMaster {
@@ -805,32 +805,32 @@
             const x = e.clientX;
             const y = e.clientY;
             
-            // Actualizar coordenadas del haz de luz para que sigan con precisión al ratón[cite: 3]
+            // Actualizar coordenadas del haz de luz para que sigan con precisión al ratón[cite: 3, 10]
             document.documentElement.style.setProperty('--mouse-x', `${x}px`);
             document.documentElement.style.setProperty('--mouse-y', `${y}px`);
         });
 
-        // REDIRECCIÓN CONTROLADA HACIA ATRÁS[cite: 3]
+        // REDIRECCIÓN CONTROLADA HACIA ATRÁS[cite: 3, 10]
         function irAInicio() {
             window.location.replace('https://quimerac3.github.io/');
         }
 
-        // 1. Inserción inicial en el historial[cite: 3]
+        // 1. Inserción inicial en el historial[cite: 3, 10]
         history.pushState({ page: 'ecosistema' }, "", window.location.href);
 
-        // 2. Reforzar la trampa tras la primera interacción del usuario[cite: 3]
+        // 2. Reforzar la trampa tras la primera interacción del usuario[cite: 3, 10]
         ['click', 'touchstart', 'keydown', 'scroll'].forEach(evt => {
             window.addEventListener(evt, function () {
                 history.pushState({ page: 'ecosistema' }, "", window.location.href);
             }, { once: true });
         });
 
-        // 3. Capturar retroceso desde el botón de la interfaz del navegador[cite: 3]
+        // 3. Capturar retroceso desde el botón de la interfaz del navegador[cite: 3, 10]
         window.addEventListener('popstate', function () {
             irAInicio();
         });
 
-        // 4. Capturar la combinación Alt + Flecha Izquierda[cite: 3]
+        // 4. Capturar la combinación Alt + Flecha Izquierda[cite: 3, 10]
         window.addEventListener('keydown', function (e) {
             if (e.altKey && (e.key === 'ArrowLeft' || e.keyCode === 37)) {
                 e.preventDefault();
@@ -839,12 +839,12 @@
             }
         }, true);
 
-        // HOVER Y ANIMACIONES QUIMERA[cite: 3]
+        // HOVER Y ANIMACIONES QUIMERA[cite: 3, 10]
         const quimeraLink = document.getElementById('quimera-link');
         quimeraLink.addEventListener('mouseenter', () => quimeraLink.classList.add('active-wave'));
         quimeraLink.addEventListener('mouseleave', () => quimeraLink.classList.remove('active-wave'));
 
-        // MODAL DE LA LETRA Q[cite: 3]
+        // MODAL DE LA LETRA Q[cite: 3, 10]
         const imageModal = document.getElementById('image-modal');
         const closeModal = document.querySelector('.close-modal');
 
@@ -858,7 +858,7 @@
             if (e.target === imageModal) imageModal.classList.remove('active');
         });
 
-        // CONTROL DE MÚSICA[cite: 3]
+        // CONTROL DE MÚSICA[cite: 3, 10]
         const music = document.getElementById('bg-music');
         const audioToggle = document.getElementById('audio-toggle');
         let isMusicPlaying = false;
@@ -877,7 +877,7 @@
             }
         });
 
-        // CONTROL PANTALLA COMPLETA[cite: 3]
+        // CONTROL PANTALLA COMPLETA[cite: 3, 10]
         const fullscreenToggle = document.getElementById('fullscreen-toggle');
         fullscreenToggle.addEventListener('click', (e) => {
             e.preventDefault();
@@ -892,7 +892,7 @@
             }
         });
 
-        // BUCLE ALEATORIO DE FRAME SKIPPING AMBIENTAL PARA LA IMAGEN DE FONDO[cite: 3]
+        // BUCLE ALEATORIO DE FRAME SKIPPING AMBIENTAL PARA LA IMAGEN DE FONDO[cite: 3, 10]
         function iniciarFrameSkippingAmbiental() {
             const bgLayer = document.getElementById('bg-layer');
 
@@ -910,7 +910,7 @@
             setTimeout(dispararSkip, 7000);
         }
 
-        // ENTRADA SINCRONIZADA PASO A PASO CON RESPLANDOR HOLOGRÁFICO EN RECUADROS[cite: 3]
+        // ENTRADA SINCRONIZADA PASO A PASO CON RESPLANDOR HOLOGRÁFICO EN RECUADROS[cite: 3, 10]
         function runEcosystemEntrance() {
             const overlay = document.getElementById('intro-overlay');
             const bgLayer = document.getElementById('bg-layer');
@@ -920,24 +920,24 @@
                 overlay.style.opacity = '0';
 
                 // =========================================================================
-                // GRUPO 1: A LA PAR CON LA IMAGEN DE FONDO Y EL HAZ DE LUZ DEL CURSOR[cite: 3]
+                // GRUPO 1: A LA PAR CON LA IMAGEN DE FONDO Y EL HAZ DE LUZ DEL CURSOR[cite: 3, 10]
                 // =========================================================================
                 bgLayer.style.opacity = '1';
                 cursorGlow.classList.add('visible');
                 bgLayer.classList.add('bg-glitch-active');
                 setTimeout(() => {
                     bgLayer.classList.remove('bg-glitch-active');
-                }, 1050);
+                }, 350);
 
-                // Top-bar visible con glitch supremo[cite: 3]
+                // Top-bar visible con glitch único de entrada[cite: 3, 10]
                 const topBar = document.querySelector('.top-bar');
                 topBar.style.opacity = '1';
                 topBar.classList.add('glitch-slice-active');
                 setTimeout(() => {
                     topBar.classList.remove('glitch-slice-active');
-                }, 1050);
+                }, 350);
 
-                // Los 5 recuadros con glitch supremo a la par y luego modo resplandor holográfico[cite: 3]
+                // Los 5 recuadros con glitch único a la par y luego modo resplandor holográfico[cite: 3, 10]
                 const cards = ['.card-1', '.card-2', '.card-3', '.card-4', '.card-5'];
                 cards.forEach(cardSel => {
                     const card = document.querySelector(cardSel);
@@ -947,10 +947,10 @@
                     setTimeout(() => {
                         card.classList.remove('glitch-slice-active');
                         card.classList.add('card-hologram-glow');
-                    }, 1050);
+                    }, 350);
                 });
 
-                // Efecto de mecanografía para el logotipo superior a la par[cite: 3]
+                // Efecto de mecanografía para el logotipo superior a la par[cite: 3, 10]
                 const brandLogo = document.querySelector('.brand-logo');
                 const textLogo = brandLogo.dataset.text;
                 let iLogo = 0;
@@ -965,11 +965,11 @@
 
 
                 // =========================================================================
-                // GRUPO 2: TÍTULOS RESTANTES EN SECUENCIA ESTRICTA (SIN ADELANTARSE)[cite: 3]
+                // GRUPO 2: TÍTULOS RESTANTES EN SECUENCIA ESTRICTA (SIN ADELANTARSE)[cite: 3, 10]
                 // =========================================================================
                 document.querySelector('header').style.opacity = '1';
 
-                function ejecutarGlitchSupremo(selector, delay) {
+                function ejecutarGlitchUnico(selector, delay) {
                     setTimeout(() => {
                         const el = document.querySelector(selector);
                         if (!el) return;
@@ -979,15 +979,15 @@
                         setTimeout(() => {
                             el.classList.remove('glitch-slice-active');
                             el.classList.add('hologram-mode');
-                        }, 1050);
+                        }, 350);
                     }, delay);
                 }
 
-                ejecutarGlitchSupremo('.ecosistema-title', 1400);
-                ejecutarGlitchSupremo('header h1', 2650);
-                ejecutarGlitchSupremo('header p', 3900);
+                ejecutarGlitchUnico('.ecosistema-title', 600);
+                ejecutarGlitchUnico('header h1', 1100);
+                ejecutarGlitchUnico('header p', 1600);
 
-                // 3. ENTRADA LÁSER PARA EL FOOTER + HOLOGRAPHIC MODE[cite: 3]
+                // 3. ENTRADA LÁSER PARA EL FOOTER + HOLOGRAPHIC MODE[cite: 3, 10]
                 setTimeout(async () => {
                     const mainFooter = document.getElementById('main-footer');
                     const footerText = document.getElementById('footer-text');
@@ -996,7 +996,7 @@
                     await new Promise(r => setTimeout(r, 1200));
                     mainFooter.classList.remove('active-laser');
                     mainFooter.classList.add('revealed', 'hologram-mode');
-                }, 5400);
+                }, 2200);
 
                 iniciarFrameSkippingAmbiental();
             }
@@ -1014,7 +1014,7 @@
 
         window.addEventListener('DOMContentLoaded', runEcosystemEntrance);
 
-        // TRANSICIÓN DE SALIDA UNIFICADA ORIGINAL (LIMPIA Y FLUIDA)[cite: 3]
+        // TRANSICIÓN DE SALIDA UNIFICADA ORIGINAL (LIMPIA Y FLUIDA)[cite: 3, 10]
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
