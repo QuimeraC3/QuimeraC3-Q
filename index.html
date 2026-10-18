@@ -114,16 +114,6 @@
             transition: opacity 500ms ease, background-color 500ms ease;
         }
 
-        /* Elementos con opacidad inicial 0[cite: 3, 10] */
-        .top-bar, header {
-            opacity: 0;
-            transition: opacity 500ms ease;
-        }
-
-        .brand-logo {
-            transition: opacity 500ms ease;
-        }
-
         /* NAVEGACIÓN SUPERIOR[cite: 3, 10] */
         .top-bar {
             background-color: rgba(11, 19, 41, 0.0);
@@ -150,7 +140,8 @@
             font-weight: 700;
             text-decoration: none;
             letter-spacing: -0.01em;
-            transition: color 0.2s ease, opacity 500ms ease;
+            display: inline-block;
+            transition: color 0.2s ease;
         }
 
         .brand-logo:hover {
@@ -177,16 +168,24 @@
             color: #38bdf8;
         }
 
+        /* RECUADROS DE MÚSICA Y PANTALLA COMPLETA ACTUALIZADOS AL ESTILO INDEXQE */
         #audio-toggle, #fullscreen-toggle {
-            background: rgba(200, 139, 50, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 0.3rem 0.8rem;
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.22);
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            color: #ffffff;
+            padding: 0.35rem 0.9rem;
             border-radius: 20px;
             cursor: pointer;
-            transition: opacity 500ms ease;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
+            transition: opacity 500ms ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
+
         #audio-toggle:hover, #fullscreen-toggle:hover {
-            background: var(--accent);
+            background: rgba(56, 189, 248, 0.5);
+            border-color: #38bdf8;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
             color: #ffffff;
         }
 
@@ -263,22 +262,11 @@
             opacity: 0;
         }
 
-        /* EFECTO LÁSER COMÚN PARA EL FOOTER CON POSICIÓN ABSOLUTA BLINDADA[cite: 3, 10] */
-        footer.laser-burn-effect {
-            position: absolute !important;
-            bottom: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            text-align: center;
-            padding: 0.4rem 2rem;
-            background-color: rgba(11, 19, 41, 0.2);
-            backdrop-filter: blur(8px);
-            color: #ffffff;
-            font-size: clamp(0.65rem, 1vw, 0.8rem);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 100;
-            clip-path: inset(0 100% 0 0);
+        /* EFECTO LÁSER COMÚN PARA EL HEADER Y FOOTER CON POSICIÓN ABSOLUTA BLINDADA[cite: 3, 10, 13] */
+        .laser-burn-effect {
             opacity: 0;
+            clip-path: inset(0 100% 0 0);
+            position: relative;
         }
 
         .laser-burn-effect.active-laser {
@@ -364,6 +352,21 @@
             }
         }
 
+        footer.laser-burn-effect {
+            position: absolute !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            text-align: center;
+            padding: 0.4rem 2rem;
+            background-color: rgba(11, 19, 41, 0.2);
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+            font-size: clamp(0.65rem, 1vw, 0.8rem);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
+        }
+
         /* REGLAS DE REBANADO CON GLITCH ÚNICO (SIMPLE Y DEFINITIVO)[cite: 3, 10] */
         .glitch-slice-active {
             animation: sliceGlitchMaster 0.35s steps(2, end) 1 both;
@@ -419,8 +422,13 @@
         }
 
         .hologram-mode {
-            animation: hologramFlicker 4s infinite ease-in-out;
-            text-shadow: 0 0 15px rgba(56, 189, 248, 0.6), 0 0 30px rgba(200, 139, 50, 0.4), 4px 4px 10px rgba(0, 0, 0, 0.8);
+            animation: hologramNeonGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes hologramNeonGlow {
+            0% { text-shadow: 0 0 8px rgba(56, 189, 248, 0.7), 0 0 20px rgba(15, 118, 110, 0.5), 3px 3px 8px rgba(0, 0, 0, 0.8); }
+            50% { text-shadow: 0 0 20px rgba(56, 189, 248, 1), 0 0 35px rgba(56, 189, 248, 0.8), 0 0 50px rgba(200, 139, 50, 0.6), 3px 3px 8px rgba(0, 0, 0, 0.8); }
+            100% { text-shadow: 0 0 8px rgba(56, 189, 248, 0.7), 0 0 20px rgba(15, 118, 110, 0.5), 3px 3px 8px rgba(0, 0, 0, 0.8); }
         }
 
         .card-hologram-glow {
@@ -434,14 +442,6 @@
             35% { box-shadow: 0 0 18px rgba(56, 189, 248, 0.6), var(--shadow); border-color: rgba(56, 189, 248, 0.9); }
             67% { box-shadow: 0 0 8px rgba(56, 189, 248, 0.3), var(--shadow); border-color: rgba(255, 255, 255, 0.6); }
             70% { box-shadow: 0 0 15px rgba(200, 139, 50, 0.5), var(--shadow); border-color: rgba(200, 139, 50, 0.8); }
-        }
-
-        @keyframes hologramFlicker {
-            0%, 100% { opacity: 1; filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5)); }
-            33% { opacity: 0.92; filter: drop-shadow(0 0 4px rgba(200, 139, 50, 0.3)); }
-            35% { opacity: 0.98; filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.7)); }
-            67% { opacity: 0.88; filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.4)); }
-            70% { opacity: 1; filter: drop-shadow(0 0 10px rgba(200, 139, 50, 0.6)); }
         }
 
         header h1 a {
@@ -754,10 +754,10 @@
 
     <nav class="top-bar">
         <div class="top-bar-container">
-            <a href="https://quimerac3.github.io/" class="brand-logo" data-text="QUIMERA - Inicio General"></a>
+            <a href="https://quimerac3.github.io/" class="brand-logo laser-burn-effect" id="brand-logo" data-text="QUIMERA - Inicio General"></a>
             <ul class="nav-links">
-                <li><a href="#" id="audio-toggle"><span style="color: #ffffff;">🎵</span> Música: OFF</a></li>
-                <li><a href="#" id="fullscreen-toggle">⛶ Pantalla Completa</a></li>
+                <li><a href="#" id="audio-toggle" class="laser-burn-effect"><span style="color: #ffffff;">🎵</span> Música: OFF</a></li>
+                <li><a href="#" id="fullscreen-toggle" class="laser-burn-effect">⛶ Pantalla Completa</a></li>
             </ul>
         </div>
     </nav>
@@ -805,7 +805,6 @@
             const x = e.clientX;
             const y = e.clientY;
             
-            // Actualizar coordenadas del haz de luz para que sigan con precisión al ratón[cite: 3, 10]
             document.documentElement.style.setProperty('--mouse-x', `${x}px`);
             document.documentElement.style.setProperty('--mouse-y', `${y}px`);
         });
@@ -815,22 +814,18 @@
             window.location.replace('https://quimerac3.github.io/');
         }
 
-        // 1. Inserción inicial en el historial[cite: 3, 10]
         history.pushState({ page: 'ecosistema' }, "", window.location.href);
 
-        // 2. Reforzar la trampa tras la primera interacción del usuario[cite: 3, 10]
         ['click', 'touchstart', 'keydown', 'scroll'].forEach(evt => {
             window.addEventListener(evt, function () {
                 history.pushState({ page: 'ecosistema' }, "", window.location.href);
             }, { once: true });
         });
 
-        // 3. Capturar retroceso desde el botón de la interfaz del navegador[cite: 3, 10]
         window.addEventListener('popstate', function () {
             irAInicio();
         });
 
-        // 4. Capturar la combinación Alt + Flecha Izquierda[cite: 3, 10]
         window.addEventListener('keydown', function (e) {
             if (e.altKey && (e.key === 'ArrowLeft' || e.keyCode === 37)) {
                 e.preventDefault();
@@ -910,18 +905,15 @@
             setTimeout(dispararSkip, 7000);
         }
 
-        // ENTRADA SINCRONIZADA PASO A PASO CON RESPLANDOR HOLOGRÁFICO EN RECUADROS[cite: 3, 10]
+        // ENTRADA SINCRONIZADA PASO A PASO CON LASER BURN ANIMATIONS PARA EL HEADER Y FOOTER[cite: 3, 10, 13]
         function runEcosystemEntrance() {
             const overlay = document.getElementById('intro-overlay');
             const bgLayer = document.getElementById('bg-layer');
             const cursorGlow = document.getElementById('cursor-light-glow');
 
-            function iniciarAnimaciones() {
+            async function iniciarAnimaciones() {
                 overlay.style.opacity = '0';
 
-                // =========================================================================
-                // GRUPO 1: A LA PAR CON LA IMAGEN DE FONDO Y EL HAZ DE LUZ DEL CURSOR[cite: 3, 10]
-                // =========================================================================
                 bgLayer.style.opacity = '1';
                 cursorGlow.classList.add('visible');
                 bgLayer.classList.add('bg-glitch-active');
@@ -929,15 +921,32 @@
                     bgLayer.classList.remove('bg-glitch-active');
                 }, 350);
 
-                // Top-bar visible con glitch único de entrada[cite: 3, 10]
                 const topBar = document.querySelector('.top-bar');
                 topBar.style.opacity = '1';
-                topBar.classList.add('glitch-slice-active');
-                setTimeout(() => {
-                    topBar.classList.remove('glitch-slice-active');
-                }, 350);
 
-                // Los 5 recuadros con glitch único a la par y luego modo resplandor holográfico[cite: 3, 10]
+                // 1. ANIMACIÓN LÁSER PARA "QUIMERA - Inicio General" (Brand Logo)
+                const brandLogo = document.getElementById('brand-logo');
+                brandLogo.textContent = brandLogo.dataset.text;
+                brandLogo.classList.add('active-laser');
+                await new Promise(r => setTimeout(r, 1200));
+                brandLogo.classList.remove('active-laser');
+                brandLogo.classList.add('revealed', 'hologram-mode');
+
+                // 2. ANIMACIÓN LÁSER PARA "Música"
+                const audioToggleBtn = document.getElementById('audio-toggle');
+                audioToggleBtn.classList.add('active-laser');
+                await new Promise(r => setTimeout(r, 1200));
+                audioToggleBtn.classList.remove('active-laser');
+                audioToggleBtn.classList.add('revealed', 'hologram-mode');
+
+                // 3. ANIMACIÓN LÁSER PARA "Pantalla Completa"
+                const fullscreenToggleBtn = document.getElementById('fullscreen-toggle');
+                fullscreenToggleBtn.classList.add('active-laser');
+                await new Promise(r => setTimeout(r, 1200));
+                fullscreenToggleBtn.classList.remove('active-laser');
+                fullscreenToggleBtn.classList.add('revealed', 'hologram-mode');
+
+                // Recuadros principales con glitch único y resplandor holográfico
                 const cards = ['.card-1', '.card-2', '.card-3', '.card-4', '.card-5'];
                 cards.forEach(cardSel => {
                     const card = document.querySelector(cardSel);
@@ -950,23 +959,6 @@
                     }, 350);
                 });
 
-                // Efecto de mecanografía para el logotipo superior a la par[cite: 3, 10]
-                const brandLogo = document.querySelector('.brand-logo');
-                const textLogo = brandLogo.dataset.text;
-                let iLogo = 0;
-                function typeBrandLogo() {
-                    if (iLogo <= textLogo.length) {
-                        brandLogo.innerHTML = textLogo.substring(0, iLogo);
-                        iLogo++;
-                        setTimeout(typeBrandLogo, 25);
-                    }
-                }
-                typeBrandLogo();
-
-
-                // =========================================================================
-                // GRUPO 2: TÍTULOS RESTANTES EN SECUENCIA ESTRICTA (SIN ADELANTARSE)[cite: 3, 10]
-                // =========================================================================
                 document.querySelector('header').style.opacity = '1';
 
                 function ejecutarGlitchUnico(selector, delay) {
@@ -983,11 +975,11 @@
                     }, delay);
                 }
 
-                ejecutarGlitchUnico('.ecosistema-title', 600);
-                ejecutarGlitchUnico('header h1', 1100);
-                ejecutarGlitchUnico('header p', 1600);
+                ejecutarGlitchUnico('.ecosistema-title', 200);
+                ejecutarGlitchUnico('header h1', 700);
+                ejecutarGlitchUnico('header p', 1200);
 
-                // 3. ENTRADA LÁSER PARA EL FOOTER + HOLOGRAPHIC MODE[cite: 3, 10]
+                // 4. ANIMACIÓN LÁSER PARA EL FOOTER
                 setTimeout(async () => {
                     const mainFooter = document.getElementById('main-footer');
                     const footerText = document.getElementById('footer-text');
@@ -996,7 +988,7 @@
                     await new Promise(r => setTimeout(r, 1200));
                     mainFooter.classList.remove('active-laser');
                     mainFooter.classList.add('revealed', 'hologram-mode');
-                }, 2200);
+                }, 1600);
 
                 iniciarFrameSkippingAmbiental();
             }
