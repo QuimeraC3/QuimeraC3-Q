@@ -31,6 +31,20 @@
             background-color: #000000;
         }
 
+        /* CAPA CRT SCANLINES (Efecto de televisión antigua) */
+        .crt-scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 2000;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 6px 100%;
+            opacity: 0.65;
+        }
+
         /* Capa de luz reactiva exclusiva para el movimiento del puntero del ratón */
         .cursor-light-glow {
             position: fixed;
@@ -734,6 +748,9 @@
     </style>
 </head>
 <body>
+
+    <!-- Capa CRT Scanlines -->
+    <div class="crt-scanlines"></div>
 
     <audio id="bg-music" src="Tango_Futuro_(Lado_B).mp3" loop preload="auto"></audio>
     
