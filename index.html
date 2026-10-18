@@ -931,11 +931,28 @@
             async function iniciarAnimaciones() {
                 overlay.style.opacity = '0';
 
+                // Activación simultánea de la imagen de fondo, luz del cursor, glitch y recuadros
                 bgLayer.style.opacity = '1';
                 cursorGlow.classList.add('visible');
                 bgLayer.classList.add('bg-glitch-active');
+                
+                // Recuadros principales animándose de inmediato junto al fondo
+                const cards = ['.card-1', '.card-2', '.card-3', '.card-4', '.card-5'];
+                cards.forEach(cardSel => {
+                    const card = document.querySelector(cardSel);
+                    if (!card) return;
+                    card.style.opacity = '1';
+                    card.classList.add('glitch-slice-active');
+                });
+
                 setTimeout(() => {
                     bgLayer.classList.remove('bg-glitch-active');
+                    cards.forEach(cardSel => {
+                        const card = document.querySelector(cardSel);
+                        if (!card) return;
+                        card.classList.remove('glitch-slice-active');
+                        card.classList.add('card-hologram-glow');
+                    });
                 }, 350);
 
                 const topBar = document.querySelector('.top-bar');
@@ -962,19 +979,6 @@
                 await new Promise(r => setTimeout(r, 1200));
                 fullscreenToggleBtn.classList.remove('active-laser');
                 fullscreenToggleBtn.classList.add('revealed', 'hologram-mode');
-
-                // Recuadros principales con glitch único y resplandor holográfico
-                const cards = ['.card-1', '.card-2', '.card-3', '.card-4', '.card-5'];
-                cards.forEach(cardSel => {
-                    const card = document.querySelector(cardSel);
-                    if (!card) return;
-                    card.style.opacity = '1';
-                    card.classList.add('glitch-slice-active');
-                    setTimeout(() => {
-                        card.classList.remove('glitch-slice-active');
-                        card.classList.add('card-hologram-glow');
-                    }, 350);
-                });
 
                 document.querySelector('header').style.opacity = '1';
 
