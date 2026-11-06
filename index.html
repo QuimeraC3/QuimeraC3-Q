@@ -676,7 +676,7 @@
 
         .contenido-modal-principal {
             position: relative;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('Quimera_Negro.webp');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('Quimeratrix.webp');
             background-size: cover;
             background-position: center center;
             border: 1.5px solid var(--accent);
@@ -725,6 +725,26 @@
             text-shadow: 0 0 10px rgba(0, 0, 0, 0.95);
             -webkit-text-stroke: 0.5px #000000;
             text-align: justify;
+        }
+
+        /* HIPERVÍNCULO DE CONTINUAR ALINEADO A LA DERECHA RADICAL */
+        .btn-continuar-link {
+            color: #c88b32;
+            font-weight: 800;
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            text-decoration: underline;
+            cursor: pointer;
+            display: block;
+            text-align: right;
+            margin-top: 2rem;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            -webkit-text-stroke: 0.5px #000000;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-continuar-link:hover {
+            color: #ffffff;
+            text-shadow: 0 0 12px #ffffff;
         }
 
         .glyphs-section-title {
@@ -991,8 +1011,19 @@
         <div class="contenido-modal-principal crt-screen-effect hologram-glow-box" id="contenido-modal-box">
             <div class="modal-scroll-wrapper" id="modal-inner-scroll">
 
-                <!-- CONTENEDOR DINÁMICO DE LAS FASES DEL ACERTIJO -->
-                <div id="fase-acertijo-container">
+                <!-- FASE 0: MODAL DE BIENVENIDA -->
+                <div id="fase-bienvenida-container">
+                    <h2 class="titulo-oculto">¡BIENVENIDO NAVEGANTE!</h2>
+                    <p class="acertijo-poema">
+                        Navegante: Te damos la bienvenida. Has encontrado el último portal de éste ECOSISTEMA ACADÉMICO.<br><br>
+                        Para lograr acceder a éste sitio restringido, es necesario que completes una prueba de conocimiento en la que hagas uso de tu memoria ancestral para recordar a los héroes mitológicos que dieron vida al símbolo representativo de éste Instituto.<br><br>
+                        Serás partícipe de la resolución del ACERTIJO TRIPLE...
+                    </p>
+                    <a id="btn-continuar-welcome" class="btn-continuar-link">CONTINUAR</a>
+                </div>
+
+                <!-- CONTENEDOR DINÁMICO DE LAS FASES DEL ACERTIJO (1, 2 Y 3) -->
+                <div id="fase-acertijo-container" style="display: none;">
                     <h2 class="titulo-oculto" id="acertijo-titulo">EL ENIGMA DE LA COMPLEJIDAD.</h2>
                     <p class="acertijo-poema" id="acertijo-texto"></p>
 
@@ -1177,6 +1208,29 @@
         const targetContainer = document.getElementById('target-glyphs-container');
         const btnReset = document.getElementById('btn-reset');
         const contenidoModalBox = document.getElementById('contenido-modal-box');
+
+        // LÓGICA DE TRANSICIÓN DEL MODAL DE BIENVENIDA A LA FASE I
+        const btnWelcomeContinuar = document.getElementById('btn-continuar-welcome');
+        btnWelcomeContinuar.onclick = () => {
+            const faseBienvenida = document.getElementById('fase-bienvenida-container');
+            faseBienvenida.classList.add('vaporize-effect');
+
+            setTimeout(() => {
+                faseBienvenida.style.display = 'none';
+                faseBienvenida.classList.remove('vaporize-effect');
+
+                const faseAcertijo = document.getElementById('fase-acertijo-container');
+                faseAcertijo.style.display = 'block';
+                faseAcertijo.classList.add('materialize-effect');
+
+                loadPhase(0);
+
+                setTimeout(() => {
+                    faseAcertijo.classList.remove('materialize-effect');
+                }, 900);
+
+            }, 800);
+        };
 
         function loadPhase(idx) {
             currentPhaseIdx = idx;
@@ -1428,6 +1482,12 @@
         quimeraLink.addEventListener('click', (e) => {
             e.preventDefault();
 
+            // Resetear contenedores para mostrar bienvenida
+            document.getElementById('fase-bienvenida-container').style.display = 'block';
+            document.getElementById('fase-acertijo-container').style.display = 'none';
+            document.getElementById('hologram-locks-group-container').style.display = 'none';
+            contenidoModalBox.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('Quimeratrix.webp')`;
+
             // 1. Desvanecimiento a negro
             const overlay = document.getElementById('intro-overlay');
             overlay.style.backgroundColor = '#000000';
@@ -1449,9 +1509,6 @@
                     // 3. Abrir modal con TV encendiéndose hacia atrás
                     const modalPrincipal = document.getElementById('modal-principal');
                     modalPrincipal.classList.add('tv-turn-on');
-
-                    // Cargar fase 1
-                    loadPhase(0);
 
                 }, 800);
 
