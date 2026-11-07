@@ -1039,7 +1039,7 @@
 
                 <!-- CONTENEDOR DINÁMICO DE LAS FASES DEL ACERTIJO (1, 2 Y 3) -->
                 <div id="fase-acertijo-container" style="display: none; width: 100%;">
-                    <h2 class="titulo-oculto" id="acertijo-titulo">EL ENIGMA DE LA COMPLEJIDAD.</h2>
+                    <h2 class="titulo-oculto" id="acertijo-titulo"></h2>
                     <p class="acertijo-poema" id="acertijo-texto"></p>
 
                     <div id="puzzle-content-area">
@@ -1251,7 +1251,7 @@
             currentPhaseIdx = idx;
             const phase = riddlePhases[idx];
             
-            // RESTAURACIÓN EXPLÍCITA DEL TÍTULO DEL ACERTIJO CORRESPONDIENTE
+            // ASIGNACIÓN EXPLÍCITA Y DIRECTA DEL TÍTULO EN CADA FASE
             acertijoTitulo.textContent = phase.title;
             acertijoTexto.textContent = phase.poem;
 
