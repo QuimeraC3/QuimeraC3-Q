@@ -657,7 +657,7 @@
         .card-5 { top: 15vh; right: 02.5vw; width: 17.5vw; max-width: 350px; padding: 0.7rem 0.7rem; transform: translateX(10%) translateY(-25%); }
         .card-5:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(10%) translateY(-25%) translateY(-6px); }
 
-        /* ESTILOS DEL MODAL DE ACERTIJOS (DINÁMICO CON IMÁGENES DE RESALDO) */
+        /* ESTILOS DEL MODAL DE ACERTIJOS (DINÁMICO CON IMÁGENES DE RESPALDO) */
         #modal-principal {
             position: fixed;
             top: 0;
@@ -687,8 +687,11 @@
             color: #ffffff;
             z-index: 10;
             transition: background-image 0.5s ease-in-out;
+            display: flex;
+            flex-direction: column;
         }
 
+        /* CONTENEDOR DESPLAZABLE Y CENTRADO VERTICAL */
         .modal-scroll-wrapper {
             position: relative;
             z-index: 10;
@@ -696,6 +699,12 @@
             overflow-y: auto;
             padding: 3rem 3.5rem;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            width: 100%;
         }
 
         .modal-scroll-wrapper::-webkit-scrollbar { width: 8px; }
@@ -737,6 +746,7 @@
             display: block;
             text-align: right;
             margin-top: 2rem;
+            width: 100%;
             transition: color 0.3s ease, text-shadow 0.3s ease;
             -webkit-text-stroke: 0.5px #000000;
             letter-spacing: 0.05em;
@@ -829,18 +839,18 @@
             border-color: #ef4444;
         }
 
-        /* CONTENEDOR DE LOS TRES CANDADOS HOLOGRÁFICOS (AMPLIADOS) */
+        /* CONTENEDOR DE LOS TRES CANDADOS HOLOGRÁFICOS (AMPLIADOS UN 50%) */
         .locks-container-group {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 2.5rem;
             margin: 2rem auto;
             flex-wrap: wrap;
         }
 
         .holo-lock {
-            width: 120px;
-            height: 145px;
+            width: 180px;
+            height: 218px;
             position: relative;
             animation: holoFloat 2s ease-in-out infinite alternate;
         }
@@ -848,27 +858,28 @@
         .holo-shackle {
             position: absolute;
             top: 0;
-            left: 22px;
-            width: 76px;
-            height: 68px;
-            border: 7px solid #38bdf8;
-            border-top-left-radius: 38px;
-            border-top-right-radius: 38px;
+            left: 33px;
+            width: 114px;
+            height: 102px;
+            border: 10px solid #38bdf8;
+            border-top-left-radius: 57px;
+            border-top-right-radius: 57px;
             border-bottom: none;
             box-shadow: 0 0 25px #38bdf8, inset 0 0 10px #38bdf8;
             transform-origin: bottom left;
-            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
         .holo-body {
             position: absolute;
             bottom: 0;
-            width: 120px;
-            height: 90px;
+            width: 180px;
+            height: 135px;
             background: rgba(56, 189, 248, 0.25);
-            border: 4px solid #38bdf8;
-            border-radius: 16px;
+            border: 6px solid #38bdf8;
+            border-radius: 20px;
             box-shadow: 0 0 35px rgba(56, 189, 248, 0.85), inset 0 0 15px rgba(56, 189, 248, 0.6);
+            transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
         }
 
         @keyframes holoFloat {
@@ -876,16 +887,17 @@
             100% { transform: translateY(-8px); filter: drop-shadow(0 0 25px rgba(56, 189, 248, 1)); }
         }
 
+        /* COLOR VERDE RESPLANDECIENTE AL DESBLOQUEARSE */
         .holo-lock.unlocked .holo-shackle {
-            transform: rotate(-45deg) translateY(-14px) translateX(-8px);
-            border-color: #fef384;
-            box-shadow: 0 0 30px #fef384, inset 0 0 12px #fef384;
+            transform: rotate(-45deg) translateY(-18px) translateX(-10px);
+            border-color: #22c55e !important;
+            box-shadow: 0 0 35px #22c55e, inset 0 0 15px #22c55e !important;
         }
 
         .holo-lock.unlocked .holo-body {
-            border-color: #fef384;
-            background: rgba(254, 243, 132, 0.35);
-            box-shadow: 0 0 45px rgba(254, 243, 132, 0.95);
+            border-color: #22c55e !important;
+            background: rgba(34, 197, 94, 0.35) !important;
+            box-shadow: 0 0 50px rgba(34, 197, 94, 0.95), inset 0 0 18px rgba(34, 197, 94, 0.7) !important;
         }
 
         @media (max-width: 1200px) {
@@ -1026,7 +1038,7 @@
                 </div>
 
                 <!-- CONTENEDOR DINÁMICO DE LAS FASES DEL ACERTIJO (1, 2 Y 3) -->
-                <div id="fase-acertijo-container" style="display: none;">
+                <div id="fase-acertijo-container" style="display: none; width: 100%;">
                     <h2 class="titulo-oculto" id="acertijo-titulo">EL ENIGMA DE LA COMPLEJIDAD.</h2>
                     <p class="acertijo-poema" id="acertijo-texto"></p>
 
@@ -1044,7 +1056,7 @@
                 </div>
 
                 <!-- CONTENEDOR DE LOS 3 CANDADOS HOLOGRÁFICOS -->
-                <div id="hologram-locks-group-container" style="display: none;">
+                <div id="hologram-locks-group-container" style="display: none; width: 100%;">
                     <div class="locks-container-group">
                         <div class="holo-lock" id="lock-1"><div class="holo-shackle"></div><div class="holo-body"></div></div>
                         <div class="holo-lock" id="lock-2"><div class="holo-shackle"></div><div class="holo-body"></div></div>
