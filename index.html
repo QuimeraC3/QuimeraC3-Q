@@ -225,7 +225,7 @@
             z-index: 9999;
             pointer-events: none;
             opacity: 1;
-            transition: opacity 1000ms ease, background-color 1000ms ease;
+            transition: opacity 500ms ease, background-color 500ms ease;
         }
 
         body.blurred-page {
@@ -234,7 +234,7 @@
         body.blurred-page #intro-overlay {
             opacity: 1;
             background-color: #ffffff;
-            transition: opacity 500ms ease, background-color 500ms ease;
+            transition: opacity 300ms ease, background-color 300ms ease;
         }
 
         /* NAVEGACIÓN SUPERIOR */
@@ -1373,7 +1373,7 @@
 
         function triggerPhaseCompleted(phaseIdx) {
             const phase = riddlePhases[phaseIdx];
-            // Cambiar fondo al color principal (Quimera.webp, Belerofonte.webp, Pegaso.webp) al liberar candado
+            // Cambiar fondo al color principal al liberar candado
             contenidoModalBox.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url('${phase.bgUnlocked}')`;
 
             const faseContainer = document.getElementById('fase-acertijo-container');
@@ -1419,7 +1419,7 @@
                             faseContainer.classList.add('materialize-effect');
                             loadPhase(phaseIdx + 1);
                         } else {
-                            // SECUENCIA DE SALIDA FINAL SOLICITADA
+                            // SECUENCIA DE SALIDA FINAL OPTIMIZADA Y RÁPIDA
                             const modalBox = document.getElementById('modal-principal');
                             modalBox.classList.remove('tv-turn-on');
                             modalBox.classList.add('tv-turn-off');
@@ -1435,15 +1435,15 @@
                                     overlay.style.backgroundColor = '#ffffff';
                                     setTimeout(() => {
                                         window.location.replace(ECOSYSTEM_URL);
-                                    }, 1000);
-                                }, 800);
+                                    }, 500);
+                                }, 400);
 
-                            }, 700);
+                            }, 500);
                         }
 
                     }, 800);
 
-                }, 4000);
+                }, 3000);
 
             }, 800);
         }
@@ -1489,7 +1489,7 @@
             document.documentElement.style.setProperty('--mouse-y', `${y}px`);
         });
 
-        // ACTIVACIÓN DEL MODAL AL CLICAR "QUIMERA"
+        // ACTIVACIÓN DEL MODAL AL CLICAR "QUIMERA" (TIEMPOS RESTAURADOS Y FLUIDOS)
         const quimeraLink = document.getElementById('quimera-link');
         quimeraLink.addEventListener('mouseenter', () => quimeraLink.classList.add('active-wave'));
         quimeraLink.addEventListener('mouseleave', () => quimeraLink.classList.remove('active-wave'));
@@ -1503,13 +1503,13 @@
             document.getElementById('hologram-locks-group-container').style.display = 'none';
             contenidoModalBox.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('Quimeratrix.webp')`;
 
-            // 1. Desvanecimiento a negro
+            // 1. Desvanecimiento rápido a negro
             const overlay = document.getElementById('intro-overlay');
             overlay.style.backgroundColor = '#000000';
             overlay.style.opacity = '1';
 
             document.querySelectorAll('.top-bar, header, .container, #bg-layer, #main-footer').forEach(el => {
-                el.style.transition = 'opacity 800ms ease';
+                el.style.transition = 'opacity 500ms ease';
                 el.style.opacity = '0';
             });
 
@@ -1521,13 +1521,13 @@
                 overlay.style.opacity = '0';
 
                 setTimeout(() => {
-                    // 3. Abrir modal con TV encendiéndose hacia atrás
+                    // 3. Abrir modal con TV encendiéndose con la duración limpia original
                     const modalPrincipal = document.getElementById('modal-principal');
                     modalPrincipal.classList.add('tv-turn-on');
 
-                }, 800);
+                }, 500);
 
-            }, 1000);
+            }, 600);
         });
 
         // ENTRADA INICIAL DE LA PÁGINA
@@ -1565,19 +1565,19 @@
                 const brandLogo = document.getElementById('brand-logo');
                 brandLogo.textContent = brandLogo.dataset.text;
                 brandLogo.classList.add('active-laser');
-                await new Promise(r => setTimeout(r, 1200));
+                await new Promise(r => setTimeout(r, 800));
                 brandLogo.classList.remove('active-laser');
                 brandLogo.classList.add('revealed', 'hologram-mode');
 
                 const audioToggleBtn = document.getElementById('audio-toggle');
                 audioToggleBtn.classList.add('active-laser');
-                await new Promise(r => setTimeout(r, 1200));
+                await new Promise(r => setTimeout(r, 800));
                 audioToggleBtn.classList.remove('active-laser');
                 audioToggleBtn.classList.add('revealed', 'hologram-mode');
 
                 const fullscreenToggleBtn = document.getElementById('fullscreen-toggle');
                 fullscreenToggleBtn.classList.add('active-laser');
-                await new Promise(r => setTimeout(r, 1200));
+                await new Promise(r => setTimeout(r, 800));
                 fullscreenToggleBtn.classList.remove('active-laser');
                 fullscreenToggleBtn.classList.add('revealed', 'hologram-mode');
 
@@ -1597,19 +1597,19 @@
                     }, delay);
                 }
 
-                ejecutarGlitchUnico('.ecosistema-title', 200);
-                ejecutarGlitchUnico('header h1', 700);
-                ejecutarGlitchUnico('header p', 1200);
+                ejecutarGlitchUnico('.ecosistema-title', 150);
+                ejecutarGlitchUnico('header h1', 400);
+                ejecutarGlitchUnico('header p', 700);
 
                 setTimeout(async () => {
                     const mainFooter = document.getElementById('main-footer');
                     const footerText = document.getElementById('footer-text');
                     footerText.textContent = footerText.dataset.text.replace('2026', new Date().getFullYear());
                     mainFooter.classList.add('active-laser');
-                    await new Promise(r => setTimeout(r, 1200));
+                    await new Promise(r => setTimeout(r, 800));
                     mainFooter.classList.remove('active-laser');
                     mainFooter.classList.add('revealed', 'hologram-mode');
-                }, 1600);
+                }, 1000);
             }
 
             const imgFondo = new Image();
@@ -1639,7 +1639,7 @@
                 document.body.classList.add('blurred-page');
 
                 document.querySelectorAll('.top-bar, header, .container, #main-footer').forEach(el => {
-                    el.style.transition = 'opacity 800ms ease';
+                    el.style.transition = 'opacity 500ms ease';
                     el.style.opacity = '0';
                 });
                 document.getElementById('bg-layer').style.opacity = '0';
@@ -1652,9 +1652,9 @@
 
                 setTimeout(() => {
                     overlay.style.backgroundColor = '#ffffff';
-                }, 600);
+                }, 400);
 
-                setTimeout(() => { window.location.href = targetUrl; }, 1200);
+                setTimeout(() => { window.location.href = targetUrl; }, 800);
             });
         });
     </script>
