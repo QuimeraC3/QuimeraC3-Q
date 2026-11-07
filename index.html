@@ -1184,7 +1184,7 @@
 
         window.addEventListener('resize', initMatrix);
 
-        // CONFIGURACIÓN DE LAS 3 FASES DEL ACERTIJO Y SUS IMÁGENES DE FONDO
+        // CONFIGURACIÓN DE LAS 3 FASES DEL ACERTIJO Y SUS TÍTULOS E IMÁGENES DE FONDO
         const riddlePhases = [
             {
                 title: "EL ENIGMA DE LA COMPLEJIDAD.",
@@ -1250,6 +1250,8 @@
         function loadPhase(idx) {
             currentPhaseIdx = idx;
             const phase = riddlePhases[idx];
+            
+            // RESTAURACIÓN EXPLÍCITA DEL TÍTULO DEL ACERTIJO CORRESPONDIENTE
             acertijoTitulo.textContent = phase.title;
             acertijoTexto.textContent = phase.poem;
 
@@ -1489,7 +1491,7 @@
             document.documentElement.style.setProperty('--mouse-y', `${y}px`);
         });
 
-        // ACTIVACIÓN DEL MODAL AL CLICAR "QUIMERA" (TIEMPOS RESTAURADOS Y FLUIDOS)
+        // ACTIVACIÓN DEL MODAL AL CLICAR "QUIMERA"
         const quimeraLink = document.getElementById('quimera-link');
         quimeraLink.addEventListener('mouseenter', () => quimeraLink.classList.add('active-wave'));
         quimeraLink.addEventListener('mouseleave', () => quimeraLink.classList.remove('active-wave'));
