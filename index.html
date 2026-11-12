@@ -173,7 +173,7 @@
             transition: opacity 1200ms ease;
         }
 
-        /* 1ª CAPA DE FONDO: Quimera_Ecosistema01.webp (Base opaca completa) */
+        /* 1ª CAPA DE FONDO: Quimera_Ecosistema.webp (Base opaca completa) */
         #bg-layer {
             position: fixed;
             top: 0;
@@ -181,7 +181,7 @@
             width: 100vw;
             height: 100vh;
             z-index: -3;
-            background: linear-gradient(rgba(15, 23, 42, 0.00), rgba(15, 23, 42, 0.00)), url('Quimera_Ecosistema01.webp');
+            background: linear-gradient(rgba(15, 23, 42, 0.00), rgba(15, 23, 42, 0.00)), url('Quimera_Ecosistema.webp');
             background-size: cover;
             background-position: center center;
             background-attachment: fixed;
@@ -1054,7 +1054,7 @@
     <canvas id="matrix-canvas"></canvas>
     
     <!-- CAPAS DE FONDO DUALES -->
-    <div id="bg-layer"></div>       <!-- 1ª Capa: Quimera_Ecosistema01.webp (Base) -->
+    <div id="bg-layer"></div>       <!-- 1ª Capa: Quimera_Ecosistema.webp (Base) -->
     <div id="bg-top-layer"></div>  <!-- 2ª Capa: QuimeraC3-Q1.webp (Con transparencia superior) -->
 
     <!-- RECUADRO SELECCIONABLE INTERACTIVO (HOTSPOT CON ENLACE Y TRANSICIÓN NEGRO-BLANCO) -->
@@ -1170,7 +1170,7 @@
         // PRECARGA GLOBAL DE LAS 8 IMÁGENES REQUERIDAS
         // -------------------------------------------------------------
         const assetImages = [
-            'Quimera_Ecosistema01.webp',
+            'Quimera_Ecosistema.webp',
             'QuimeraC3-Q1.webp',
             'Quimera_Negro.webp',
             'Quimera.webp',
@@ -1670,7 +1670,7 @@
             }
 
             const imgBase = new Image();
-            imgBase.src = 'Quimera_Ecosistema01.webp';
+            imgBase.src = 'Quimera_Ecosistema.webp';
             const imgTop = new Image();
             imgTop.src = 'QuimeraC3-Q1.webp';
 
