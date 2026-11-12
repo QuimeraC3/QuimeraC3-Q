@@ -150,7 +150,7 @@
             width: 100vw;
             height: 100vh;
             pointer-events: none;
-            z-index: 0;
+            z-index: 1;
             background: radial-gradient(circle 400px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(56, 189, 248, 0.18), rgba(200, 139, 50, 0.1) 45%, transparent 80%);
             opacity: 0;
             transition: opacity 1.5s ease;
@@ -173,20 +173,38 @@
             transition: opacity 1200ms ease;
         }
 
-        /* Capa de fondo estática, nítida y completa */
+        /* 1ª CAPA DE FONDO: Quimera_Ecosistema01.webp (Base opaca completa) */
         #bg-layer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: -1;
+            z-index: -3;
             background: linear-gradient(rgba(15, 23, 42, 0.00), rgba(15, 23, 42, 0.00)), url('Quimera_Ecosistema01.webp');
             background-size: cover;
             background-position: center center;
             background-attachment: fixed;
             opacity: 0;
             transition: opacity 1200ms ease;
+        }
+
+        /* 2ª CAPA DE FONDO SUPERIOR: QuimeraC3-Q1.webp (Con transparencia tipo GIF/PNG) */
+        #bg-top-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background: url('QuimeraC3-Q1.webp');
+            background-size: cover; /* Puedes cambiar a 'contain' si deseas que la imagen completa se ajuste sin recortarse */
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: 0;
+            transition: opacity 1200ms ease;
+            pointer-events: none;
         }
 
         #bg-layer.bg-glitch-active {
@@ -829,7 +847,7 @@
             border-color: #ef4444;
         }
 
-        /* CONTENEDOR DE LOS TRES CANDADOS HOLOGRÁFICOS (50% MÁS GRANDES Y CENTRADOS VERTICALMENTE) */
+        /* CONTENEDOR DE LOS TRES CANDADOS HOLOGRÁFICOS */
         #hologram-locks-group-container {
             display: none;
             min-height: calc(88vh - 6rem);
@@ -903,7 +921,7 @@
                 overflow-x: hidden;
             }
 
-            #bg-layer {
+            #bg-layer, #bg-top-layer {
                 height: 100%;
                 background-attachment: scroll;
             }
@@ -1006,8 +1024,9 @@
     <audio id="bg-music" src="Tango_Futuro_(Lado_B).mp3" loop preload="auto"></audio>
     <canvas id="matrix-canvas"></canvas>
     
-    <!-- Capa de fondo estática -->
-    <div id="bg-layer"></div>
+    <!-- CAPAS DE FONDO DUALES -->
+    <div id="bg-layer"></div>       <!-- 1ª Capa: Quimera_Ecosistema01.webp (Base) -->
+    <div id="bg-top-layer"></div>  <!-- 2ª Capa: QuimeraC3-Q1.webp (Con transparencia superior) -->
 
     <!-- Capa de luz reactiva exclusiva del puntero del ratón -->
     <div class="cursor-light-glow" id="cursor-light-glow"></div>
@@ -1116,9 +1135,11 @@
         const ECOSYSTEM_URL = "https://quimerac3.github.io/QuimeraC3-Q-MDQ/";
 
         // -------------------------------------------------------------
-        // PRECARGA GLOBAL DE LAS 7 IMÁGENES REQUERIDAS (Evita retrasos)
+        // PRECARGA GLOBAL DE LAS 8 IMÁGENES REQUERIDAS (Incluyendo la nueva capa)
         // -------------------------------------------------------------
         const assetImages = [
+            'Quimera_Ecosistema01.webp',
+            'QuimeraC3-Q1.webp',
             'Quimera_Negro.webp',
             'Quimera.webp',
             'Belerofonte_Negro.webp',
@@ -1180,7 +1201,7 @@
 
         window.addEventListener('resize', initMatrix);
 
-        // CONFIGURACIÓN DE LAS 3 FASES DEL ACERTIJO Y SUS IMÁGENES DE FONDO
+        // CONFIGURACIÓN DE LAS 3 FASES DEL ACERTIJO Y SUS IMÁGENES DE RESPALDO
         const riddlePhases = [
             {
                 title: "EL ENIGMA DE LA COMPLEJIDAD.",
@@ -1369,7 +1390,6 @@
 
         function triggerPhaseCompleted(phaseIdx) {
             const phase = riddlePhases[phaseIdx];
-            // Cambiar fondo al color principal (Quimera.webp, Belerofonte.webp, Pegaso.webp) al liberar candado
             contenidoModalBox.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url('${phase.bgUnlocked}')`;
 
             const faseContainer = document.getElementById('fase-acertijo-container');
@@ -1415,7 +1435,6 @@
                             faseContainer.classList.add('materialize-effect');
                             loadPhase(phaseIdx + 1);
                         } else {
-                            // SECUENCIA DE SALIDA FINAL SOLICITADA
                             const modalBox = document.getElementById('modal-principal');
                             modalBox.classList.remove('tv-turn-on');
                             modalBox.classList.add('tv-turn-off');
@@ -1493,31 +1512,27 @@
         quimeraLink.addEventListener('click', (e) => {
             e.preventDefault();
 
-            // Resetear contenedores para mostrar bienvenida
             document.getElementById('fase-bienvenida-container').style.display = 'block';
             document.getElementById('fase-acertijo-container').style.display = 'none';
             document.getElementById('hologram-locks-group-container').style.display = 'none';
             contenidoModalBox.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('Quimeratrix.webp')`;
 
-            // 1. Desvanecimiento a negro
             const overlay = document.getElementById('intro-overlay');
             overlay.style.backgroundColor = '#000000';
             overlay.style.opacity = '1';
 
-            document.querySelectorAll('.top-bar, header, .container, #bg-layer, #main-footer').forEach(el => {
+            document.querySelectorAll('.top-bar, header, .container, #bg-layer, #bg-top-layer, #main-footer').forEach(el => {
                 el.style.transition = 'opacity 800ms ease';
                 el.style.opacity = '0';
             });
 
             setTimeout(() => {
-                // 2. Iniciar lluvia de matriz
                 initMatrix();
                 startMatrix();
                 matrixCanvas.style.opacity = '1';
                 overlay.style.opacity = '0';
 
                 setTimeout(() => {
-                    // 3. Abrir modal con TV encendiéndose hacia atrás
                     const modalPrincipal = document.getElementById('modal-principal');
                     modalPrincipal.classList.add('tv-turn-on');
 
@@ -1530,11 +1545,13 @@
         function runEcosystemEntrance() {
             const overlay = document.getElementById('intro-overlay');
             const bgLayer = document.getElementById('bg-layer');
+            const bgTopLayer = document.getElementById('bg-top-layer');
             const cursorGlow = document.getElementById('cursor-light-glow');
 
             async function iniciarAnimaciones() {
                 overlay.style.opacity = '0';
                 bgLayer.style.opacity = '1';
+                if (bgTopLayer) bgTopLayer.style.opacity = '1'; // Ambas capas de fondo aparecen juntas con suavidad
                 cursorGlow.classList.add('visible');
                 bgLayer.classList.add('bg-glitch-active');
                 
@@ -1608,15 +1625,13 @@
                 }, 1600);
             }
 
-            const imgFondo = new Image();
-            imgFondo.src = 'Quimera_Ecosistema01.webp';
+            // Precarga de verificación
+            const imgBase = new Image();
+            imgBase.src = 'Quimera_Ecosistema01.webp';
+            const imgTop = new Image();
+            imgTop.src = 'QuimeraC3-Q1.webp';
 
-            if (imgFondo.complete) {
-                requestAnimationFrame(iniciarAnimaciones);
-            } else {
-                imgFondo.onload = () => requestAnimationFrame(iniciarAnimaciones);
-                imgFondo.onerror = () => requestAnimationFrame(iniciarAnimaciones);
-            }
+            requestAnimationFrame(iniciarAnimaciones);
         }
 
         window.addEventListener('DOMContentLoaded', runEcosystemEntrance);
@@ -1639,6 +1654,7 @@
                     el.style.opacity = '0';
                 });
                 document.getElementById('bg-layer').style.opacity = '0';
+                document.getElementById('bg-top-layer').style.opacity = '0';
                 document.getElementById('cursor-light-glow').style.opacity = '0';
 
                 const overlay = document.getElementById('intro-overlay');
