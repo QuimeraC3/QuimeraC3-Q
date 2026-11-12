@@ -198,13 +198,40 @@
             height: 100vh;
             z-index: -2;
             background: url('QuimeraC3-Q1.webp');
-            background-size: cover; /* Puedes cambiar a 'contain' si deseas que la imagen completa se ajuste sin recortarse */
+            background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
             background-attachment: fixed;
             opacity: 0;
             transition: opacity 1200ms ease;
             pointer-events: none;
+            transform-origin: center center;
+        }
+
+        /* ANIMACIÓN DE LATIDO (160 lpm -> 0.375s por ciclo) */
+        @keyframes heartbeat160 {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.04); }
+            40% { transform: scale(0.97); }
+            55% { transform: scale(1.02); }
+        }
+
+        #bg-top-layer.heartbeat-active {
+            animation: heartbeat160 0.375s infinite ease-in-out;
+        }
+
+        /* RECUADRO INTERACTIVO TRANSPARENTE DE LATIDO (380x325px en [640, 225]) */
+        #interactive-box {
+            position: fixed;
+            top: 225px;
+            left: 640px;
+            width: 380px;
+            height: 325px;
+            background: transparent;
+            border: none;
+            z-index: 5;
+            cursor: pointer;
+            pointer-events: auto;
         }
 
         #bg-layer.bg-glitch-active {
@@ -921,7 +948,7 @@
                 overflow-x: hidden;
             }
 
-            #bg-layer, #bg-top-layer {
+            #bg-layer, #bg-top-layer, #interactive-box {
                 height: 100%;
                 background-attachment: scroll;
             }
@@ -1027,6 +1054,9 @@
     <!-- CAPAS DE FONDO DUALES -->
     <div id="bg-layer"></div>       <!-- 1ª Capa: Quimera_Ecosistema01.webp (Base) -->
     <div id="bg-top-layer"></div>  <!-- 2ª Capa: QuimeraC3-Q1.webp (Con transparencia superior) -->
+    
+    <!-- RECUADRO INTERACTIVO DE LATIDO (160 lpm) -->
+    <div id="interactive-box"></div>
 
     <!-- Capa de luz reactiva exclusiva del puntero del ratón -->
     <div class="cursor-light-glow" id="cursor-light-glow"></div>
@@ -1135,7 +1165,7 @@
         const ECOSYSTEM_URL = "https://quimerac3.github.io/QuimeraC3-Q-MDQ/";
 
         // -------------------------------------------------------------
-        // PRECARGA GLOBAL DE LAS 8 IMÁGENES REQUERIDAS (Incluyendo la nueva capa)
+        // PRECARGA GLOBAL DE LAS IMÁGENES
         // -------------------------------------------------------------
         const assetImages = [
             'Quimera_Ecosistema01.webp',
@@ -1152,6 +1182,18 @@
         assetImages.forEach(src => {
             const img = new Image();
             img.src = src;
+        });
+
+        // CONTROL DE LATIDO AL PASAR EL PUNTERO SOBRE EL RECUADRO INTERACTIVO
+        const interactiveBox = document.getElementById('interactive-box');
+        const bgTopLayer = document.getElementById('bg-top-layer');
+
+        interactiveBox.addEventListener('mouseenter', () => {
+            bgTopLayer.classList.add('heartbeat-active');
+        });
+
+        interactiveBox.addEventListener('mouseleave', () => {
+            bgTopLayer.classList.remove('heartbeat-active');
         });
 
         // MOTOR MATRIX
@@ -1270,7 +1312,6 @@
             acertijoTitulo.textContent = phase.title;
             acertijoTexto.textContent = phase.poem;
 
-            // Cambiar imagen de respaldo inicial de la fase
             contenidoModalBox.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('${phase.bgInitial}')`;
 
             sourceRevealed = Array(phase.letters.length).fill(false);
@@ -1521,7 +1562,7 @@
             overlay.style.backgroundColor = '#000000';
             overlay.style.opacity = '1';
 
-            document.querySelectorAll('.top-bar, header, .container, #bg-layer, #bg-top-layer, #main-footer').forEach(el => {
+            document.querySelectorAll('.top-bar, header, .container, #bg-layer, #bg-top-layer, #interactive-box, #main-footer').forEach(el => {
                 el.style.transition = 'opacity 800ms ease';
                 el.style.opacity = '0';
             });
@@ -1551,7 +1592,7 @@
             async function iniciarAnimaciones() {
                 overlay.style.opacity = '0';
                 bgLayer.style.opacity = '1';
-                if (bgTopLayer) bgTopLayer.style.opacity = '1'; // Ambas capas de fondo aparecen juntas con suavidad
+                if (bgTopLayer) bgTopLayer.style.opacity = '1';
                 cursorGlow.classList.add('visible');
                 bgLayer.classList.add('bg-glitch-active');
                 
@@ -1625,12 +1666,6 @@
                 }, 1600);
             }
 
-            // Precarga de verificación
-            const imgBase = new Image();
-            imgBase.src = 'Quimera_Ecosistema01.webp';
-            const imgTop = new Image();
-            imgTop.src = 'QuimeraC3-Q1.webp';
-
             requestAnimationFrame(iniciarAnimaciones);
         }
 
@@ -1655,6 +1690,7 @@
                 });
                 document.getElementById('bg-layer').style.opacity = '0';
                 document.getElementById('bg-top-layer').style.opacity = '0';
+                document.getElementById('interactive-box').style.opacity = '0';
                 document.getElementById('cursor-light-glow').style.opacity = '0';
 
                 const overlay = document.getElementById('intro-overlay');
