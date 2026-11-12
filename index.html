@@ -220,6 +220,7 @@
             cursor: pointer;
             z-index: 5;
             pointer-events: auto;
+            text-decoration: none;
         }
 
         /* ANIMACIÓN DE LATIDO A 106 LPM (60s / 106 = ~0.566s por ciclo) */
@@ -1056,8 +1057,8 @@
     <div id="bg-layer"></div>       <!-- 1ª Capa: Quimera_Ecosistema01.webp (Base) -->
     <div id="bg-top-layer"></div>  <!-- 2ª Capa: QuimeraC3-Q1.webp (Con transparencia superior) -->
 
-    <!-- RECUADRO SELECCIONABLE INTERACTIVO (HOTSPOT DE LATIDO) -->
-    <div id="hotspot-box"></div>
+    <!-- RECUADRO SELECCIONABLE INTERACTIVO (HOTSPOT CON ENLACE Y TRANSICIÓN NEGRO-BLANCO) -->
+    <a href="https://quimerac3.github.io/QuimeraC3-GAAV/" id="hotspot-box"></a>
 
     <!-- Capa de luz reactiva exclusiva del puntero del ratón -->
     <div class="cursor-light-glow" id="cursor-light-glow"></div>
@@ -1678,7 +1679,7 @@
 
         window.addEventListener('DOMContentLoaded', runEcosystemEntrance);
 
-        // TRANSICIONES DE SALIDA DE OTROS ENLACES
+        // TRANSICIONES DE SALIDA DE TODOS LOS ENLACES (INCLUYENDO EL NUEVO HOTSPOT)
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -1702,11 +1703,11 @@
 
                 const overlay = document.getElementById('intro-overlay');
                 overlay.style.zIndex = '40000';
-                overlay.style.backgroundColor = '#000000';
+                overlay.style.backgroundColor = '#000000'; // Difuminar a negro inicial
                 overlay.style.opacity = '1';
 
                 setTimeout(() => {
-                    overlay.style.backgroundColor = '#ffffff';
+                    overlay.style.backgroundColor = '#ffffff'; // Transición posterior a blanco
                 }, 600);
 
                 setTimeout(() => { window.location.href = targetUrl; }, 1200);
