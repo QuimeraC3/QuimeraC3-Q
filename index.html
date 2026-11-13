@@ -31,7 +31,7 @@
             background-color: #000000;
         }
 
-        /* CAPA CRT SCANLINES (Efecto de televisión antigua) */
+        /* CAPA CRT SCANLINES */
         .crt-scanlines {
             position: fixed;
             top: 0;
@@ -45,7 +45,6 @@
             opacity: 0.65;
         }
 
-        /* EFECTO CRT UNIFICADO PARA MODAL */
         .crt-screen-effect {
             position: relative;
             overflow: hidden;
@@ -67,7 +66,7 @@
             border-radius: inherit;
         }
 
-        /* RETROILUMINACIÓN RGB HOLOGRÁFICA TRIDIMENSIONAL PERMANENTE */
+        /* RETROILUMINACIÓN RGB HOLOGRÁFICA PERMANENTE */
         @keyframes hologramBoxGlow {
             0% { box-shadow: 0 0 15px rgba(56, 189, 248, 0.4), 0 0 30px rgba(15, 118, 110, 0.3), 0 20px 25px -5px rgba(0, 0, 0, 0.5); }
             50% { box-shadow: 0 0 32px rgba(56, 189, 248, 0.95), 0 0 65px rgba(56, 189, 248, 0.65), 0 0 85px rgba(200, 139, 50, 0.55), 0 20px 25px -5px rgba(0, 0, 0, 0.5); }
@@ -78,49 +77,27 @@
             animation: hologramBoxGlow 3s ease-in-out infinite alternate;
         }
 
-        /* EFECTO HOLOGRÁFICO DE PARTÍCULAS QUE SE EVAPORAN */
+        /* EFECTO HOLOGRÁFICO DE PARTÍCULAS (EVAPORACIÓN / APARICIÓN) */
         @keyframes holoVaporize {
-            0% {
-                opacity: 1;
-                filter: blur(0px) brightness(1);
-                transform: scale(1) translateY(0);
-            }
-            50% {
-                opacity: 0.6;
-                filter: blur(3px) brightness(2) drop-shadow(0 0 15px #38bdf8);
-                transform: scale(1.02) translateY(-5px);
-            }
-            100% {
-                opacity: 0;
-                filter: blur(8px) brightness(3);
-                transform: scale(0.98) translateY(-15px);
-                letter-spacing: 0.2em;
-            }
+            0% { opacity: 1; filter: blur(0px) brightness(1); transform: scale(1) translateY(0); }
+            50% { opacity: 0.6; filter: blur(3px) brightness(2) drop-shadow(0 0 15px #38bdf8); transform: scale(1.02) translateY(-5px); }
+            100% { opacity: 0; filter: blur(8px) brightness(3); transform: scale(0.98) translateY(-15px); letter-spacing: 0.2em; }
         }
 
         .vaporize-effect {
             animation: holoVaporize 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
-        /* EFECTO DE APARICIÓN HOLOGRÁFICA (FADE-IN CON BRILLO) */
         @keyframes holoMaterialize {
-            0% {
-                opacity: 0;
-                filter: blur(6px) brightness(2.5);
-                transform: scale(0.98) translateY(10px);
-            }
-            100% {
-                opacity: 1;
-                filter: blur(0px) brightness(1);
-                transform: scale(1) translateY(0);
-            }
+            0% { opacity: 0; filter: blur(6px) brightness(2.5); transform: scale(0.98) translateY(10px); }
+            100% { opacity: 1; filter: blur(0px) brightness(1); transform: scale(1) translateY(0); }
         }
 
         .materialize-effect {
             animation: holoMaterialize 0.9s cubic-bezier(0.1, 1, 0.3, 1) forwards;
         }
 
-        /* Animación TV Encendiéndose / Apagándose */
+        /* ANIMACIÓN TV */
         .tv-turn-on {
             animation: tvTurnOn 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
             pointer-events: auto !important;
@@ -142,13 +119,10 @@
             100% { transform: scale(0, 0.01); opacity: 0; filter: brightness(20); }
         }
 
-        /* Capa de luz reactiva exclusiva para el movimiento del puntero del ratón */
         .cursor-light-glow {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
             pointer-events: none;
             z-index: 1;
             background: radial-gradient(circle 400px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(56, 189, 248, 0.18), rgba(200, 139, 50, 0.1) 45%, transparent 80%);
@@ -156,30 +130,22 @@
             transition: opacity 1.5s ease;
         }
 
-        .cursor-light-glow.visible {
-            opacity: 1;
-        }
+        .cursor-light-glow.visible { opacity: 1; }
 
-        /* Lienzo Matrix */
         #matrix-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
             z-index: 15000;
             pointer-events: none;
             opacity: 0;
             transition: opacity 1200ms ease;
         }
 
-        /* 1ª CAPA DE FONDO: Quimera_Ecosistema.webp (Base opaca completa) */
         #bg-layer {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
             z-index: -3;
             background: linear-gradient(rgba(15, 23, 42, 0.00), rgba(15, 23, 42, 0.00)), url('Quimera_Ecosistema.webp');
             background-size: cover;
@@ -189,13 +155,10 @@
             transition: opacity 1200ms ease;
         }
 
-        /* 2ª CAPA DE FONDO SUPERIOR: QuimeraC3-Q1.webp (Con transparencia tipo GIF/PNG) */
         #bg-top-layer {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
             z-index: -2;
             background: url('QuimeraC3-Q1.webp');
             background-size: cover;
@@ -223,7 +186,7 @@
             text-decoration: none;
         }
 
-        /* ANIMACIÓN DE LATIDO A 106 LPM (60s / 106 = ~0.566s por ciclo) */
+        /* ANIMACIÓN DE LATIDO A 106 LPM */
         @keyframes heartbeat106 {
             0% { transform: scale(1); }
             25% { transform: scale(1.035); }
@@ -249,25 +212,10 @@
             100% { filter: none; transform: translate(0); }
         }
 
-        #bg-layer.bg-skipping-active {
-            animation: bgFrameSkipAnim 0.25s steps(3, jump-none) 1 both;
-        }
-
-        @keyframes bgFrameSkipAnim {
-            0% { filter: contrast(120%) brightness(100%); transform: translate(0, 0); }
-            30% { filter: invert(20%) hue-rotate(180deg) contrast(200%); transform: translate(6px, -4px); }
-            60% { filter: brightness(150%) saturate(200%); transform: translate(-6px, 4px); }
-            90% { filter: grayscale(80%) contrast(150%); transform: translate(2px, -2px); }
-            100% { filter: none; transform: translate(0, 0); }
-        }
-
-        /* Capa de pantalla completa para la transición */
         #intro-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
             background: #ffffff;
             z-index: 9999;
             pointer-events: none;
@@ -275,9 +223,7 @@
             transition: opacity 1000ms ease, background-color 1000ms ease;
         }
 
-        body.blurred-page {
-            pointer-events: none;
-        }
+        body.blurred-page { pointer-events: none; }
         body.blurred-page #intro-overlay {
             opacity: 1;
             background-color: #ffffff;
@@ -289,8 +235,7 @@
             background-color: rgba(11, 19, 41, 0.0);
             padding: 0.85rem 2rem;
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             width: 100%;
             z-index: 100;
         }
@@ -309,15 +254,11 @@
             font-size: clamp(0.85rem, 1.5vw, 1.1rem);
             font-weight: 700;
             text-decoration: none;
-            letter-spacing: -0.01em;
             display: inline-block;
             transition: color 0.2s ease;
         }
 
-        .brand-logo:hover {
-            color: #38bdf8;
-            text-decoration: underline;
-        }
+        .brand-logo:hover { color: #38bdf8; text-decoration: underline; }
 
         .nav-links {
             display: flex;
@@ -334,9 +275,7 @@
             transition: color 0.2s ease;
         }
 
-        .nav-links a:hover {
-            color: #38bdf8;
-        }
+        .nav-links a:hover { color: #38bdf8; }
 
         #audio-toggle, #fullscreen-toggle {
             display: inline-block;
@@ -355,24 +294,19 @@
             background: rgba(56, 189, 248, 0.5);
             border-color: #38bdf8;
             box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
-            color: #ffffff;
         }
 
-        /* ENCABEZADO CARTESIANO CENTRAL */
         header {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
             pointer-events: none;
             z-index: 10;
         }
 
         .ecosistema-title {
             position: absolute;
-            top: 11vh;
-            left: 50.5%;
+            top: 11vh; left: 50.5%;
             transform: translateX(-50%);
             font-family: Georgia, "Times New Roman", serif;
             font-size: clamp(1.5rem, 4vw, 4rem);
@@ -385,15 +319,13 @@
             width: 100%;
             text-align: center;
             pointer-events: auto;
-            margin: 0;
             color: #ffffff;
             opacity: 0;
         }
 
         header h1 {
             position: absolute;
-            top: 61vh;
-            left: 50.5%;
+            top: 61vh; left: 50.5%;
             transform: translateX(-50%);
             font-family: Georgia, "Times New Roman", serif;
             font-size: clamp(2rem, 8.5vw, 7rem);
@@ -406,7 +338,6 @@
             width: 100%;
             text-align: center;
             pointer-events: auto;
-            margin: 0;
             color: #ffffff;
             opacity: 0;
         }
@@ -421,7 +352,6 @@
             font-weight: 700;
             width: 100%;
             max-width: 1000px;
-            margin: 0;
             text-align: center;
             pointer-events: auto;
             -webkit-text-stroke: 1px #000000;
@@ -431,7 +361,6 @@
             opacity: 0;
         }
 
-        /* EFECTO LÁSER COMÚN */
         .laser-burn-effect {
             opacity: 0;
             clip-path: inset(0 100% 0 0);
@@ -451,9 +380,7 @@
         .laser-burn-effect.active-laser::before {
             content: '';
             position: absolute;
-            top: -30px;
-            bottom: -30px;
-            left: 0;
+            top: -30px; bottom: -30px; left: 0;
             width: 16px;
             background: radial-gradient(circle, #ffffff 0%, #38bdf8 40%, #c88b32 80%, transparent 100%);
             box-shadow: 0 0 35px #38bdf8, 0 0 70px #fffbeb, 0 0 100px #c88b32, inset 0 0 15px #ffffff;
@@ -462,51 +389,19 @@
             filter: blur(0.5px);
         }
 
-        .laser-burn-effect.active-laser::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            bottom: -10px;
-            left: 0;
-            right: 0;
-            height: 120%;
-            pointer-events: none;
-            background: linear-gradient(90deg, rgba(255,255,255,0.9) 0%, rgba(56,189,248,0.6) 30%, rgba(200,139,50,0.3) 60%, transparent 100%);
-            mix-blend-mode: color-dodge;
-            animation: hyperLaserSparksWave 1.2s cubic-bezier(0.15, 1, 0.2, 1) forwards;
-            z-index: 12;
-        }
-
         @keyframes hyperLaserReveal {
-            0% {
-                clip-path: inset(0 100% 0 0);
-                filter: brightness(4) contrast(200%) drop-shadow(0 0 30px rgba(56, 189, 248, 1));
-            }
-            50% {
-                filter: brightness(2.5) contrast(150%) drop-shadow(0 0 15px rgba(200, 139, 50, 0.9));
-            }
-            100% {
-                clip-path: inset(0 0 0 0);
-                filter: brightness(1) contrast(100%) drop-shadow(0 0 0px transparent);
-            }
+            0% { clip-path: inset(0 100% 0 0); filter: brightness(4) contrast(200%); }
+            100% { clip-path: inset(0 0 0 0); filter: brightness(1) contrast(100%); }
         }
 
         @keyframes hyperLaserBarMove {
             0% { left: 0%; opacity: 1; transform: scaleY(1.8) skewX(-15deg); }
-            50% { transform: scaleY(2.2) skewX(5deg); }
-            90% { opacity: 1; }
             100% { left: 100%; opacity: 0; transform: scaleY(0.5) skewX(0deg); }
-        }
-
-        @keyframes hyperLaserSparksWave {
-            0% { opacity: 1; clip-path: inset(0 100% 0 0); }
-            100% { opacity: 0; clip-path: inset(0 0 0 0); }
         }
 
         footer.laser-burn-effect {
             position: absolute !important;
-            bottom: 0 !important;
-            left: 0 !important;
+            bottom: 0 !important; left: 0 !important;
             width: 100% !important;
             text-align: center;
             padding: 0.4rem 2rem;
@@ -522,53 +417,10 @@
             animation: sliceGlitchMaster 0.35s steps(2, end) 1 both;
         }
 
-        .glitch-slice-active::before,
-        .glitch-slice-active::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .glitch-slice-active::before {
-            left: 4px;
-            text-shadow: -3px 0 #ff0055, 0 3px #00e5ff;
-            clip-path: inset(0 0 52% 0);
-            animation: sliceTopShift 0.35s steps(2, end) 1 both;
-        }
-
-        .glitch-slice-active::after {
-            left: -4px;
-            text-shadow: 3px 0 #00e5ff, 0 -3px #ff0055;
-            clip-path: inset(48% 0 0 0);
-            animation: sliceBottomShift 0.35s steps(2, end) 1 both;
-        }
-
         @keyframes sliceGlitchMaster {
             0% { transform: translateX(-50%) translate(0); filter: hue-rotate(0deg); }
-            20% { transform: translateX(-50%) translate(-12px, 6px); filter: contrast(220%) hue-rotate(90deg); }
-            40% { transform: translateX(-50%) translate(10px, -6px); filter: contrast(180%) invert(20%); }
-            60% { transform: translateX(-50%) translate(-8px, 4px); filter: contrast(250%) hue-rotate(-90deg); }
-            80% { transform: translateX(-50%) translate(9px, -4px); filter: contrast(150%); }
+            50% { transform: translateX(-50%) translate(-12px, 6px); filter: contrast(220%) hue-rotate(90deg); }
             100% { transform: translateX(-50%) translate(0); filter: none; }
-        }
-
-        @keyframes sliceTopShift {
-            0%, 100% { transform: translate(0, 0); }
-            30% { transform: translate(-20px, -5px); }
-            60% { transform: translate(14px, 4px); }
-        }
-
-        @keyframes sliceBottomShift {
-            0%, 100% { transform: translate(0, 0); }
-            30% { transform: translate(20px, 5px); }
-            60% { transform: translate(-14px, -4px); }
         }
 
         .hologram-mode {
@@ -588,34 +440,15 @@
 
         @keyframes cardHologramFlicker {
             0%, 100% { box-shadow: 0 0 12px rgba(56, 189, 248, 0.4), 0 0 25px rgba(200, 139, 50, 0.2), var(--shadow); border-color: rgba(255, 255, 255, 0.8); }
-            33% { box-shadow: 0 0 6px rgba(200, 139, 50, 0.3), var(--shadow); border-color: rgba(255, 255, 255, 0.5); }
-            35% { box-shadow: 0 0 18px rgba(56, 189, 248, 0.6), var(--shadow); border-color: rgba(56, 189, 248, 0.9); }
-            67% { box-shadow: 0 0 8px rgba(56, 189, 248, 0.3), var(--shadow); border-color: rgba(255, 255, 255, 0.6); }
-            70% { box-shadow: 0 0 15px rgba(200, 139, 50, 0.5), var(--shadow); border-color: rgba(200, 139, 50, 0.8); }
+            50% { box-shadow: 0 0 18px rgba(56, 189, 248, 0.6), var(--shadow); border-color: rgba(56, 189, 248, 0.9); }
         }
 
-        header h1 a {
-            color: #ffffff;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .quimera-letter {
-            display: inline-block;
-            color: #ffffff;
-            transition: transform 0.3s ease, filter 0.3s ease;
-        }
+        header h1 a { color: #ffffff; text-decoration: none; display: inline-block; }
+        .quimera-letter { display: inline-block; color: #ffffff; }
 
         @keyframes quimeraSequentialWave {
-            0%     { color: #ffffff; }
-            3.57%  { color: #c88b32; }
-            25%    { color: #c88b32; }
-            28.57% { color: #ffffff; }
-            50%    { color: #ffffff; }
-            53.57% { color: #c88b32; }
-            75%    { color: #c88b32; }
-            78.57% { color: #ffffff; }
-            100%   { color: #ffffff; }
+            0%, 28.57%, 50%, 78.57%, 100% { color: #ffffff; }
+            3.57%, 25%, 53.57%, 75% { color: #c88b32; }
         }
 
         #quimera-link.active-wave .char-q { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 0ms; }
@@ -628,10 +461,8 @@
 
         .container {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
             pointer-events: none;
             z-index: 10;
         }
@@ -645,8 +476,7 @@
             border: 1px solid #ffffff;
             border-radius: 12px;
             padding: 0.7rem 0.8rem;
-            width: 20vw;
-            max-width: 350px;
+            width: 20vw; max-width: 350px;
             box-shadow: var(--shadow);
             transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, opacity 1200ms ease;
             display: flex;
@@ -660,19 +490,12 @@
             font-family: Georgia, "Times New Roman", serif;
             font-size: clamp(1.4rem, 2.0vw, 1.6rem);
             font-weight: 700;
-            letter-spacing: 0.06em;
             color: #ffffff;
             -webkit-text-stroke: 0.5px #000000;
-            text-shadow: 0 0 1px #ffffff, 0 0 1px #ffffff;
-            transition: color 0.3s ease, -webkit-text-stroke 0.3s ease, text-shadow 0.3s ease, opacity 0.3s ease;
+            transition: color 0.3s ease, opacity 0.3s ease;
         }
 
-        .info-card:hover h2 {
-            opacity: 1;
-            color: var(--accent);
-            -webkit-text-stroke: 0.5px #000000;
-            text-shadow: none;
-        }
+        .info-card:hover h2 { opacity: 1; color: var(--accent); }
 
         .info-card p {
             opacity: 0;
@@ -680,37 +503,33 @@
             font-size: clamp(1.1rem, 1.5vw, 1.25rem);
             font-weight: 600;
             -webkit-text-stroke: 0.5px #000000;
-            transition: color 0.3s ease, -webkit-text-stroke: 0.5px #000000, opacity 0.3s ease;
+            transition: color 0.3s ease, opacity 0.3s ease;
         }
 
-        .info-card:hover p {
-            opacity: 1;
-            color: #000000;
-            -webkit-text-stroke: 0;
-        }
+        .info-card:hover p { opacity: 1; color: #000000; -webkit-text-stroke: 0; }
 
-        .card-1 { top: 15vh; left: 03vw; width: 15vw; max-width: 350px; padding: 0.7rem 0.7rem; transform: translateX(-10%) translateY(-25%); }
-        .card-1:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(-10%) translateY(-25%) translateY(-6px); }
+        .card-1 { top: 15vh; left: 03vw; width: 15vw; transform: translateX(-10%) translateY(-25%); }
+        .card-1:hover { background-color: #ffffff; transform: translateX(-10%) translateY(-25%) translateY(-6px); }
 
-        .card-2 { top: 46.5vh; left: 02.25vw; width: 14vw; max-width: 350px; padding: 0.7rem 0.7rem; transform: translateX(-10%) translateY(-25%); }
-        .card-2:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(-10%) translateY(-25%) translateY(-6px); }
+        .card-2 { top: 46.5vh; left: 02.25vw; width: 14vw; transform: translateX(-10%) translateY(-25%); }
+        .card-2:hover { background-color: #ffffff; transform: translateX(-10%) translateY(-25%) translateY(-6px); }
 
-        .card-3 { top: 81.5vh; left: 49%; width: 12vw; max-width: 350px; padding: 0.3rem 0.7rem; gap: 0rem; transform: translateX(-50%) translateY(55%); }
-        .card-3:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(-50%) translateY(55%) translateY(-6px); }
+        .card-3 { top: 81.5vh; left: 49%; width: 12vw; padding: 0.3rem 0.7rem; transform: translateX(-50%) translateY(55%); }
+        .card-3:hover { background-color: #ffffff; transform: translateX(-50%) translateY(55%) translateY(-6px); }
 
-        .card-4 { top: 46.5vh; right: 01.75vw; width: 14.5vw; max-width: 350px; padding: 0.7rem 0.7rem; transform: translateX(10%) translateY(-25%); }
-        .card-4:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(10%) translateY(-25%) translateY(-6px); }
+        .card-4 { top: 46.5vh; right: 01.75vw; width: 14.5vw; transform: translateX(10%) translateY(-25%); }
+        .card-4:hover { background-color: #ffffff; transform: translateX(10%) translateY(-25%) translateY(-6px); }
 
-        .card-5 { top: 15vh; right: 02.5vw; width: 17.5vw; max-width: 350px; padding: 0.7rem 0.7rem; transform: translateX(10%) translateY(-25%); }
-        .card-5:hover { box-shadow: var(--shadow-lg); background-color: #ffffff; transform: translateX(10%) translateY(-25%) translateY(-6px); }
+        .card-5 { top: 15vh; right: 02.5vw; width: 17.5vw; transform: translateX(10%) translateY(-25%); }
+        .card-5:hover { background-color: #ffffff; transform: translateX(10%) translateY(-25%) translateY(-6px); }
 
-        /* ESTILOS DEL MODAL DE ACERTIJOS (DINÁMICO CON IMÁGENES DE RESPALDO) */
+        /* =====================================================================
+           MODAL 1: ACERTIJO TRIPLE (PORTAL QUIMERA)
+           ===================================================================== */
         #modal-principal {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
             background: transparent;
             z-index: 25000;
             display: flex;
@@ -774,7 +593,6 @@
             text-align: justify;
         }
 
-        /* HIPERVÍNCULO DE CONTINUAR ALINEADO A LA DERECHA RADICAL */
         .btn-continuar-link {
             color: #c88b32;
             font-weight: 800;
@@ -789,10 +607,7 @@
             letter-spacing: 0.05em;
         }
 
-        .btn-continuar-link:hover {
-            color: #ffffff;
-            text-shadow: 0 0 12px #ffffff;
-        }
+        .btn-continuar-link:hover { color: #ffffff; text-shadow: 0 0 12px #ffffff; }
 
         .glyphs-section-title {
             font-size: clamp(1rem, 2.5vw, 1.5rem);
@@ -832,17 +647,8 @@
             -webkit-text-stroke: 0.5px #000000;
         }
 
-        .glyph-box:hover:not(.used) {
-            border-color: #38bdf8;
-            transform: translateY(-2px);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
-        }
-
-        .glyph-box.used {
-            opacity: 0.3;
-            cursor: not-allowed;
-            border-color: rgba(255, 255, 255, 0.1);
-        }
+        .glyph-box:hover:not(.used) { border-color: #38bdf8; transform: translateY(-2px); box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
+        .glyph-box.used { opacity: 0.3; cursor: not-allowed; border-color: rgba(255, 255, 255, 0.1); }
 
         .target-box {
             width: clamp(40px, 6.5vw, 55px);
@@ -872,11 +678,7 @@
             text-shadow: 0 0 10px var(--accent);
         }
 
-        .target-box:hover.filled {
-            border-color: #ef4444;
-        }
-
-        /* CONTENEDOR DE LOS TRES CANDADOS HOLOGRÁFICOS */
+        /* CANDADOS HOLOGRÁFICOS DEL ACERTIJO TRIPLE */
         #hologram-locks-group-container {
             display: none;
             min-height: calc(88vh - 6rem);
@@ -894,18 +696,15 @@
         }
 
         .holo-lock {
-            width: 180px;
-            height: 218px;
+            width: 180px; height: 218px;
             position: relative;
             animation: holoFloat 2s ease-in-out infinite alternate;
         }
 
         .holo-shackle {
             position: absolute;
-            top: 0;
-            left: 33px;
-            width: 114px;
-            height: 102px;
+            top: 0; left: 33px;
+            width: 114px; height: 102px;
             border: 11px solid #38bdf8;
             border-top-left-radius: 57px;
             border-top-right-radius: 57px;
@@ -918,8 +717,7 @@
         .holo-body {
             position: absolute;
             bottom: 0;
-            width: 180px;
-            height: 135px;
+            width: 180px; height: 135px;
             background: rgba(56, 189, 248, 0.25);
             border: 6px solid #38bdf8;
             border-radius: 24px;
@@ -943,129 +741,266 @@
             box-shadow: 0 0 65px rgba(34, 197, 94, 0.95);
         }
 
+        /* =====================================================================
+           MODAL 2: ÚLTIMO RETO DEL ECOSISTEMA QUIMERA (GALERÍA AUDIOVISUAL)
+           ===================================================================== */
+        #modal-galeria {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: transparent;
+            z-index: 26000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0, 0.01);
+        }
+
+        .contenido-modal-galeria {
+            position: relative;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('Quimeratrix.webp');
+            background-size: cover;
+            background-position: center center;
+            border: 1.5px solid var(--accent);
+            border-radius: 12px;
+            width: 92vw;
+            max-width: 980px;
+            min-height: 88vh;
+            color: #ffffff;
+            z-index: 10;
+        }
+
+        .titulo-galeria {
+            color: #fef384;
+            font-family: Georgia, "Times New Roman", serif;
+            font-weight: 900;
+            font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+            margin-bottom: 1.2rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            text-shadow: 0 0 15px rgba(200, 139, 50, 0.9);
+            -webkit-text-stroke: 0.75px #000000;
+            padding: 0 10px;
+        }
+
+        .texto-galeria {
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+            line-height: 1.6;
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.95);
+            -webkit-text-stroke: 0.5px #000000;
+            text-align: center;
+        }
+
+        .numbers-grid {
+            display: flex;
+            justify-content: center;
+            gap: 0.35rem;
+            flex-wrap: wrap;
+            margin: 1rem auto;
+            max-width: 900px;
+        }
+
+        .num-btn {
+            background: rgba(0, 0, 0, 0.85);
+            border: 1.5px solid rgba(200, 139, 50, 0.7);
+            color: #fef384;
+            font-family: monospace;
+            font-size: 0.85rem;
+            font-weight: bold;
+            padding: 0.4rem 0.55rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-text-stroke: 0.4px #000;
+        }
+
+        .num-btn:hover {
+            background: rgba(56, 189, 248, 0.3);
+            border-color: #38bdf8;
+            transform: translateY(-2px);
+        }
+
+        .words-section-title {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            color: #38bdf8;
+            margin: 1.2rem 0 0.5rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: bold;
+            -webkit-text-stroke: 0.8px #000000;
+        }
+
+        .words-rows-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .word-row {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .word-box {
+            background: rgba(11, 19, 41, 0.85);
+            border: 2px solid rgba(56, 189, 248, 0.7);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            min-width: 115px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #ffffff;
+            cursor: grab;
+            user-select: none;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+            -webkit-text-stroke: 0.5px #000;
+            transition: all 0.2s ease;
+        }
+
+        .word-box.decrypted {
+            border-color: var(--accent);
+            color: #fef384;
+            background: rgba(200, 139, 50, 0.25);
+        }
+
+        .word-box:active { cursor: grabbing; }
+
+        .phrase-drop-container {
+            width: 100%;
+            max-width: 860px;
+            min-height: 75px;
+            margin: 1.5rem auto 1rem auto;
+            background: rgba(5, 10, 20, 0.9);
+            border: 2px dashed rgba(200, 139, 50, 0.8);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 1rem;
+            flex-wrap: wrap;
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .phrase-drop-container.error-glow {
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.8);
+        }
+
+        .phrase-drop-container.success-glow {
+            border-color: #22c55e !important;
+            box-shadow: 0 0 30px rgba(34, 197, 94, 0.9);
+        }
+
+        .phrase-slot {
+            width: 108px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+            font-size: 0.95rem;
+            color: transparent; /* Sin pistas */
+        }
+
+        .phrase-slot.filled-slot {
+            color: #fef384;
+            background: rgba(200, 139, 50, 0.3);
+            border-color: #c88b32;
+            border-style: solid;
+            cursor: pointer;
+            font-weight: bold;
+            -webkit-text-stroke: 0.5px #000;
+        }
+
+        #hologram-success-galeria {
+            display: none;
+            min-height: calc(88vh - 6rem);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .holo-lock-large {
+            width: 200px; height: 240px;
+            position: relative;
+            animation: holoFloat 2s ease-in-out infinite alternate;
+        }
+
+        .holo-shackle-large {
+            position: absolute;
+            top: 0; left: 36px;
+            width: 128px; height: 112px;
+            border: 12px solid #22c55e;
+            border-top-left-radius: 64px;
+            border-top-right-radius: 64px;
+            border-bottom: none;
+            box-shadow: 0 0 45px #22c55e, inset 0 0 18px #22c55e;
+            transform-origin: bottom left;
+            transform: rotate(-45deg) translateY(-24px) translateX(-14px);
+        }
+
+        .holo-body-large {
+            position: absolute;
+            bottom: 0;
+            width: 200px; height: 150px;
+            background: rgba(34, 197, 94, 0.35);
+            border: 6px solid #22c55e;
+            border-radius: 24px;
+            box-shadow: 0 0 75px rgba(34, 197, 94, 0.95), inset 0 0 25px rgba(34, 197, 94, 0.6);
+        }
+
         @media (max-width: 1200px) {
-            body {
-                height: auto;
-                overflow-y: auto;
-                overflow-x: hidden;
-            }
-
-            #bg-layer, #bg-top-layer {
-                height: 100%;
-                background-attachment: scroll;
-            }
-
-            .top-bar {
-                position: relative;
-                background-color: rgba(11, 19, 41, 0.85);
-                backdrop-filter: blur(6px);
-                padding: 0.75rem 1rem;
-            }
-
-            .top-bar-container {
-                flex-direction: column;
-                gap: 0.5rem;
-                text-align: center;
-            }
-
-            .nav-links {
-                justify-content: center;
-                gap: 0.8rem;
-                flex-wrap: wrap;
-            }
-
-            header {
-                position: relative;
-                top: auto;
-                left: auto;
-                width: 100%;
-                height: auto;
-                transform: none;
-                padding: 2rem 1rem 1.5rem 1rem;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-                text-align: center;
-            }
-
-            .ecosistema-title, header h1, header p {
-                position: relative !important;
-                top: auto !important;
-                left: auto !important;
-                transform: none !important;
-                width: 100% !important;
-                max-width: 100% !important;
-            }
-
-            header p {
-                padding: 0 1rem;
-            }
-
-            .container {
-                position: relative;
-                top: auto;
-                left: auto;
-                width: 100%;
-                height: auto;
-                pointer-events: auto;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-                padding: 0 1rem 2rem 1rem;
-            }
-
-            .info-card {
-                position: relative !important;
-                top: auto !important;
-                left: auto !important;
-                right: auto !important;
-                bottom: auto !important;
-                transform: none !important;
-                width: 100% !important;
-                max-width: 420px !important;
-                margin: 0 auto;
-                background-color: rgba(15, 23, 42, 0.75);
-                backdrop-filter: blur(4px);
-            }
-
-            .info-card:hover {
-                transform: translateY(-4px) !important;
-                background-color: #ffffff;
-            }
-
-            footer.laser-burn-effect {
-                position: relative !important;
-                margin-top: 1rem;
-                padding: 1rem;
-                bottom: auto !important;
-                left: auto !important;
-            }
+            body { height: auto; overflow-y: auto; overflow-x: hidden; }
+            #bg-layer, #bg-top-layer { height: 100%; background-attachment: scroll; }
+            .top-bar { position: relative; background-color: rgba(11, 19, 41, 0.85); padding: 0.75rem 1rem; }
+            .top-bar-container { flex-direction: column; gap: 0.5rem; text-align: center; }
+            header { position: relative; height: auto; padding: 2rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+            .ecosistema-title, header h1, header p { position: relative !important; top: auto !important; left: auto !important; transform: none !important; width: 100% !important; max-width: 100% !important; }
+            .container { position: relative; height: auto; pointer-events: auto; display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 0 1rem 2rem 1rem; }
+            .info-card { position: relative !important; width: 100% !important; max-width: 420px !important; margin: 0 auto; background-color: rgba(15, 23, 42, 0.75); }
+            footer.laser-burn-effect { position: relative !important; margin-top: 1rem; padding: 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Capa CRT Scanlines -->
     <div class="crt-scanlines"></div>
 
     <audio id="bg-music" src="Tango_Futuro_(Lado_B).mp3" loop preload="auto"></audio>
     <canvas id="matrix-canvas"></canvas>
     
     <!-- CAPAS DE FONDO DUALES -->
-    <div id="bg-layer"></div>       <!-- 1ª Capa: Quimera_Ecosistema.webp (Base) -->
-    <div id="bg-top-layer"></div>  <!-- 2ª Capa: QuimeraC3-Q1.webp (Con transparencia superior) -->
+    <div id="bg-layer"></div>
+    <div id="bg-top-layer"></div>
 
-    <!-- RECUADRO SELECCIONABLE INTERACTIVO (HOTSPOT CON ENLACE Y TRANSICIÓN NEGRO-BLANCO) -->
+    <!-- RECUADRO SELECCIONABLE INTERACTIVO (HOTSPOT) -->
     <a href="https://quimerac3.github.io/QuimeraC3-GAAV/" id="hotspot-box"></a>
 
-    <!-- Capa de luz reactiva exclusiva del puntero del ratón -->
     <div class="cursor-light-glow" id="cursor-light-glow"></div>
-
     <div id="intro-overlay"></div>
 
-    <!-- MODAL PRINCIPAL DEL ACERTIJO TRIPLE -->
+    <!-- =========================================================================
+         MODAL 1: ACERTIJO TRIPLE (ACTIVADO AL CLICAR EN "QUIMERA")
+         ========================================================================= -->
     <div id="modal-principal">
         <div class="contenido-modal-principal crt-screen-effect hologram-glow-box" id="contenido-modal-box">
             <div class="modal-scroll-wrapper" id="modal-inner-scroll">
@@ -1116,6 +1051,50 @@
         </div>
     </div>
 
+    <!-- =========================================================================
+         MODAL 2: ÚLTIMO RETO (ACTIVADO AL CLICAR EN EL EMBLEMA INTERACTIVO)
+         ========================================================================= -->
+    <div id="modal-galeria">
+        <div class="contenido-modal-galeria crt-screen-effect hologram-glow-box">
+            <div class="modal-scroll-wrapper">
+
+                <div id="fase-reto-galeria">
+                    <h2 class="titulo-galeria">¡BIENVENIDO AL ÚLTIMO RETO DEL ECOSISTEMA QUIMERA!</h2>
+                    <p class="texto-galeria">
+                        ¡LO HAS CONSEGUIDO NAVEGANTE!<br>
+                        Has descubierto los seis códigos incluidos en cada concepto del Ecosistema Quimera.<br>
+                        Es hora de descubrir el orden correcto de la frase que te dará acceso.<br>
+                        Selecciona con un clic los números de cada código descubierto y una vez desencriptada cada palabra, arrástrala a su correspondiente sitio para formar la palabra correcta.
+                    </p>
+
+                    <!-- RENGLÓN DE 27 NÚMEROS -->
+                    <div class="numbers-grid" id="numbers-grid-container"></div>
+
+                    <!-- DOS RENGLONES DE RECUADROS PARA LAS PALABRAS -->
+                    <div class="words-rows-container">
+                        <div class="word-row" id="words-row-1"></div>
+                        <div class="word-row" id="words-row-2"></div>
+                    </div>
+
+                    <!-- ZONA DE ARRASTRE DE LA FRASE -->
+                    <div class="phrase-drop-container" id="phrase-drop-zone"></div>
+                </div>
+
+                <!-- CANDADO HOLOGRÁFICO VERDE DE ÉXITO -->
+                <div id="hologram-success-galeria">
+                    <div class="holo-lock-large">
+                        <div class="holo-shackle-large"></div>
+                        <div class="holo-body-large"></div>
+                    </div>
+                    <p style="color: #22c55e; font-family: monospace; font-size: clamp(1.1rem, 2.2vw, 1.5rem); font-weight: bold; margin-top: 1.5rem; text-shadow: 0 0 20px #22c55e; -webkit-text-stroke: 0.5px #000000;">
+                        ¡BIENVENIDO NAVEGANTE A LA GALERÍA AUDIOVISUAL DEL ECOSISTEMA QUIMERA!
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <nav class="top-bar">
         <div class="top-bar-container">
             <a href="https://quimerac3.github.io/" class="brand-logo laser-burn-effect" id="brand-logo" data-text="QUIMERA - Inicio General"></a>
@@ -1137,22 +1116,18 @@
             <h2>QUIMERA</h2>
             <p>Esto somos.</p>
         </a>
-
         <a href="https://quimerac3.github.io/QuimeraC3-Q-02M/" class="info-card card-2" data-text="MISIÓN.">
             <h2>MISIÓN.</h2>
             <p>Para esto existimos.</p>
         </a>
-
         <a href="https://quimerac3.github.io/QuimeraC3-Q-03V/" class="info-card card-3" data-text="VISIÓN.">
             <h2>VISIÓN.</h2>
             <p>Hacia esto vamos.</p>
         </a>
-
         <a href="https://quimerac3.github.io/QuimeraC3-Q-04P/" class="info-card card-4" data-text="PRINCIPIOS.">
             <h2>PRINCIPIOS.</h2>
             <p>Así creamos.</p>
         </a>
-
         <a href="https://quimerac3.github.io/QuimeraC3-Q-05D/" class="info-card card-5" data-text="DESARROLLO.">
             <h2>DESARROLLO.</h2>
             <p>Aquí es donde creamos.</p>
@@ -1165,10 +1140,9 @@
 
     <script>
         const ECOSYSTEM_URL = "https://quimerac3.github.io/QuimeraC3-Q-MDQ/";
+        const GALLERY_URL = "https://quimerac3.github.io/QuimeraC3-GAAV/";
 
-        // -------------------------------------------------------------
-        // PRECARGA GLOBAL DE LAS 8 IMÁGENES REQUERIDAS
-        // -------------------------------------------------------------
+        // PRECARGA DE IMÁGENES
         const assetImages = [
             'Quimera_Ecosistema.webp',
             'QuimeraC3-Q1.webp',
@@ -1180,13 +1154,9 @@
             'Pegaso.webp',
             'Quimeratrix.webp'
         ];
-        
-        assetImages.forEach(src => {
-            const img = new Image();
-            img.src = src;
-        });
+        assetImages.forEach(src => { const img = new Image(); img.src = src; });
 
-        // MOTOR MATRIX
+        // MOTOR MATRIX DORADO
         const matrixCanvas = document.getElementById('matrix-canvas');
         const matrixCtx = matrixCanvas.getContext('2d');
         let matrixInterval = null;
@@ -1230,10 +1200,11 @@
                 matrixInterval = setInterval(drawMatrix, 33);
             }
         }
-
         window.addEventListener('resize', initMatrix);
 
-        // CONFIGURACIÓN DE LAS 3 FASES DEL ACERTIJO Y SUS IMÁGENES DE RESPALDO
+        /* =====================================================================
+           LÓGICA 1: ACERTIJO TRIPLE (PORTAL "QUIMERA")
+           ===================================================================== */
         const riddlePhases = [
             {
                 title: "EL ENIGMA DE LA COMPLEJIDAD.",
@@ -1273,7 +1244,6 @@
         const btnReset = document.getElementById('btn-reset');
         const contenidoModalBox = document.getElementById('contenido-modal-box');
 
-        // LÓGICA DE TRANSICIÓN DEL MODAL DE BIENVENIDA A LA FASE I
         const btnWelcomeContinuar = document.getElementById('btn-continuar-welcome');
         btnWelcomeContinuar.onclick = () => {
             const faseBienvenida = document.getElementById('fase-bienvenida-container');
@@ -1288,11 +1258,7 @@
                 faseAcertijo.classList.add('materialize-effect');
 
                 loadPhase(0);
-
-                setTimeout(() => {
-                    faseAcertijo.classList.remove('materialize-effect');
-                }, 900);
-
+                setTimeout(() => faseAcertijo.classList.remove('materialize-effect'), 900);
             }, 800);
         };
 
@@ -1301,7 +1267,6 @@
             const phase = riddlePhases[idx];
             acertijoTitulo.textContent = phase.title;
             acertijoTexto.textContent = phase.poem;
-
             contenidoModalBox.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('${phase.bgInitial}')`;
 
             sourceRevealed = Array(phase.letters.length).fill(false);
@@ -1314,14 +1279,11 @@
         function startSourceMatrixIntervals(letters) {
             sourceIntervals.forEach(clearInterval);
             sourceIntervals = [];
-
             for (let i = 0; i < letters.length; i++) {
                 const interval = setInterval(() => {
                     if (!sourceRevealed[i]) {
                         const box = document.getElementById(`source-box-${i}`);
-                        if (box) {
-                            box.textContent = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-                        }
+                        if (box) box.textContent = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
                     }
                 }, 60);
                 sourceIntervals.push(interval);
@@ -1334,18 +1296,15 @@
                 const box = document.createElement('div');
                 box.id = `source-box-${idx}`;
                 box.className = 'glyph-box';
-
                 if (!sourceRevealed[idx]) {
                     box.textContent = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
                     box.onclick = () => revealSourceBox(idx, phase);
                 } else {
                     box.textContent = char;
-                    const isUsedInTarget = currentState.includes(idx);
-                    if (isUsedInTarget) {
+                    if (currentState.includes(idx)) {
                         box.classList.add('used');
                         box.onclick = null;
                     } else {
-                        box.classList.remove('used');
                         box.onclick = () => sendToTarget(idx, phase);
                     }
                 }
@@ -1356,7 +1315,6 @@
             for (let i = 0; i < phase.target.length; i++) {
                 const targetBox = document.createElement('div');
                 targetBox.className = 'target-box';
-
                 const sourceIdx = currentState[i];
                 if (sourceIdx !== null) {
                     targetBox.textContent = phase.letters[sourceIdx];
@@ -1364,8 +1322,6 @@
                     targetBox.onclick = () => returnToSource(i, phase);
                 } else {
                     targetBox.textContent = '_';
-                    targetBox.classList.remove('filled');
-                    targetBox.onclick = null;
                 }
                 targetContainer.appendChild(targetBox);
             }
@@ -1383,10 +1339,7 @@
             if (emptySlot !== -1) {
                 currentState[emptySlot] = sourceIdx;
                 renderPuzzle(phase);
-
-                if (!currentState.includes(null)) {
-                    checkPuzzleSolution(phase);
-                }
+                if (!currentState.includes(null)) checkPuzzleSolution(phase);
             }
         }
 
@@ -1409,13 +1362,8 @@
                 triggerPhaseCompleted(currentPhaseIdx);
             } else {
                 const targetBoxes = targetContainer.querySelectorAll('.target-box');
-                targetBoxes.forEach(b => {
-                    b.style.borderColor = '#ef4444';
-                    b.style.color = '#ef4444';
-                });
-                setTimeout(() => {
-                    renderPuzzle(phase);
-                }, 600);
+                targetBoxes.forEach(b => { b.style.borderColor = '#ef4444'; b.style.color = '#ef4444'; });
+                setTimeout(() => renderPuzzle(phase), 600);
             }
         }
 
@@ -1479,22 +1427,298 @@
 
                                 setTimeout(() => {
                                     overlay.style.backgroundColor = '#ffffff';
-                                    setTimeout(() => {
-                                        window.location.replace(ECOSYSTEM_URL);
-                                    }, 1000);
+                                    setTimeout(() => { window.location.replace(ECOSYSTEM_URL); }, 1000);
                                 }, 800);
-
                             }, 700);
                         }
-
                     }, 800);
-
                 }, 4000);
-
             }, 800);
         }
 
-        // CONTROL DE MÚSICA Y PANTALLA COMPLETA
+        // ACTIVACIÓN DEL MODAL 1 AL CLICAR EN "QUIMERA"
+        const quimeraLink = document.getElementById('quimera-link');
+        quimeraLink.addEventListener('mouseenter', () => quimeraLink.classList.add('active-wave'));
+        quimeraLink.addEventListener('mouseleave', () => quimeraLink.classList.remove('active-wave'));
+
+        quimeraLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('fase-bienvenida-container').style.display = 'block';
+            document.getElementById('fase-acertijo-container').style.display = 'none';
+            document.getElementById('hologram-locks-group-container').style.display = 'none';
+            contenidoModalBox.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('Quimeratrix.webp')`;
+
+            const overlay = document.getElementById('intro-overlay');
+            overlay.style.backgroundColor = '#000000';
+            overlay.style.opacity = '1';
+
+            document.querySelectorAll('.top-bar, header, .container, #bg-layer, #bg-top-layer, #hotspot-box, #main-footer').forEach(el => {
+                el.style.transition = 'opacity 800ms ease';
+                el.style.opacity = '0';
+            });
+
+            setTimeout(() => {
+                startMatrix();
+                matrixCanvas.style.opacity = '1';
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('modal-principal').classList.add('tv-turn-on');
+                }, 800);
+            }, 1000);
+        });
+
+
+        /* =====================================================================
+           LÓGICA 2: ÚLTIMO RETO (ACTIVADO AL CLICAR EN EL EMBLEMA #hotspot-box)
+           ===================================================================== */
+        const alphabetMap = {
+            1: 'A', 2: 'B', 3: 'C', 4: 'D', 5: 'E', 6: 'F', 7: 'G', 8: 'H', 9: 'I',
+            10: 'J', 11: 'K', 12: 'L', 13: 'M', 14: 'N', 15: 'Ñ', 16: 'O', 17: 'P',
+            18: 'Q', 19: 'R', 20: 'S', 21: 'T', 22: 'U', 23: 'V', 24: 'W', 25: 'X',
+            26: 'Y', 27: 'Z'
+        };
+
+        const wordsData = [
+            { id: 'este', word: 'ESTE', code: [5, 20, 21, 5], row: 1 },
+            { id: 'quien', word: 'QUIEN', code: [18, 22, 9, 5, 14], row: 1 },
+            { id: 'toda', word: 'TODA', code: [21, 16, 4, 1], row: 1 },
+            { id: 'umbral', word: 'UMBRAL', code: [22, 13, 2, 19, 1, 12], row: 1 },
+            { id: 'cruce', word: 'CRUCE', code: [3, 19, 22, 3, 5], row: 2 },
+            { id: 'ignorancia', word: 'IGNORANCIA', code: [9, 7, 14, 16, 19, 1, 14, 3, 9, 1], row: 2 },
+            { id: 'pierda', word: 'PIERDA', code: [17, 9, 5, 19, 4, 1], row: 2 }
+        ];
+
+        const CORRECT_PHRASE = ['PIERDA', 'TODA', 'IGNORANCIA', 'QUIEN', 'CRUCE', 'ESTE', 'UMBRAL'];
+
+        let currentActiveWordId = null;
+        let currentInputSequence = [];
+        let decryptedWords = {};
+        let placedWords = Array(7).fill(null);
+
+        function initCryptexGame() {
+            currentActiveWordId = null;
+            currentInputSequence = [];
+            decryptedWords = {};
+            placedWords = Array(7).fill(null);
+
+            const gridContainer = document.getElementById('numbers-grid-container');
+            gridContainer.innerHTML = '';
+
+            // Renglón de 27 botones visibles únicamente del 01 al 27
+            for (let i = 1; i <= 27; i++) {
+                const numStr = String(i).padStart(2, '0');
+                const btn = document.createElement('button');
+                btn.className = 'num-btn';
+                btn.textContent = numStr;
+                btn.onclick = () => handleNumberClick(i);
+                gridContainer.appendChild(btn);
+            }
+
+            renderWordsRows();
+            renderDropSlots();
+        }
+
+        function renderWordsRows() {
+            const row1 = document.getElementById('words-row-1');
+            const row2 = document.getElementById('words-row-2');
+            row1.innerHTML = '';
+            row2.innerHTML = '';
+
+            wordsData.forEach(item => {
+                const box = document.createElement('div');
+                box.className = 'word-box';
+                box.id = `word-box-${item.id}`;
+                
+                if (decryptedWords[item.id]) {
+                    box.textContent = item.word;
+                    box.classList.add('decrypted');
+                    box.draggable = true;
+                    box.ondragstart = (e) => {
+                        e.dataTransfer.setData('text/plain', item.id);
+                    };
+                } else if (currentActiveWordId === item.id) {
+                    // Mostrar progreso parcial de letras mientras se teclea
+                    const partial = item.code.map((n, idx) => idx < currentInputSequence.length ? alphabetMap[n] : '_').join(' ');
+                    box.textContent = partial;
+                    box.style.borderColor = '#38bdf8';
+                } else {
+                    box.textContent = item.code.map(() => '_').join(' ');
+                }
+
+                if (item.row === 1) row1.appendChild(box);
+                else row2.appendChild(box);
+            });
+        }
+
+        function renderDropSlots() {
+            const dropZone = document.getElementById('phrase-drop-zone');
+            dropZone.innerHTML = '';
+
+            for (let i = 0; i < 7; i++) {
+                const slot = document.createElement('div');
+                slot.className = 'phrase-slot';
+                slot.dataset.slot = i;
+
+                const assignedWordId = placedWords[i];
+                if (assignedWordId) {
+                    const wordObj = wordsData.find(w => w.id === assignedWordId);
+                    slot.textContent = wordObj.word;
+                    slot.classList.add('filled-slot');
+                    slot.onclick = () => removeWordFromSlot(i);
+                }
+
+                slot.ondragover = (e) => e.preventDefault();
+                slot.ondrop = (e) => {
+                    e.preventDefault();
+                    const wordId = e.dataTransfer.getData('text/plain');
+                    if (wordId) assignWordToSlot(wordId, i);
+                };
+
+                dropZone.appendChild(slot);
+            }
+        }
+
+        function handleNumberClick(num) {
+            if (currentActiveWordId === null) {
+                const matchedWord = wordsData.find(w => !decryptedWords[w.id] && w.code[0] === num);
+                if (matchedWord) {
+                    currentActiveWordId = matchedWord.id;
+                    currentInputSequence = [num];
+                    checkSequenceProgress(matchedWord);
+                }
+            } else {
+                const matchedWord = wordsData.find(w => w.id === currentActiveWordId);
+                const nextIdx = currentInputSequence.length;
+                if (matchedWord && matchedWord.code[nextIdx] === num) {
+                    currentInputSequence.push(num);
+                    checkSequenceProgress(matchedWord);
+                } else {
+                    currentActiveWordId = null;
+                    currentInputSequence = [];
+                    renderWordsRows();
+                }
+            }
+        }
+
+        function checkSequenceProgress(wordObj) {
+            if (currentInputSequence.length === wordObj.code.length) {
+                decryptedWords[wordObj.id] = wordObj.word;
+                currentActiveWordId = null;
+                currentInputSequence = [];
+            }
+            renderWordsRows();
+        }
+
+        function assignWordToSlot(wordId, slotIndex) {
+            const existingSlot = placedWords.indexOf(wordId);
+            if (existingSlot !== -1) placedWords[existingSlot] = null;
+            placedWords[slotIndex] = wordId;
+            renderDropSlots();
+            checkPhraseCompletion();
+        }
+
+        function removeWordFromSlot(slotIndex) {
+            placedWords[slotIndex] = null;
+            renderDropSlots();
+            checkPhraseCompletion();
+        }
+
+        function checkPhraseCompletion() {
+            const dropZone = document.getElementById('phrase-drop-zone');
+            if (placedWords.includes(null)) {
+                dropZone.classList.remove('error-glow', 'success-glow');
+                return;
+            }
+
+            const currentPhraseArray = placedWords.map(id => wordsData.find(w => w.id === id).word);
+            const isCorrect = currentPhraseArray.every((w, idx) => w === CORRECT_PHRASE[idx]);
+
+            if (isCorrect) {
+                dropZone.classList.remove('error-glow');
+                dropZone.classList.add('success-glow');
+                triggerGaleriaSuccess();
+            } else {
+                dropZone.classList.remove('success-glow');
+                dropZone.classList.add('error-glow');
+            }
+        }
+
+        function triggerGaleriaSuccess() {
+            setTimeout(() => {
+                const retoContainer = document.getElementById('fase-reto-galeria');
+                retoContainer.classList.add('vaporize-effect');
+
+                setTimeout(() => {
+                    retoContainer.style.display = 'none';
+                    retoContainer.classList.remove('vaporize-effect');
+
+                    const successContainer = document.getElementById('hologram-success-galeria');
+                    successContainer.style.display = 'flex';
+                    successContainer.classList.add('materialize-effect');
+
+                    // Esperar 5 segundos y apagar
+                    setTimeout(() => {
+                        successContainer.classList.remove('materialize-effect');
+                        successContainer.classList.add('vaporize-effect');
+
+                        setTimeout(() => {
+                            const modalGaleria = document.getElementById('modal-galeria');
+                            modalGaleria.classList.remove('tv-turn-on');
+                            modalGaleria.classList.add('tv-turn-off');
+
+                            setTimeout(() => {
+                                matrixCanvas.style.opacity = '0';
+                                const overlay = document.getElementById('intro-overlay');
+                                overlay.style.zIndex = '40000';
+                                overlay.style.backgroundColor = '#000000';
+                                overlay.style.opacity = '1';
+
+                                setTimeout(() => {
+                                    overlay.style.backgroundColor = '#ffffff';
+                                    setTimeout(() => {
+                                        window.location.replace(GALLERY_URL);
+                                    }, 1000);
+                                }, 800);
+                            }, 700);
+                        }, 800);
+                    }, 5000);
+                }, 800);
+            }, 600);
+        }
+
+        // ACTIVACIÓN DEL MODAL 2 AL CLICAR EN EL EMBLEMA INTERACTIVO (#hotspot-box)
+        const hotspotBox = document.getElementById('hotspot-box');
+        hotspotBox.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            initCryptexGame();
+            document.getElementById('fase-reto-galeria').style.display = 'block';
+            document.getElementById('hologram-success-galeria').style.display = 'none';
+
+            const overlay = document.getElementById('intro-overlay');
+            overlay.style.backgroundColor = '#000000';
+            overlay.style.opacity = '1';
+
+            document.querySelectorAll('.top-bar, header, .container, #bg-layer, #bg-top-layer, #hotspot-box, #main-footer').forEach(el => {
+                el.style.transition = 'opacity 800ms ease';
+                el.style.opacity = '0';
+            });
+
+            setTimeout(() => {
+                startMatrix();
+                matrixCanvas.style.opacity = '1';
+                overlay.style.opacity = '0';
+
+                setTimeout(() => {
+                    document.getElementById('modal-galeria').classList.add('tv-turn-on');
+                }, 800);
+            }, 1000);
+        });
+
+
+        /* =====================================================================
+           CONTROLES GENERALES, LATIDO Y ANIMACIÓN DE ENTRADA
+           ===================================================================== */
         const music = document.getElementById('bg-music');
         const audioToggle = document.getElementById('audio-toggle');
         let isMusicPlaying = false;
@@ -1527,69 +1751,21 @@
             }
         });
 
-        // CURSOR GLOW
         document.addEventListener('mousemove', (e) => {
-            const x = e.clientX;
-            const y = e.clientY;
-            document.documentElement.style.setProperty('--mouse-x', `${x}px`);
-            document.documentElement.style.setProperty('--mouse-y', `${y}px`);
+            document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+            document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
         });
 
-        // INTERACCIÓN DE LATIDO A 106 LPM PARA EL HOTSPOT
-        const hotspotBox = document.getElementById('hotspot-box');
+        // EFECTO DE LATIDO INTACTO A 106 LPM
         const bgTopLayer = document.getElementById('bg-top-layer');
-
         if (hotspotBox && bgTopLayer) {
-            hotspotBox.addEventListener('mouseenter', () => {
-                bgTopLayer.classList.add('heartbeat-active');
-            });
-            hotspotBox.addEventListener('mouseleave', () => {
-                bgTopLayer.classList.remove('heartbeat-active');
-            });
+            hotspotBox.addEventListener('mouseenter', () => bgTopLayer.classList.add('heartbeat-active'));
+            hotspotBox.addEventListener('mouseleave', () => bgTopLayer.classList.remove('heartbeat-active'));
         }
 
-        // ACTIVACIÓN DEL MODAL AL CLICAR "QUIMERA"
-        const quimeraLink = document.getElementById('quimera-link');
-        quimeraLink.addEventListener('mouseenter', () => quimeraLink.classList.add('active-wave'));
-        quimeraLink.addEventListener('mouseleave', () => quimeraLink.classList.remove('active-wave'));
-
-        quimeraLink.addEventListener('click', (e) => {
-            e.preventDefault();
-
-            document.getElementById('fase-bienvenida-container').style.display = 'block';
-            document.getElementById('fase-acertijo-container').style.display = 'none';
-            document.getElementById('hologram-locks-group-container').style.display = 'none';
-            contenidoModalBox.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('Quimeratrix.webp')`;
-
-            const overlay = document.getElementById('intro-overlay');
-            overlay.style.backgroundColor = '#000000';
-            overlay.style.opacity = '1';
-
-            document.querySelectorAll('.top-bar, header, .container, #bg-layer, #bg-top-layer, #hotspot-box, #main-footer').forEach(el => {
-                el.style.transition = 'opacity 800ms ease';
-                el.style.opacity = '0';
-            });
-
-            setTimeout(() => {
-                initMatrix();
-                startMatrix();
-                matrixCanvas.style.opacity = '1';
-                overlay.style.opacity = '0';
-
-                setTimeout(() => {
-                    const modalPrincipal = document.getElementById('modal-principal');
-                    modalPrincipal.classList.add('tv-turn-on');
-
-                }, 800);
-
-            }, 1000);
-        });
-
-        // ENTRADA INICIAL DE LA PÁGINA
         function runEcosystemEntrance() {
             const overlay = document.getElementById('intro-overlay');
             const bgLayer = document.getElementById('bg-layer');
-            const bgTopLayer = document.getElementById('bg-top-layer');
             const cursorGlow = document.getElementById('cursor-light-glow');
 
             async function iniciarAnimaciones() {
@@ -1646,7 +1822,6 @@
                         if (!el) return;
                         el.style.opacity = '1';
                         el.classList.add('glitch-slice-active');
-                        
                         setTimeout(() => {
                             el.classList.remove('glitch-slice-active');
                             el.classList.add('hologram-mode');
@@ -1669,21 +1844,16 @@
                 }, 1600);
             }
 
-            const imgBase = new Image();
-            imgBase.src = 'Quimera_Ecosistema.webp';
-            const imgTop = new Image();
-            imgTop.src = 'QuimeraC3-Q1.webp';
-
             requestAnimationFrame(iniciarAnimaciones);
         }
 
         window.addEventListener('DOMContentLoaded', runEcosystemEntrance);
 
-        // TRANSICIONES DE SALIDA DE TODOS LOS ENLACES (INCLUYENDO EL NUEVO HOTSPOT)
+        // TRANSICIÓN DE SALIDA PARA EL RESTO DE ENLACES DE NAVEGACIÓN
         const allLinks = document.querySelectorAll('a[href]');
         allLinks.forEach(link => {
             link.addEventListener('click', function(e) {
-                if (this.id === 'audio-toggle' || this.id === 'fullscreen-toggle' || this.id === 'quimera-link') return;
+                if (this.id === 'audio-toggle' || this.id === 'fullscreen-toggle' || this.id === 'quimera-link' || this.id === 'hotspot-box') return;
                 const href = this.getAttribute('href');
                 if (href.startsWith('#')) return;
 
@@ -1691,7 +1861,6 @@
                 const targetUrl = this.href;
 
                 document.body.classList.add('blurred-page');
-
                 document.querySelectorAll('.top-bar, header, .container, #main-footer').forEach(el => {
                     el.style.transition = 'opacity 800ms ease';
                     el.style.opacity = '0';
@@ -1703,13 +1872,10 @@
 
                 const overlay = document.getElementById('intro-overlay');
                 overlay.style.zIndex = '40000';
-                overlay.style.backgroundColor = '#000000'; // Difuminar a negro inicial
+                overlay.style.backgroundColor = '#000000';
                 overlay.style.opacity = '1';
 
-                setTimeout(() => {
-                    overlay.style.backgroundColor = '#ffffff'; // Transición posterior a blanco
-                }, 600);
-
+                setTimeout(() => { overlay.style.backgroundColor = '#ffffff'; }, 600);
                 setTimeout(() => { window.location.href = targetUrl; }, 1200);
             });
         });
