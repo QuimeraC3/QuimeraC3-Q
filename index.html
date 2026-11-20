@@ -446,21 +446,25 @@
             50% { box-shadow: 0 0 18px rgba(56, 189, 248, 0.6), var(--shadow); border-color: rgba(56, 189, 248, 0.9); }
         }
 
-        header h1 a { color: #ffffff; text-decoration: none; display: inline-block; }
-        .quimera-letter { display: inline-block; color: #ffffff; }
-
-        @keyframes quimeraSequentialWave {
-            0%, 28.57%, 50%, 78.57%, 100% { color: #ffffff; }
-            3.57%, 25%, 53.57%, 75% { color: #c88b32; }
+        /* PALABRA QUIMERA CON HALO DORADO IDÉNTICO AL FINAL DE INDEXQUIMERATRIX */
+        header h1 a {
+            color: #ffffff;
+            text-decoration: none;
+            display: inline-block;
+            transition: filter 0.35s ease;
         }
-
-        #quimera-link.active-wave .char-q { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 0ms; }
-        #quimera-link.active-wave .char-u { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 80.85ms; }
-        #quimera-link.active-wave .char-i { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 161.70ms; }
-        #quimera-link.active-wave .char-m { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 242.55ms; }
-        #quimera-link.active-wave .char-e { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 323.40ms; }
-        #quimera-link.active-wave .char-r { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 404.25ms; }
-        #quimera-link.active-wave .char-a { animation: quimeraSequentialWave 2.264s infinite linear; animation-delay: 485.10ms; }
+        header h1 a.active-wave {
+            filter: drop-shadow(0 0 20px rgba(200, 139, 50, 0.22));
+        }
+        .quimera-letter {
+            display: inline-block;
+            color: #ffffff;
+            transition: color 0.35s ease, text-shadow 0.35s ease;
+        }
+        .quimera-letter.gold {
+            color: #c88b32;
+            text-shadow: 0 0 18px rgba(200, 139, 50, 0.95), 0 0 34px rgba(200, 139, 50, 0.55);
+        }
 
         .container {
             position: absolute;
@@ -681,7 +685,7 @@
             text-shadow: 0 0 10px var(--accent);
         }
 
-        /* CANDADOS HOLOGRÁFICOS DEL ACERTIJO TRIPLE */
+        /* CANDADOS HOLOGRÁFICOS (ANIMACIÓN IDÉNTICA A INDEXQUIMERATRIX) */
         #hologram-locks-group-container {
             display: none;
             min-height: calc(88vh - 6rem);
@@ -714,7 +718,7 @@
             border-bottom: none;
             box-shadow: 0 0 38px #38bdf8, inset 0 0 15px #38bdf8;
             transform-origin: bottom left;
-            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.8s ease, box-shadow 0.8s ease;
         }
 
         .holo-body {
@@ -725,6 +729,7 @@
             border: 6px solid #38bdf8;
             border-radius: 24px;
             box-shadow: 0 0 52px rgba(56, 189, 248, 0.85), inset 0 0 22px rgba(56, 189, 248, 0.6);
+            transition: border-color 0.8s ease, background-color 0.8s ease, box-shadow 0.8s ease;
         }
 
         @keyframes holoFloat {
@@ -734,14 +739,14 @@
 
         .holo-lock.unlocked .holo-shackle {
             transform: rotate(-45deg) translateY(-21px) translateX(-12px);
-            border-color: #22c55e;
-            box-shadow: 0 0 45px #22c55e, inset 0 0 18px #22c55e;
+            border-color: #fef384;
+            box-shadow: 0 0 45px #fef384, inset 0 0 18px #fef384;
         }
 
         .holo-lock.unlocked .holo-body {
-            border-color: #22c55e;
-            background: rgba(34, 197, 94, 0.35);
-            box-shadow: 0 0 65px rgba(34, 197, 94, 0.95);
+            border-color: #fef384;
+            background: rgba(254, 243, 132, 0.3);
+            box-shadow: 0 0 65px rgba(254, 243, 132, 0.95);
         }
 
         /* =====================================================================
@@ -942,6 +947,7 @@
             align-items: center;
         }
 
+        /* CANDADO GRANDE DE GALERÍA CON LA MISMA ANIMACIÓN DE DESBLOQUEO DE INDEXQUIMERATRIX */
         .holo-lock-large {
             width: 200px; height: 240px;
             position: relative;
@@ -952,23 +958,36 @@
             position: absolute;
             top: 0; left: 36px;
             width: 128px; height: 112px;
-            border: 12px solid #22c55e;
+            border: 12px solid #38bdf8;
             border-top-left-radius: 64px;
             border-top-right-radius: 64px;
             border-bottom: none;
-            box-shadow: 0 0 45px #22c55e, inset 0 0 18px #22c55e;
+            box-shadow: 0 0 45px #38bdf8, inset 0 0 18px #38bdf8;
             transform-origin: bottom left;
-            transform: rotate(-45deg) translateY(-24px) translateX(-14px);
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.8s ease, box-shadow 0.8s ease;
         }
 
         .holo-body-large {
             position: absolute;
             bottom: 0;
             width: 200px; height: 150px;
-            background: rgba(34, 197, 94, 0.35);
-            border: 6px solid #22c55e;
+            background: rgba(56, 189, 248, 0.25);
+            border: 6px solid #38bdf8;
             border-radius: 24px;
-            box-shadow: 0 0 75px rgba(34, 197, 94, 0.95), inset 0 0 25px rgba(34, 197, 94, 0.6);
+            box-shadow: 0 0 75px rgba(56, 189, 248, 0.85), inset 0 0 25px rgba(56, 189, 248, 0.6);
+            transition: border-color 0.8s ease, background-color 0.8s ease, box-shadow 0.8s ease;
+        }
+
+        .holo-lock-large.unlocked .holo-shackle-large {
+            transform: rotate(-45deg) translateY(-24px) translateX(-14px);
+            border-color: #fef384;
+            box-shadow: 0 0 45px #fef384, inset 0 0 18px #fef384;
+        }
+
+        .holo-lock-large.unlocked .holo-body-large {
+            border-color: #fef384;
+            background: rgba(254, 243, 132, 0.3);
+            box-shadow: 0 0 75px rgba(254, 243, 132, 0.95), inset 0 0 25px rgba(254, 243, 132, 0.6);
         }
 
         @media (max-width: 1200px) {
@@ -1083,13 +1102,13 @@
                     <div class="phrase-drop-container" id="phrase-drop-zone"></div>
                 </div>
 
-                <!-- CANDADO HOLOGRÁFICO VERDE DE ÉXITO -->
+                <!-- CANDADO HOLOGRÁFICO DE ÉXITO CON ANIMACIÓN DE APERTURA -->
                 <div id="hologram-success-galeria">
-                    <div class="holo-lock-large">
+                    <div class="holo-lock-large" id="galeria-holo-lock">
                         <div class="holo-shackle-large"></div>
                         <div class="holo-body-large"></div>
                     </div>
-                    <p style="color: #22c55e; font-family: monospace; font-size: clamp(1.1rem, 2.2vw, 1.5rem); font-weight: bold; margin-top: 1.5rem; text-shadow: 0 0 20px #22c55e; -webkit-text-stroke: 0.5px #000000;">
+                    <p id="galeria-lock-status" style="color: #38bdf8; font-family: monospace; font-size: clamp(1.1rem, 2.2vw, 1.5rem); font-weight: bold; margin-top: 1.5rem; text-shadow: 0 0 20px #38bdf8; -webkit-text-stroke: 0.5px #000000; transition: color 0.8s ease, text-shadow 0.8s ease;">
                         ¡BIENVENIDO NAVEGANTE A LA GALERÍA AUDIOVISUAL DEL ECOSISTEMA QUIMERA!
                     </p>
                 </div>
@@ -1390,19 +1409,30 @@
                 const lock3 = document.getElementById('lock-3');
                 const statusText = document.getElementById('locks-status-text');
 
-                if (phaseIdx === 0) {
-                    lock1.classList.add('unlocked');
-                    statusText.textContent = "¡PRIMER CANDADO DESBLOQUEADO!";
-                } else if (phaseIdx === 1) {
-                    lock1.classList.add('unlocked');
-                    lock2.classList.add('unlocked');
-                    statusText.textContent = "¡SEGUNDO CANDADO DESBLOQUEADO!";
-                } else if (phaseIdx === 2) {
-                    lock1.classList.add('unlocked');
-                    lock2.classList.add('unlocked');
-                    lock3.classList.add('unlocked');
-                    statusText.textContent = "¡SISTEMA COMPLETAMENTE DESBLOQUEADO: ACCEDIENDO...";
-                }
+                // Mantener los ya desbloqueados y preparar el nuevo candado cerrado para animarlo a los 400ms
+                lock1.classList.toggle('unlocked', phaseIdx > 0);
+                lock2.classList.toggle('unlocked', phaseIdx > 1);
+                lock3.classList.remove('unlocked');
+
+                statusText.style.color = "#38bdf8";
+                statusText.style.textShadow = "0 0 15px #38bdf8";
+                statusText.textContent = "VERIFICANDO CLAVE HOLOGRÁFICA...";
+
+                // Animación de desbloqueo idéntica a indexQuimeratrix (400ms)
+                setTimeout(() => {
+                    if (phaseIdx === 0) {
+                        lock1.classList.add('unlocked');
+                        statusText.textContent = "¡PRIMER CANDADO DESBLOQUEADO!";
+                    } else if (phaseIdx === 1) {
+                        lock2.classList.add('unlocked');
+                        statusText.textContent = "¡SEGUNDO CANDADO DESBLOQUEADO!";
+                    } else if (phaseIdx === 2) {
+                        lock3.classList.add('unlocked');
+                        statusText.textContent = "¡SISTEMA COMPLETAMENTE DESBLOQUEADO: ACCEDIENDO...";
+                    }
+                    statusText.style.color = "#fef384";
+                    statusText.style.textShadow = "0 0 15px #c88b32";
+                }, 400);
 
                 setTimeout(() => {
                     locksGroupContainer.classList.remove('materialize-effect');
@@ -1439,16 +1469,71 @@
             }, 800);
         }
 
-        // ACTIVACIÓN DEL MODAL 1 AL CLICAR EN "QUIMERA"
+        // ANIMACIÓN DE ONDA DORADA CON HALO PARA "QUIMERA" (IDÉNTICA A INDEXQUIMERATRIX)
         const quimeraLink = document.getElementById('quimera-link');
-        quimeraLink.addEventListener('mouseenter', () => quimeraLink.classList.add('active-wave'));
-        quimeraLink.addEventListener('mouseleave', () => quimeraLink.classList.remove('active-wave'));
+        const quimeraLetters = Array.from(quimeraLink.querySelectorAll('.quimera-letter'));
+        let quimeraHoverTimer = null;
+
+        function startQuimeraGoldWave() {
+            const stepTime = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 400 : 120;
+            if (quimeraHoverTimer) clearTimeout(quimeraHoverTimer);
+            quimeraLink.classList.add('active-wave');
+
+            function runCycle() {
+                if (!quimeraLink.classList.contains('active-wave')) return;
+                let i = 0;
+                const paintGold = () => {
+                    if (!quimeraLink.classList.contains('active-wave')) return;
+                    if (i < quimeraLetters.length) {
+                        quimeraLetters[i].classList.add('gold');
+                        quimeraLetters[i].style.color = '#c88b32';
+                        i++;
+                        quimeraHoverTimer = setTimeout(paintGold, stepTime);
+                    } else {
+                        let j = 0;
+                        const paintWhite = () => {
+                            if (!quimeraLink.classList.contains('active-wave')) return;
+                            if (j < quimeraLetters.length) {
+                                quimeraLetters[j].classList.remove('gold');
+                                quimeraLetters[j].style.color = '#ffffff';
+                                j++;
+                                quimeraHoverTimer = setTimeout(paintWhite, stepTime);
+                            } else {
+                                quimeraHoverTimer = setTimeout(runCycle, 0);
+                            }
+                        };
+                        paintWhite();
+                    }
+                };
+                paintGold();
+            }
+            runCycle();
+        }
+
+        function stopQuimeraGoldWave() {
+            quimeraLink.classList.remove('active-wave');
+            if (quimeraHoverTimer) {
+                clearTimeout(quimeraHoverTimer);
+                quimeraHoverTimer = null;
+            }
+            quimeraLetters.forEach(letter => {
+                letter.classList.remove('gold');
+                letter.style.color = '#ffffff';
+            });
+        }
+
+        quimeraLink.addEventListener('mouseenter', startQuimeraGoldWave);
+        quimeraLink.addEventListener('mouseleave', stopQuimeraGoldWave);
 
         quimeraLink.addEventListener('click', (e) => {
             e.preventDefault();
+            stopQuimeraGoldWave();
             document.getElementById('fase-bienvenida-container').style.display = 'block';
             document.getElementById('fase-acertijo-container').style.display = 'none';
             document.getElementById('hologram-locks-group-container').style.display = 'none';
+            document.getElementById('lock-1').classList.remove('unlocked');
+            document.getElementById('lock-2').classList.remove('unlocked');
+            document.getElementById('lock-3').classList.remove('unlocked');
             contenidoModalBox.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('Quimeratrix.webp')`;
 
             const overlay = document.getElementById('intro-overlay');
@@ -1540,7 +1625,6 @@
                         e.dataTransfer.setData('text/plain', item.id);
                     };
                 } else if (currentActiveWordId === item.id) {
-                    // Mostrar progreso parcial de letras mientras se teclea
                     const partial = item.code.map((n, idx) => idx < currentInputSequence.length ? alphabetMap[n] : '_').join(' ');
                     box.textContent = partial;
                     box.style.borderColor = '#38bdf8';
@@ -1656,10 +1740,24 @@
                     retoContainer.classList.remove('vaporize-effect');
 
                     const successContainer = document.getElementById('hologram-success-galeria');
+                    const galeriaLock = document.getElementById('galeria-holo-lock');
+                    const galeriaStatus = document.getElementById('galeria-lock-status');
+
+                    galeriaLock.classList.remove('unlocked');
+                    galeriaStatus.style.color = '#38bdf8';
+                    galeriaStatus.style.textShadow = '0 0 20px #38bdf8';
+
                     successContainer.style.display = 'flex';
                     successContainer.classList.add('materialize-effect');
 
-                    // Esperar 5 segundos y apagar
+                    // Animación de desbloqueo idéntica a indexQuimeratrix (400ms)
+                    setTimeout(() => {
+                        galeriaLock.classList.add('unlocked');
+                        galeriaStatus.style.color = '#fef384';
+                        galeriaStatus.style.textShadow = '0 0 20px #c88b32';
+                    }, 400);
+
+                    // Esperar 4.4 segundos (400ms cierre + 4000ms exhibición) y apagar
                     setTimeout(() => {
                         successContainer.classList.remove('materialize-effect');
                         successContainer.classList.add('vaporize-effect');
@@ -1684,7 +1782,7 @@
                                 }, 800);
                             }, 700);
                         }, 800);
-                    }, 5000);
+                    }, 4400);
                 }, 800);
             }, 600);
         }
@@ -1697,6 +1795,7 @@
             initCryptexGame();
             document.getElementById('fase-reto-galeria').style.display = 'block';
             document.getElementById('hologram-success-galeria').style.display = 'none';
+            document.getElementById('galeria-holo-lock').classList.remove('unlocked');
 
             const overlay = document.getElementById('intro-overlay');
             overlay.style.backgroundColor = '#000000';
