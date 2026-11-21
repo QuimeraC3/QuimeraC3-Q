@@ -173,6 +173,79 @@
             transform-origin: center center;
         }
 
+        /* ESCENA FINAL DE ENTRADA A LA GALERÍA AUDIOVISUAL (DETRÁS DEL MODAL Y SOBRE MATRIX) */
+        #gallery-portal-stage {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 16000;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 700ms ease, visibility 700ms ease;
+        }
+
+        #gallery-portal-stage.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #gallery-particles-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        #gallery-q1-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #gallery-entering-caption {
+            position: absolute;
+            top: 61vh;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(1120px, 92vw);
+            text-align: center;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(1.15rem, 2.55vw, 2.25rem);
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            line-height: 1.35;
+            color: #ffffff;
+            -webkit-text-stroke: 1px #000000;
+            text-shadow: 0 0 18px rgba(56, 189, 248, 0.75), 0 0 32px rgba(200, 139, 50, 0.55), 3px 3px 10px rgba(0, 0, 0, 0.95);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        #gallery-white-fade {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #ffffff;
+            z-index: 15500;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1100ms ease;
+        }
+
+        #gallery-white-fade.active {
+            opacity: 1;
+        }
+
         /* RECUADRO SELECCIONABLE INTERACTIVO (HOTSPOT) */
         #hotspot-box {
             position: fixed;
@@ -807,11 +880,18 @@
 
         .numbers-grid {
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.45rem;
+            margin: 1rem auto;
+            max-width: 900px;
+        }
+
+        .numbers-row {
+            display: flex;
             justify-content: center;
             gap: 0.35rem;
             flex-wrap: wrap;
-            margin: 1rem auto;
-            max-width: 900px;
         }
 
         .num-btn {
@@ -884,6 +964,14 @@
             border-color: var(--accent);
             color: #fef384;
             background: rgba(200, 139, 50, 0.25);
+        }
+
+        .word-box.placed-empty {
+            background: rgba(5, 10, 20, 0.45);
+            border: 2px dashed rgba(255, 255, 255, 0.22);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.65);
+            cursor: default;
+            color: transparent;
         }
 
         .word-box:active { cursor: grabbing; }
@@ -1009,6 +1097,14 @@
 
     <audio id="bg-music" src="Tango_Futuro_(Lado_B).mp3" loop preload="auto"></audio>
     <canvas id="matrix-canvas"></canvas>
+    <div id="gallery-white-fade"></div>
+
+    <!-- ESCENA FINAL DE ENTRADA A LA GALERÍA AUDIOVISUAL -->
+    <div id="gallery-portal-stage" aria-live="polite">
+        <img id="gallery-q1-image" src="QuimeraC3-Q1.webp" alt="Emblema del Ecosistema Quimera">
+        <canvas id="gallery-particles-canvas"></canvas>
+        <div id="gallery-entering-caption"></div>
+    </div>
     
     <!-- CAPAS DE FONDO DUALES -->
     <div id="bg-layer"></div>
@@ -1081,7 +1177,7 @@
             <div class="modal-scroll-wrapper">
 
                 <div id="fase-reto-galeria">
-                    <h2 class="titulo-galeria">¡BIENVENIDO AL ÚLTIMO RETO DEL ECOSISTEMA QUIMERA!</h2>
+                    <h2 class="titulo-galeria">¡BIENVENIDOS AL ÚLTIMO RETO DEL ECOSISTEMA QUIMERA!</h2>
                     <p class="texto-galeria">
                         ¡FELICIDADES NAVEGANTE, LO HAS CONSEGUIDO!<br>
                         Has descubierto los siete códigos incluidos en cada concepto del Ecosistema Quimera.<br>
@@ -1089,7 +1185,7 @@
                         Selecciona con un clic los números de cada código descubierto y una vez desencriptada cada palabra, arrástrala a su correspondiente sitio para formar la palabra correcta.
                     </p>
 
-                    <!-- RENGLÓN DE 27 NÚMEROS -->
+                    <!-- DOS FILAS DE NÚMEROS: 01-13 Y 14-27 -->
                     <div class="numbers-grid" id="numbers-grid-container"></div>
 
                     <!-- DOS RENGLONES DE RECUADROS PARA LAS PALABRAS -->
@@ -1409,7 +1505,6 @@
                 const lock3 = document.getElementById('lock-3');
                 const statusText = document.getElementById('locks-status-text');
 
-                // Mantener los ya desbloqueados y preparar el nuevo candado cerrado para animarlo a los 400ms
                 lock1.classList.toggle('unlocked', phaseIdx > 0);
                 lock2.classList.toggle('unlocked', phaseIdx > 1);
                 lock3.classList.remove('unlocked');
@@ -1418,7 +1513,6 @@
                 statusText.style.textShadow = "0 0 15px #38bdf8";
                 statusText.textContent = "VERIFICANDO CLAVE HOLOGRÁFICA...";
 
-                // Animación de desbloqueo idéntica a indexQuimeratrix (400ms)
                 setTimeout(() => {
                     if (phaseIdx === 0) {
                         lock1.classList.add('unlocked');
@@ -1592,15 +1686,24 @@
             const gridContainer = document.getElementById('numbers-grid-container');
             gridContainer.innerHTML = '';
 
-            // Renglón de 27 botones visibles únicamente del 01 al 27
+            const rowTop = document.createElement('div');
+            rowTop.className = 'numbers-row';
+            const rowBottom = document.createElement('div');
+            rowBottom.className = 'numbers-row';
+
+            // Primera línea: 01 al 13; segunda línea: 14 al 27
             for (let i = 1; i <= 27; i++) {
                 const numStr = String(i).padStart(2, '0');
                 const btn = document.createElement('button');
                 btn.className = 'num-btn';
                 btn.textContent = numStr;
                 btn.onclick = () => handleNumberClick(i);
-                gridContainer.appendChild(btn);
+                if (i <= 13) rowTop.appendChild(btn);
+                else rowBottom.appendChild(btn);
             }
+
+            gridContainer.appendChild(rowTop);
+            gridContainer.appendChild(rowBottom);
 
             renderWordsRows();
             renderDropSlots();
@@ -1616,8 +1719,15 @@
                 const box = document.createElement('div');
                 box.className = 'word-box';
                 box.id = `word-box-${item.id}`;
-                
-                if (decryptedWords[item.id]) {
+
+                const isPlacedInPhrase = placedWords.includes(item.id);
+
+                if (isPlacedInPhrase) {
+                    // Queda un espacio vacío en el sitio donde se encontraba originalmente
+                    box.textContent = '';
+                    box.classList.add('placed-empty');
+                    box.draggable = false;
+                } else if (decryptedWords[item.id]) {
                     box.textContent = item.word;
                     box.classList.add('decrypted');
                     box.draggable = true;
@@ -1700,12 +1810,14 @@
             const existingSlot = placedWords.indexOf(wordId);
             if (existingSlot !== -1) placedWords[existingSlot] = null;
             placedWords[slotIndex] = wordId;
+            renderWordsRows();
             renderDropSlots();
             checkPhraseCompletion();
         }
 
         function removeWordFromSlot(slotIndex) {
             placedWords[slotIndex] = null;
+            renderWordsRows();
             renderDropSlots();
             checkPhraseCompletion();
         }
@@ -1728,6 +1840,167 @@
                 dropZone.classList.remove('success-glow');
                 dropZone.classList.add('error-glow');
             }
+        }
+
+        /* =====================================================================
+           SECUENCIA FINAL DE INGRESO A LA GALERÍA AUDIOVISUAL
+           ===================================================================== */
+        let galleryParticlesRaf = 0;
+        let galleryDotsTimer = null;
+        let galleryTypeTimer = null;
+
+        function startGalleryHolographicParticles() {
+            const canvas = document.getElementById('gallery-particles-canvas');
+            const q1Img = document.getElementById('gallery-q1-image');
+            if (!canvas) return;
+
+            if (galleryParticlesRaf) cancelAnimationFrame(galleryParticlesRaf);
+            const ctx = canvas.getContext('2d', { alpha: true });
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reducedMotion) {
+                if (q1Img) q1Img.style.opacity = '1';
+                canvas.style.opacity = '0';
+                return;
+            }
+
+            const particleCount = width < 600 ? 1800 : 3400;
+            const particles = [];
+
+            for (let i = 0; i < particleCount; i++) {
+                const tx = Math.random() * width;
+                const ty = Math.random() * height;
+                const mode = Math.random();
+                let sx, sy;
+
+                if (mode < 0.4) {
+                    sx = tx + (Math.random() - 0.5) * 140;
+                    sy = -Math.random() * height * 0.35;
+                } else if (mode < 0.72) {
+                    const side = Math.random() > 0.5 ? 1 : -1;
+                    sx = width / 2 + side * (width * 0.5 + Math.random() * 280);
+                    sy = ty + (Math.random() - 0.5) * height * 0.5;
+                } else {
+                    sx = Math.random() * width;
+                    sy = Math.random() * height;
+                }
+
+                const roll = Math.random();
+                const colorRGB = roll > 0.68 ? '56, 189, 248' : roll > 0.36 ? '255, 255, 255' : '200, 139, 50';
+
+                particles.push({
+                    sx, sy, tx, ty,
+                    delay: Math.random() * 550,
+                    duration: 1200 + Math.random() * 700,
+                    colorRGB,
+                    size: 1.5 + Math.random() * 1.8,
+                    trail: Math.random() > 0.45
+                });
+            }
+
+            canvas.style.opacity = '1';
+            if (q1Img) q1Img.style.opacity = '0';
+
+            const startTime = performance.now();
+
+            function draw(now) {
+                ctx.clearRect(0, 0, width, height);
+                const elapsed = now - startTime;
+                ctx.globalCompositeOperation = 'lighter';
+
+                let arrivedCount = 0;
+                for (const p of particles) {
+                    const localT = Math.max(0, elapsed - p.delay);
+                    const t = Math.min(1, localT / p.duration);
+                    const eased = 1 - Math.pow(1 - t, 3);
+                    const x = p.sx + (p.tx - p.sx) * eased;
+                    const y = p.sy + (p.ty - p.sy) * eased;
+                    if (t >= 1) arrivedCount++;
+
+                    if (p.trail && t < 0.95) {
+                        const trailT = Math.max(0, eased - 0.18);
+                        const trx = p.sx + (p.tx - p.sx) * trailT;
+                        const tryY = p.sy + (p.ty - p.sy) * trailT;
+                        ctx.strokeStyle = `rgba(${p.colorRGB}, 0.28)`;
+                        ctx.lineWidth = p.size * 0.55;
+                        ctx.beginPath();
+                        ctx.moveTo(trx, tryY);
+                        ctx.lineTo(x, y);
+                        ctx.stroke();
+                    }
+
+                    ctx.fillStyle = `rgba(${p.colorRGB}, 0.88)`;
+                    const pSize = t > 0.95 ? p.size * 1.25 : p.size;
+                    ctx.fillRect(x - pSize / 2, y - pSize / 2, pSize, pSize);
+                }
+
+                ctx.globalCompositeOperation = 'source-over';
+                const progressRatio = particleCount > 0 ? arrivedCount / particleCount : 1;
+
+                if (q1Img) {
+                    // Revelación progresiva de QuimeraC3-Q1.webp conforme convergen las partículas
+                    const imgOpacity = Math.min(1, Math.max(0, (progressRatio - 0.25) / 0.65));
+                    q1Img.style.opacity = String(imgOpacity);
+                }
+
+                if (elapsed < 2350) {
+                    galleryParticlesRaf = requestAnimationFrame(draw);
+                } else {
+                    if (q1Img) q1Img.style.opacity = '1';
+                    canvas.style.transition = 'opacity 550ms ease';
+                    canvas.style.opacity = '0';
+                }
+            }
+
+            galleryParticlesRaf = requestAnimationFrame(draw);
+        }
+
+        function startGalleryTypewriterCaption() {
+            const caption = document.getElementById('gallery-entering-caption');
+            if (!caption) return;
+
+            if (galleryTypeTimer) clearTimeout(galleryTypeTimer);
+            if (galleryDotsTimer) clearInterval(galleryDotsTimer);
+
+            const baseText = 'INGRESANDO A LA GALERÍA AUDIOVISUAL DEL ECOSISTEMA QUIMERA';
+            caption.textContent = '';
+            caption.style.opacity = '1';
+
+            let idx = 0;
+            const typeNextChar = () => {
+                if (idx <= baseText.length) {
+                    caption.textContent = baseText.slice(0, idx);
+                    idx++;
+                    galleryTypeTimer = setTimeout(typeNextChar, 36);
+                } else {
+                    let dotStep = 1;
+                    caption.textContent = baseText + '.';
+                    galleryDotsTimer = setInterval(() => {
+                        dotStep = (dotStep % 3) + 1;
+                        caption.textContent = baseText + '.'.repeat(dotStep);
+                    }, 420);
+                }
+            };
+
+            typeNextChar();
+        }
+
+        function revealGalleryPortalScene() {
+            // Ocultar elementos del ecosistema detrás del modal para que solo quede Matrix y la escena de portal
+            document.querySelectorAll('.ecosistema-title, header h1, header p, .container, #bg-layer, #bg-top-layer, #hotspot-box, .top-bar, #main-footer').forEach(el => {
+                el.style.transition = 'opacity 500ms ease';
+                el.style.opacity = '0';
+            });
+
+            const stage = document.getElementById('gallery-portal-stage');
+            stage.classList.add('visible');
+
+            startGalleryHolographicParticles();
+            startGalleryTypewriterCaption();
         }
 
         function triggerGaleriaSuccess() {
@@ -1757,30 +2030,35 @@
                         galeriaStatus.style.textShadow = '0 0 20px #c88b32';
                     }, 400);
 
-                    // Esperar 4.4 segundos (400ms cierre + 4000ms exhibición) y apagar
+                    // Evaporación del candado y cierre del modal tras exhibición
                     setTimeout(() => {
                         successContainer.classList.remove('materialize-effect');
                         successContainer.classList.add('vaporize-effect');
 
+                        const modalBox = document.querySelector('.contenido-modal-galeria');
+                        if (modalBox) modalBox.classList.add('vaporize-effect');
+
                         setTimeout(() => {
                             const modalGaleria = document.getElementById('modal-galeria');
-                            modalGaleria.classList.remove('tv-turn-on');
-                            modalGaleria.classList.add('tv-turn-off');
+                            if (modalGaleria) {
+                                modalGaleria.style.display = 'none';
+                                modalGaleria.classList.remove('tv-turn-on');
+                            }
 
+                            // En el momento en que desaparece el candado y el modal:
+                            // detrás solo queda Matrix, y aparecen QuimeraC3-Q1.webp (partículas) y la leyenda
+                            revealGalleryPortalScene();
+
+                            // Desvanecimiento de la lluvia Matrix en blanco manteniendo QuimeraC3-Q1.webp y la leyenda
                             setTimeout(() => {
                                 matrixCanvas.style.opacity = '0';
-                                const overlay = document.getElementById('intro-overlay');
-                                overlay.style.zIndex = '40000';
-                                overlay.style.backgroundColor = '#000000';
-                                overlay.style.opacity = '1';
+                                const whiteFade = document.getElementById('gallery-white-fade');
+                                if (whiteFade) whiteFade.classList.add('active');
 
                                 setTimeout(() => {
-                                    overlay.style.backgroundColor = '#ffffff';
-                                    setTimeout(() => {
-                                        window.location.replace(GALLERY_URL);
-                                    }, 1000);
-                                }, 800);
-                            }, 700);
+                                    window.location.replace(GALLERY_URL);
+                                }, 1800);
+                            }, 2800);
                         }, 800);
                     }, 4400);
                 }, 800);
@@ -1796,6 +2074,8 @@
             document.getElementById('fase-reto-galeria').style.display = 'block';
             document.getElementById('hologram-success-galeria').style.display = 'none';
             document.getElementById('galeria-holo-lock').classList.remove('unlocked');
+            document.getElementById('gallery-portal-stage').classList.remove('visible');
+            document.getElementById('gallery-white-fade').classList.remove('active');
 
             const overlay = document.getElementById('intro-overlay');
             overlay.style.backgroundColor = '#000000';
