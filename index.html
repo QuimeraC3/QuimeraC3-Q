@@ -530,7 +530,7 @@
             color: #ffffff;
             text-decoration: none;
             display: inline-block;
-            transition: filter 0.08s ease;
+            transition: filter 0.12s ease;
         }
         header h1 a.active-wave {
             filter: drop-shadow(0 0 20px rgba(200, 139, 50, 0.22));
@@ -538,7 +538,7 @@
         .quimera-letter {
             display: inline-block;
             color: #ffffff;
-            transition: color 0.2s ease, text-shadow 0.08s ease;
+            transition: color 0.25s ease, text-shadow 0.12s ease;
         }
         .quimera-letter.gold {
             color: #c88b32;
@@ -1569,7 +1569,7 @@
             }, 800);
         }
 
-        // ANIMACIÓN DE ONDA DORADA: CICLO COMPLETO (BLANCO -> DORADO -> BLANCO) EN 1 PULSO DE 106 BPM (~566.04 ms)
+        // ANIMACIÓN DE ONDA DORADA: OPCIÓN 2 A LA MITAD DE VELOCIDAD (2 PULSOS DE 106 BPM ≈ 1132.08 ms)
         const quimeraLink = document.getElementById('quimera-link');
         const quimeraLetters = Array.from(quimeraLink.querySelectorAll('.quimera-letter'));
         let quimeraRafId = 0;
@@ -1593,8 +1593,8 @@
             quimeraLink.classList.add('active-wave');
 
             const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            // Opción 2: Todo el ciclo de iluminación (blanco -> dorado -> blanco) dura 1 pulso de 106 BPM (~566.04 ms)
-            const cycleMs = reducedMotion ? 1200 : (60000 / 106);
+            // Mitad de velocidad de la Opción 2: ciclo completo (blanco -> dorado -> blanco) en 2 pulsos de 106 BPM (~1132.08 ms)
+            const cycleMs = reducedMotion ? 2400 : (60000 / 106) * 2;
             const count = quimeraLetters.length;
             const startTime = performance.now();
 
@@ -1605,14 +1605,14 @@
                 const beatPhase = (elapsed % cycleMs) / cycleMs;
 
                 if (beatPhase < 0.5) {
-                    // Primera mitad del pulso: encender de Q a A de blanco a dorado
+                    // Primera mitad del ciclo: encender de Q a A de blanco a dorado
                     const progress = beatPhase / 0.5;
                     const activeCount = Math.min(count, Math.floor(progress * count) + 1);
                     for (let idx = 0; idx < count; idx++) {
                         setQuimeraLetterGold(quimeraLetters[idx], idx < activeCount);
                     }
                 } else {
-                    // Segunda mitad del pulso: regresar de dorado a blanco de Q a A
+                    // Segunda mitad del ciclo: regresar de dorado a blanco de Q a A
                     const progress = (beatPhase - 0.5) / 0.5;
                     const clearedCount = Math.min(count, Math.floor(progress * count) + 1);
                     for (let idx = 0; idx < count; idx++) {
