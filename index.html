@@ -530,7 +530,7 @@
             color: #ffffff;
             text-decoration: none;
             display: inline-block;
-            transition: filter 0.14s ease;
+            transition: filter 0.08s ease;
         }
         header h1 a.active-wave {
             filter: drop-shadow(0 0 20px rgba(200, 139, 50, 0.22));
@@ -538,7 +538,7 @@
         .quimera-letter {
             display: inline-block;
             color: #ffffff;
-            transition: color 0.18s ease, text-shadow 0.18s ease;
+            transition: color 0.08s ease, text-shadow 0.08s ease;
         }
         .quimera-letter.gold {
             color: #c88b32;
@@ -1569,7 +1569,7 @@
             }, 800);
         }
 
-        // ANIMACIÓN DE ONDA DORADA AL RITMO DEL LATIDO DE 106 BPM (~566.04 ms)
+        // ANIMACIÓN DE ONDA DORADA: CICLO COMPLETO (BLANCO -> DORADO -> BLANCO) EN 1 PULSO DE 106 BPM (~566.04 ms)
         const quimeraLink = document.getElementById('quimera-link');
         const quimeraLetters = Array.from(quimeraLink.querySelectorAll('.quimera-letter'));
         let quimeraRafId = 0;
@@ -1593,32 +1593,30 @@
             quimeraLink.classList.add('active-wave');
 
             const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            // Mismo ritmo que el latido de QuimeraC3-Q1.webp: 106 BPM (~566.04 ms por pulso)
-            const beat106Ms = reducedMotion ? 1200 : (60000 / 106);
-            // Cada letra aparece en el pulso de 106 BPM y el ciclo total recorre las letras y regresa a blanco
-            const stepMs = beat106Ms;
+            // Opción 2: Todo el ciclo de iluminación (blanco -> dorado -> blanco) dura 1 pulso de 106 BPM (~566.04 ms)
+            const cycleMs = reducedMotion ? 1200 : (60000 / 106);
             const count = quimeraLetters.length;
-            const totalSteps = count * 2;
-            const cycleMs = stepMs * totalSteps;
             const startTime = performance.now();
 
             function tick(now) {
                 if (!quimeraLink.classList.contains('active-wave')) return;
 
                 const elapsed = Math.max(0, now - startTime);
-                const cyclePos = (elapsed % cycleMs) / stepMs;
-                const currentStep = Math.floor(cyclePos);
+                const beatPhase = (elapsed % cycleMs) / cycleMs;
 
-                if (currentStep < count) {
-                    // Aparición de blanco a dorado letra por letra al ritmo de 106 BPM
+                if (beatPhase < 0.5) {
+                    // Primera mitad del pulso: encender de Q a A de blanco a dorado
+                    const progress = beatPhase / 0.5;
+                    const activeCount = Math.min(count, Math.floor(progress * count) + 1);
                     for (let idx = 0; idx < count; idx++) {
-                        setQuimeraLetterGold(quimeraLetters[idx], idx <= currentStep);
+                        setQuimeraLetterGold(quimeraLetters[idx], idx < activeCount);
                     }
                 } else {
-                    // Regreso de dorado a blanco letra por letra al mismo ritmo de 106 BPM
-                    const offIdx = currentStep - count;
+                    // Segunda mitad del pulso: regresar de dorado a blanco de Q a A
+                    const progress = (beatPhase - 0.5) / 0.5;
+                    const clearedCount = Math.min(count, Math.floor(progress * count) + 1);
                     for (let idx = 0; idx < count; idx++) {
-                        setQuimeraLetterGold(quimeraLetters[idx], idx > offIdx);
+                        setQuimeraLetterGold(quimeraLetters[idx], idx >= clearedCount);
                     }
                 }
 
