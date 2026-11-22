@@ -1575,7 +1575,14 @@
         let quimeraHoverTimer = null;
 
         function startQuimeraGoldWave() {
-            const stepTime = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 400 : 120;
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            // 106 bpm = 566.04 ms por pulso; 212 bpm = 283.02 ms por medio pulso
+            const beat106Ms = 60000 / 106; // ~566.04 ms
+            const halfBeat212Ms = beat106Ms / 2; // ~283.02 ms
+            // Recorrido de Q (índice 0) a A (índice 6) en el tiempo de 106 bpm, con pulso de 212 bpm
+            const stepTime = reducedMotion ? 400 : (beat106Ms / quimeraLetters.length);
+            const repeatDelayMs = reducedMotion ? 0 : halfBeat212Ms;
+
             if (quimeraHoverTimer) clearTimeout(quimeraHoverTimer);
             quimeraLink.classList.add('active-wave');
 
@@ -1599,7 +1606,7 @@
                                 j++;
                                 quimeraHoverTimer = setTimeout(paintWhite, stepTime);
                             } else {
-                                quimeraHoverTimer = setTimeout(runCycle, 0);
+                                quimeraHoverTimer = setTimeout(runCycle, repeatDelayMs);
                             }
                         };
                         paintWhite();
