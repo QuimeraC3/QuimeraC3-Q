@@ -525,12 +525,12 @@
             50% { box-shadow: 0 0 18px rgba(56, 189, 248, 0.6), var(--shadow); border-color: rgba(56, 189, 248, 0.9); }
         }
 
-        /* PALABRA QUIMERA CON HALO DORADO IDÉNTICO AL FINAL DE INDEXQUIMERATRIX */
+        /* PALABRA QUIMERA CON HALO DORADO SINCRONIZADO A 106 BPM */
         header h1 a {
             color: #ffffff;
             text-decoration: none;
             display: inline-block;
-            transition: filter 0.35s ease;
+            transition: filter 0.08s linear;
         }
         header h1 a.active-wave {
             filter: drop-shadow(0 0 20px rgba(200, 139, 50, 0.22));
@@ -538,7 +538,7 @@
         .quimera-letter {
             display: inline-block;
             color: #ffffff;
-            transition: color 0.35s ease, text-shadow 0.35s ease;
+            transition: color 0.08s linear, text-shadow 0.08s linear;
         }
         .quimera-letter.gold {
             color: #c88b32;
@@ -1569,64 +1569,71 @@
             }, 800);
         }
 
-        // ANIMACIÓN DE ONDA DORADA CON HALO PARA "QUIMERA" (IDÉNTICA A INDEXQUIMERATRIX)
+        // ANIMACIÓN DE ONDA DORADA SINCRONIZADA AL COMPÁS EXACTO DE 106 BPM
         const quimeraLink = document.getElementById('quimera-link');
         const quimeraLetters = Array.from(quimeraLink.querySelectorAll('.quimera-letter'));
-        let quimeraHoverTimer = null;
+        let quimeraRafId = 0;
+
+        function setQuimeraLetterGold(letter, isGold) {
+            if (!letter) return;
+            if (isGold) {
+                letter.classList.add('gold');
+                letter.style.color = '#c88b32';
+            } else {
+                letter.classList.remove('gold');
+                letter.style.color = '#ffffff';
+            }
+        }
 
         function startQuimeraGoldWave() {
-            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            // 106 bpm = 566.04 ms por pulso; 212 bpm = 283.02 ms por medio pulso
-            const beat106Ms = 60000 / 106; // ~566.04 ms
-            const halfBeat212Ms = beat106Ms / 2; // ~283.02 ms
-            // Recorrido de Q (índice 0) a A (índice 6) en el tiempo de 106 bpm, con pulso de 212 bpm
-            const stepTime = reducedMotion ? 400 : (beat106Ms / quimeraLetters.length);
-            const repeatDelayMs = reducedMotion ? 0 : halfBeat212Ms;
-
-            if (quimeraHoverTimer) clearTimeout(quimeraHoverTimer);
+            if (quimeraRafId) {
+                cancelAnimationFrame(quimeraRafId);
+                quimeraRafId = 0;
+            }
             quimeraLink.classList.add('active-wave');
 
-            function runCycle() {
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            // Cada ciclo completo dura exactamente 1 pulso de 106 BPM (~566.04 ms)
+            const beat106Ms = reducedMotion ? 1200 : (60000 / 106);
+            const count = quimeraLetters.length;
+            const startTime = performance.now();
+
+            function tick(now) {
                 if (!quimeraLink.classList.contains('active-wave')) return;
-                let i = 0;
-                const paintGold = () => {
-                    if (!quimeraLink.classList.contains('active-wave')) return;
-                    if (i < quimeraLetters.length) {
-                        quimeraLetters[i].classList.add('gold');
-                        quimeraLetters[i].style.color = '#c88b32';
-                        i++;
-                        quimeraHoverTimer = setTimeout(paintGold, stepTime);
-                    } else {
-                        let j = 0;
-                        const paintWhite = () => {
-                            if (!quimeraLink.classList.contains('active-wave')) return;
-                            if (j < quimeraLetters.length) {
-                                quimeraLetters[j].classList.remove('gold');
-                                quimeraLetters[j].style.color = '#ffffff';
-                                j++;
-                                quimeraHoverTimer = setTimeout(paintWhite, stepTime);
-                            } else {
-                                quimeraHoverTimer = setTimeout(runCycle, repeatDelayMs);
-                            }
-                        };
-                        paintWhite();
+
+                // Posición exacta dentro del pulso actual de 106 BPM [0, 1)
+                const elapsed = Math.max(0, now - startTime);
+                const beatPhase = (elapsed % beat106Ms) / beat106Ms;
+
+                if (beatPhase < 0.5) {
+                    // Primera mitad del pulso (212 BPM): encender en secuencia de Q a A
+                    const progress = beatPhase / 0.5;
+                    const activeCount = Math.min(count, Math.floor(progress * count) + 1);
+                    for (let idx = 0; idx < count; idx++) {
+                        setQuimeraLetterGold(quimeraLetters[idx], idx < activeCount);
                     }
-                };
-                paintGold();
+                } else {
+                    // Segunda mitad del pulso: apagar en secuencia de Q a A para quedar listos al siguiente golpe de 106 BPM
+                    const progress = (beatPhase - 0.5) / 0.5;
+                    const clearedCount = Math.min(count, Math.floor(progress * count) + 1);
+                    for (let idx = 0; idx < count; idx++) {
+                        setQuimeraLetterGold(quimeraLetters[idx], idx >= clearedCount);
+                    }
+                }
+
+                quimeraRafId = requestAnimationFrame(tick);
             }
-            runCycle();
+
+            quimeraRafId = requestAnimationFrame(tick);
         }
 
         function stopQuimeraGoldWave() {
             quimeraLink.classList.remove('active-wave');
-            if (quimeraHoverTimer) {
-                clearTimeout(quimeraHoverTimer);
-                quimeraHoverTimer = null;
+            if (quimeraRafId) {
+                cancelAnimationFrame(quimeraRafId);
+                quimeraRafId = 0;
             }
-            quimeraLetters.forEach(letter => {
-                letter.classList.remove('gold');
-                letter.style.color = '#ffffff';
-            });
+            quimeraLetters.forEach(letter => setQuimeraLetterGold(letter, false));
         }
 
         quimeraLink.addEventListener('mouseenter', startQuimeraGoldWave);
