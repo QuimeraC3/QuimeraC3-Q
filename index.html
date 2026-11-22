@@ -1595,7 +1595,7 @@
             const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             // Cada ciclo completo dura exactamente 1 pulso de 106 BPM (~566.04 ms)
             const beat106Ms = reducedMotion ? 1200 : (60000 / 106);
-            const cycleMs = beat106Ms * 2;
+            const cycleMs = beat106Ms * 4;
             const count = quimeraLetters.length;
             const startTime = performance.now();
 
